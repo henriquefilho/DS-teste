@@ -1,0 +1,244 @@
+{
+  "component": "atlas-switch",
+  "type": "web-component",
+  "description": "É usado para alternar rapidamente entre dois estados possíveis, que normalmente são 'liga/desliga'",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "alignment",
+      "type": "enum",
+      "values": ["left", "right"],
+      "default": "left",
+      "required": false,
+      "description": "Define a posição do controle switch em relação ao label (esquerda ou direita)"
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Define se o switch está ativado (true) ou desativado (false)"
+    },
+    
+     {
+      "name": "label",
+      "type": "boolean",
+      "values": [true, false],
+      "default": true,
+      "required": false,
+      "description": "Ativa ou desativa o label do switch. Se false, o switch será renderizado sem texto, apenas o controle visual."
+    },
+
+    {
+      "name": "label-name",
+      "type": "string",
+      "default": "Label",
+      "required": true,
+      "description": "Texto do label exibido ao lado do switch"
+    },
+    {
+      "name": "strong-label",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Define se o label deve usar fonte semi-bold (peso 600)"
+    },
+
+     {
+      "name": "description",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Ativa ou desativa o helper-text do switch. Se false, o texto descritivo abaixo do label não será exibido."
+    },
+
+    {
+      "name": "helper-text",
+      "type": "enum",
+      "values": ["default", "error"],
+      "default": "default",
+      "required": false,
+      "description": "Texto descritivo exibido abaixo do label para fornecer contexto adicional"
+    },
+    {
+      "name": "state",
+      "type": "enum",
+      "values": ["default", "disabled", "read-only", "error"],
+      "default": "default",
+      "required": false,
+      "description": "Define o estado visual e funcional do switch"
+    },
+
+     {
+      "name": "description-default-text",
+      "type": "string",
+      "default": "Descrição de apoio do switch",
+      "required": false,
+      "description": "Mensagem de erro exibida quando state='error'"
+    },
+
+    {
+      "name": "description-error-text",
+      "type": "string",
+      "default": "Descrição de erro do switch",
+      "required": false,
+      "description": "Mensagem de erro exibida quando state='error'"
+    },
+    {
+      "name": "icon-popover",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Exibe um ícone de informação ao lado do label (para tooltips/popovers)"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão interativo do switch",
+      "tokens": {
+        "background-checked": "--atlas-color-surface-control-active-default (var(--atlas-color-persian-blue-500, #0030B9))",
+        "background-unchecked": "--atlas-color-surface-control-inactive-default (var(--atlas-color-pale-sky-10, #FCFCFD))",
+        "border-unchecked": "--atlas-color-border-primary-hard (#0030B9 - azul primário)",
+        "thumb-color-unchecked": "--atlas-color-surface-static-shape-primary-hard (#0030B9 - azul primário)",
+        "thumb-color-checked": "--atlas-color-pale-sky-10 (#FCFCFD - branco)",
+        "label-color": "--atlas-color-text-static-neutral-hard (var(--atlas-color-pale-sky-900, #1d2125))",
+        "description-color": "--atlas-color-text-static-neutral-medium (var(--atlas-color-pale-sky-600, #5e6877))"
+      },
+      "behavior": "Clicável, muda entre checked/unchecked"
+    },
+    {
+      "name": "hover",
+      "description": "Estado quando o mouse está sobre o switch",
+      "tokens": {
+        "background-checked": "--atlas-color-surface-control-active-hover (var(--atlas-color-persian-blue-600, #002694))",
+        "background-unchecked": "--atlas-color-surface-control-inactive-hover (var(--atlas-color-persian-blue-200, #99ACE3))",
+        "thumb-color-unchecked": "--atlas-color-surface-static-shape-primary-hard (#0030B9 - azul primário)",
+        "thumb-color-checked": "--atlas-color-pale-sky-10 (#FCFCFD - branco)"
+      },
+      "behavior": "Indica interatividade"
+    },
+   
+    {
+      "name": "disabled",
+      "description": "Estado não interativo do switch",
+      "tokens": {
+        "background-checked": "--atlas-color-surface-control-active-disabled (var(--atlas-color-pale-sky-200, #D1D6DC))",
+        "background-unchecked": "--atlas-color-surface-control-inactive-disabled (var(--atlas-color-pale-sky-10, #FCFCFD))",
+        "border": "--atlas-color-border-disabled (var(--atlas-color-pale-sky-200, #D1D6DC))",
+        "thumb-color-unchecked": "--atlas-color-pale-sky-200 (#D1D6DC - cinza claro)",
+        "thumb-color-checked": "--atlas-color-pale-sky-400 (#9AA4B3 - cinza médio)",
+        "label-color": "--atlas-color-text-static-disabled-level-2 (var(--atlas-color-pale-sky-400, #9aa4b3))",
+        "description-color": "--atlas-color-text-static-disabled-level-2 (var(--atlas-color-pale-sky-400, #9aa4b3))"
+      },
+      "behavior": "Não clicável, cursor: not-allowed"
+    },
+    {
+      "name": "read-only",
+      "description": "Estado somente leitura, visualmente distinto mas não editável",
+      "tokens": {
+        "background-checked": "--atlas-color-surface-control-active-read-only (var(--atlas-color-pale-sky-300, #B8C0CB))",
+        "background-unchecked": "--atlas-color-surface-control-inactive-read-only (var(--atlas-color-pale-sky-10, #FCFCFD))",
+        "border": "--atlas-color-border-default (var(--atlas-color-pale-sky-200, #D1D6DC))",
+        "thumb-color": "--atlas-color-surface-static-shape-neutral-soft (#B8C0CB - cinza neutro para ambos checked/unchecked)",
+        "label-color": "--atlas-color-text-static-neutral-hard (var(--atlas-color-pale-sky-900, #1d2125))",
+        "description-color": "--atlas-color-text-static-neutral-medium (var(--atlas-color-pale-sky-600, #5e6877))"
+      },
+      "behavior": "Não clicável, mantém cores mais próximas do default"
+    },
+    {
+      "name": "error",
+      "description": "Estado de erro com mensagem de validação",
+      "tokens": {
+        "background-checked": "--atlas-color-surface-control-active-error (var(--atlas-color-red-ribbon-600, #B02A37))",
+        "background-unchecked": "--atlas-color-surface-control-inactive-error (var(--atlas-color-pale-sky-10, #FCFCFD))",
+        "border-unchecked": "--atlas-color-border-error-hard (var(--atlas-color-red-ribbon-600, #B02A37))",
+        "thumb-color-unchecked": "--atlas-color-surface-static-shape-primary-hard (#0030B9 - azul primário)",
+        "thumb-color-checked": "--atlas-color-pale-sky-10 (#FCFCFD - branco)",
+        "label-color": "--atlas-color-text-static-neutral-hard (var(--atlas-color-pale-sky-900, #1d2125))",
+        "error-text-color": "--atlas-color-text-static-error-medium (var(--atlas-color-red-ribbon-600, #B02A37))"
+      },
+      "behavior": "Exibe mensagem de erro abaixo do switch"
+    }
+  ],
+  "layout": {
+    "switch-width": "42px",
+    "switch-height": "24px",
+    "thumb-size": "18px (diameter)",
+    "thumb-position-off": "3px from left",
+    "thumb-position-on": "21px from left (3px from right)",
+    "gap-switch-label": "--atlas-gap-xs (8px)",
+    "gap-label-description": "--atlas-gap-2xs (4px)",
+    "border-radius": "var(--atlas-radius-composite-full, 9999px)",
+    "border-width": "--atlas-border-solid-default"
+  },
+  "typography": {
+    "label-default": {
+      "font-family": "var(--atlas-font-face-general, 'Open Sans', sans-serif)",
+      "font-size": "var(--atlas-typescale-label-inline-md-size, 16px)",
+      "font-weight": "--atlas-font-weight-400",
+      "line-height": "--atlas-font-line-height-100",
+      "letter-spacing": "var(--atlas-typescale-label-inline-md-letter-spacing, 0px)"
+    },
+    "label-strong": {
+      "font-family": "var(--atlas-font-face-general, 'Open Sans', sans-serif)",
+      "font-size": "var(--atlas-typescale-label-inline-md-size, 16px)",
+      "font-weight": "var(--atlas-typescale-label-inline-md-weight-strong, 600)",
+      "line-height": "--atlas-font-line-height-100",
+      "letter-spacing": "var(--atlas-typescale-label-inline-md-letter-spacing, 0px)"
+    },
+    "description": {
+      "font-family": "var(--atlas-font-face-general, 'Open Sans', sans-serif)",
+      "font-size": "var(--atlas-typescale-label-block-sm-size, 14px)",
+      "font-weight": "--atlas-font-weight-400",
+      "line-height": "--atlas-font-line-height-500.4",
+      "letter-spacing": "var(--atlas-typescale-label-block-sm-letter-spacing, 0px)"
+    },
+    "error-text": {
+      "font-family": "var(--atlas-font-face-general, 'Open Sans', sans-serif)",
+      "font-size": "var(--atlas-typescale-label-block-xs-size, 12px)",
+      "font-weight": "--atlas-font-weight-400",
+      "line-height": "--atlas-font-line-height-500.4",
+      "letter-spacing": "var(--atlas-typescale-label-block-xs-letter-spacing, 0px)"
+    }
+  },
+  "variations": [
+    {
+      "description": "Alignment (left/right) × Checked (true/false) × State (4 tipos) × Strong-label (true/false)",
+      "count": "2 × 2 × 4 × 2 = 32 combinações base"
+    },
+    {
+      "description": "Com description e icon-popover opcionais",
+      "count": "Infinitas combinações considerando conteúdo dinâmico"
+    }
+  ],
+  "dependencies": [
+    "../../tokens/atlas-design-tokens.css (obrigatório)",
+    "../../assets/fonts/style.css (para icon-popover)",
+    "../atlas-icon/atlas-icon.js (se icon-popover=true)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Switch",
+    "node-id": "119-459",
+    "inspected": "2026-02-10",
+    "documentation": "https://asaasdev.atlassian.net/wiki/spaces/EQDESIGN/pages/4849172517/Switch"
+  },
+  "notes": [
+    "O switch usa imagens renderizadas do Figma para o controle visual (background + thumb)",
+    "CRÍTICO: Todos os tokens de cor devem ter fallback hex para funcionar no Shadow DOM",
+    "O componente deve emitir evento 'change' quando o valor é alterado",
+    "Estados read-only e disabled devem prevenir interação (pointer-events: none)",
+    "O thumb (círculo) tem transição suave ao mudar de estado (transition: transform 0.2s ease, background 0.2s ease)",
+    "THUMB COLORS: Default/Error/Read-only usam branco (#FCFCFD), Disabled unchecked usa cinza claro (#D1D6DC), Disabled checked usa cinza médio (#9AA4B3)",
+    "Border aparece apenas no estado unchecked (exceto disabled que sempre tem border)",
+    "Label e description respeitam hierarquia visual conforme tokens",
+    "Icon-popover usa chevron-down (size=sm, 16px) por padrão",
+    "Error-text aparece apenas quando state='error'",
+    "Alignment='right' inverte a ordem dos elementos (label à esquerda, switch à direita)"
+  ]
+}

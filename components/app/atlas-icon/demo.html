@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtlasIcon MAUI - Demo</title>
+    <link rel="stylesheet" href="../../../tokens/atlas-design-tokens.css">
+    <link rel="stylesheet" href="../../../assets/fonts/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="../../web/atlas-icon/atlas-icon.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .maui-app {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .maui-header {
+            background: var(--atlas-color-surface-static-container-primary-hard);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .maui-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .maui-content {
+            padding: 24px;
+            background-color: var(--atlas-color-surface-static-container-neutral-ultra-soft);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .maui-section {
+            margin-bottom: 24px;
+        }
+
+        .maui-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--atlas-color-text-static-neutral-hard);
+            margin-bottom: 12px;
+        }
+
+        .info-box {
+            background: var(--atlas-color-surface-static-container-info-ultra-soft);
+            border-left: 4px solid var(--atlas-color-border-info-hard);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--atlas-color-text-static-info-medium);
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: var(--atlas-color-text-static-info-hard);
+        }
+
+        .size-grid {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .size-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--atlas-color-border-neutral-soft);
+        }
+
+        .size-label {
+            font-size: 12px;
+            color: var(--atlas-color-text-static-neutral-medium);
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--atlas-color-border-neutral-soft);
+        }
+
+        .icon-item atlas-icon {
+            font-size: 32px;
+            color: var(--atlas-color-icon-static-primary-medium);
+        }
+
+        .icon-name {
+            font-size: 10px;
+            color: var(--atlas-color-text-static-neutral-medium);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="maui-app">
+        <div class="maui-header">
+            <atlas-icon name="smartphone" style="font-size: 20px; color: white;"></atlas-icon>
+            <h1>AtlasIcon (MAUI)</h1>
+        </div>
+
+        <div class="maui-content">
+            <div class="info-box">
+                <p><strong>Emulação Visual</strong><br>
+                Este demo emula o visual do componente AtlasIcon para .NET MAUI usando os web components equivalentes.</p>
+            </div>
+
+            <!-- Size Demo -->
+            <div class="maui-section">
+                <div class="maui-section-title">Tamanhos (Size Property)</div>
+                <div class="size-grid">
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 8px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">xs</span>
+                    </div>
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 16px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">sm</span>
+                    </div>
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 24px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">md</span>
+                    </div>
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 32px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">lg</span>
+                    </div>
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 40px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">xl</span>
+                    </div>
+                    <div class="size-item">
+                        <atlas-icon name="star" style="font-size: 48px; color: var(--atlas-color-icon-static-primary-medium);"></atlas-icon>
+                        <span class="size-label">xxl</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Icons -->
+            <div class="maui-section">
+                <div class="maui-section-title">Ícones Comuns</div>
+                <div class="icon-grid">
+                    <div class="icon-item">
+                        <atlas-icon name="home"></atlas-icon>
+                        <span class="icon-name">home</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="star"></atlas-icon>
+                        <span class="icon-name">star</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="user"></atlas-icon>
+                        <span class="icon-name">user</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="bell"></atlas-icon>
+                        <span class="icon-name">bell</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="calendar"></atlas-icon>
+                        <span class="icon-name">calendar</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="clock"></atlas-icon>
+                        <span class="icon-name">clock</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="envelope"></atlas-icon>
+                        <span class="icon-name">envelope</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="phone"></atlas-icon>
+                        <span class="icon-name">phone</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Icons -->
+            <div class="maui-section">
+                <div class="maui-section-title">Ações</div>
+                <div class="icon-grid">
+                    <div class="icon-item">
+                        <atlas-icon name="plus"></atlas-icon>
+                        <span class="icon-name">plus</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="check"></atlas-icon>
+                        <span class="icon-name">check</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="x"></atlas-icon>
+                        <span class="icon-name">x</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="trash"></atlas-icon>
+                        <span class="icon-name">trash</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="pencil"></atlas-icon>
+                        <span class="icon-name">pencil</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="download"></atlas-icon>
+                        <span class="icon-name">download</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="upload"></atlas-icon>
+                        <span class="icon-name">upload</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="share"></atlas-icon>
+                        <span class="icon-name">share</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Icons -->
+            <div class="maui-section">
+                <div class="maui-section-title">Financeiro</div>
+                <div class="icon-grid">
+                    <div class="icon-item">
+                        <atlas-icon name="dollar-sign"></atlas-icon>
+                        <span class="icon-name">dollar</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="pix"></atlas-icon>
+                        <span class="icon-name">pix</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="card"></atlas-icon>
+                        <span class="icon-name">card</span>
+                    </div>
+                    <div class="icon-item">
+                        <atlas-icon name="bank"></atlas-icon>
+                        <span class="icon-name">bank</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

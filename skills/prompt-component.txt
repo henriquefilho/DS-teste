@@ -1,0 +1,9 @@
+Crie o componente atlas-button
+do figma https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit?node-id=26278-9873&m=dev
+
+instruções em #file:copilot-instructions.md  e os tokens em #file:atlas-design-tokens.css 
+
+
+Confirmação de Reuso: Confirme que você usará o componente <atlas-icon> para os ícones internos.
+
+Alerta de Inconsistência: Liste qualquer valor do Figma que não tenha um token correspondente no meu CSS.

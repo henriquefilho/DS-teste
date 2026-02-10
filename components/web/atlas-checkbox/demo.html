@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Checkbox - Demo</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Atlas Tokens -->
+  <link rel="stylesheet" href="../../tokens/atlas-design-tokens.css">
+  
+  <!-- Atlas Icons -->
+  <link rel="stylesheet" href="../../assets/fonts/style.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f5f5f5;
+      padding: 40px 20px;
+      color: #1D2125;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1D2125;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #5E6877;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #1D2125;
+      border-bottom: 2px solid #E5E8EC;
+      padding-bottom: 12px;
+    }
+
+    /* Playground Controls */
+    .playground {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .preview {
+      background: #F2F4F7;
+      border-radius: 8px;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .preview.dark {
+      background: var(--atlas-color-surface-static-container-primary-hard);
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1D2125;
+    }
+
+    .control-group input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid #D1D6DC;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .control-group input[type="text"]:focus {
+      outline: 2px solid #0030B9;
+      outline-offset: 1px;
+      border-color: #0030B9;
+    }
+
+    /* Toggle Switches */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #D1D6DC;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #0030B9;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .control-group.switch-control {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-group.switch-control label {
+      order: 2;
+      cursor: pointer;
+    }
+
+    /* States Grid */
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .state-card {
+      background: #F2F4F7;
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .state-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1D2125;
+      margin-bottom: 8px;
+    }
+
+    .checkbox-examples {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Code Block */
+    .code-block {
+      background: #2F363F;
+      color: #E5E8EC;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .code-block code {
+      color: #99ACE3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .playground {
+        grid-template-columns: 1fr;
+      }
+
+      .states-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Atlas Checkbox</h1>
+    <p class="subtitle">Checkbox interativo com suporte a múltiplos estados e variações</p>
+
+    <!-- Playground Interativo -->
+    <div class="section">
+      <h2 class="section-title">🎮 Playground Interativo</h2>
+      <div class="playground">
+        <div class="preview" id="preview">
+          <atlas-checkbox 
+            id="playgroundCheckbox"
+            label="Checkbox Label"
+            value="checkbox-value"
+            name="checkbox-name"
+          ></atlas-checkbox>
+        </div>
+        
+        <div class="controls">
+          <div class="control-group">
+            <label for="labelInput">Label</label>
+            <input type="text" id="labelInput" value="Checkbox Label">
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="checkedSwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="checkedSwitch">Checked</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="indeterminateSwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="indeterminateSwitch">Indeterminate</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="disabledSwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="disabledSwitch">Disabled</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="errorSwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="errorSwitch">Error</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="readonlySwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="readonlySwitch">Readonly</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="darkBgSwitch">
+              <span class="slider"></span>
+            </label>
+            <label for="darkBgSwitch">Dark Background</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estados: Default -->
+    <div class="section">
+      <h2 class="section-title">✨ Estados: Default</h2>
+      <div class="states-grid">
+        <div class="state-card">
+          <h3>Unchecked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox label="Default unchecked"></atlas-checkbox>
+          </div>
+        </div>
+        
+        <div class="state-card">
+          <h3>Checked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox checked label="Default checked"></atlas-checkbox>
+          </div>
+        </div>
+
+        <div class="state-card">
+          <h3>Indeterminate</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox indeterminate label="Default indeterminate"></atlas-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estados: Error -->
+    <div class="section">
+      <h2 class="section-title">🚨 Estados: Error</h2>
+      <div class="states-grid">
+        <div class="state-card">
+          <h3>Unchecked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox error label="Error unchecked"></atlas-checkbox>
+          </div>
+        </div>
+        
+        <div class="state-card">
+          <h3>Checked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox error checked label="Error checked"></atlas-checkbox>
+          </div>
+        </div>
+
+        <div class="state-card">
+          <h3>Indeterminate</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox error indeterminate label="Error indeterminate"></atlas-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estados: Readonly -->
+    <div class="section">
+      <h2 class="section-title">👁️ Estados: Readonly</h2>
+      <div class="states-grid">
+        <div class="state-card">
+          <h3>Unchecked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox readonly label="Readonly unchecked"></atlas-checkbox>
+          </div>
+        </div>
+        
+        <div class="state-card">
+          <h3>Checked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox readonly checked label="Readonly checked"></atlas-checkbox>
+          </div>
+        </div>
+
+        <div class="state-card">
+          <h3>Indeterminate</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox readonly indeterminate label="Readonly indeterminate"></atlas-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estados: Disabled -->
+    <div class="section">
+      <h2 class="section-title">🚫 Estados: Disabled</h2>
+      <div class="states-grid">
+        <div class="state-card">
+          <h3>Unchecked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox disabled label="Disabled unchecked"></atlas-checkbox>
+          </div>
+        </div>
+        
+        <div class="state-card">
+          <h3>Checked</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox disabled checked label="Disabled checked"></atlas-checkbox>
+          </div>
+        </div>
+
+        <div class="state-card">
+          <h3>Indeterminate</h3>
+          <div class="checkbox-examples">
+            <atlas-checkbox disabled indeterminate label="Disabled indeterminate"></atlas-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo de Uso -->
+    <div class="section">
+      <h2 class="section-title">💻 Exemplo de Uso</h2>
+      <div class="code-block">
+        <code>&lt;!-- Basic usage --&gt;</code><br>
+        <code>&lt;atlas-checkbox label="Accept terms"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- Checked --&gt;</code><br>
+        <code>&lt;atlas-checkbox checked label="Newsletter"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- Indeterminate (parent with partial selection) --&gt;</code><br>
+        <code>&lt;atlas-checkbox indeterminate label="Select all"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- Error state --&gt;</code><br>
+        <code>&lt;atlas-checkbox error label="Required field"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- Disabled --&gt;</code><br>
+        <code>&lt;atlas-checkbox disabled label="Not available"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- Readonly --&gt;</code><br>
+        <code>&lt;atlas-checkbox readonly checked label="View only"&gt;&lt;/atlas-checkbox&gt;</code><br><br>
+        
+        <code>&lt;!-- With value and name for forms --&gt;</code><br>
+        <code>&lt;atlas-checkbox name="terms" value="accepted" label="I agree"&gt;&lt;/atlas-checkbox&gt;</code>
+      </div>
+    </div>
+
+    <!-- JavaScript Event Handling -->
+    <div class="section">
+      <h2 class="section-title">⚡ Event Handling</h2>
+      <div class="code-block">
+        <code>const checkbox = document.querySelector('atlas-checkbox');</code><br><br>
+        
+        <code>// Listen to change events</code><br>
+        <code>checkbox.addEventListener('change', (e) => {</code><br>
+        <code>&nbsp;&nbsp;console.log('Checked:', e.detail.checked);</code><br>
+        <code>&nbsp;&nbsp;console.log('Value:', e.detail.value);</code><br>
+        <code>&nbsp;&nbsp;console.log('Name:', e.detail.name);</code><br>
+        <code>});</code><br><br>
+        
+        <code>// Programmatic control</code><br>
+        <code>checkbox.checked = true;</code><br>
+        <code>checkbox.indeterminate = true;</code><br>
+        <code>checkbox.disabled = true;</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module">
+    // Carregar dependências na ordem correta
+    import '../atlas-icon/atlas-icon.js';
+    import './atlas-checkbox.js';
+  </script>
+
+  <script>
+    // Aguarda os componentes serem definidos
+    Promise.all([
+      customElements.whenDefined('atlas-icon'),
+      customElements.whenDefined('atlas-checkbox')
+    ]).then(() => {
+      // Playground controls
+      const playgroundCheckbox = document.getElementById('playgroundCheckbox');
+      const preview = document.getElementById('preview');
+      const labelInput = document.getElementById('labelInput');
+      const checkedSwitch = document.getElementById('checkedSwitch');
+      const indeterminateSwitch = document.getElementById('indeterminateSwitch');
+      const disabledSwitch = document.getElementById('disabledSwitch');
+      const errorSwitch = document.getElementById('errorSwitch');
+      const readonlySwitch = document.getElementById('readonlySwitch');
+      const darkBgSwitch = document.getElementById('darkBgSwitch');
+
+      // Label input
+      labelInput.addEventListener('input', (e) => {
+        playgroundCheckbox.label = e.target.value;
+      });
+
+      // Checked switch
+      checkedSwitch.addEventListener('change', (e) => {
+        playgroundCheckbox.checked = e.target.checked;
+      });
+
+      // Indeterminate switch
+      indeterminateSwitch.addEventListener('change', (e) => {
+        playgroundCheckbox.indeterminate = e.target.checked;
+      });
+
+      // Disabled switch
+      disabledSwitch.addEventListener('change', (e) => {
+        playgroundCheckbox.disabled = e.target.checked;
+      });
+
+      // Error switch
+      errorSwitch.addEventListener('change', (e) => {
+        playgroundCheckbox.error = e.target.checked;
+      });
+
+      // Readonly switch
+      readonlySwitch.addEventListener('change', (e) => {
+        playgroundCheckbox.readonly = e.target.checked;
+      });
+
+      // Dark background switch
+      darkBgSwitch.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          preview.classList.add('dark');
+        } else {
+          preview.classList.remove('dark');
+        }
+      });
+
+      // Log playground checkbox changes
+      playgroundCheckbox.addEventListener('change', (e) => {
+        console.log('Playground checkbox changed:', {
+          checked: e.detail.checked,
+          value: e.detail.value,
+          name: e.detail.name
+        });
+      });
+
+      // Log all checkboxes changes
+      document.querySelectorAll('atlas-checkbox').forEach((checkbox) => {
+        checkbox.addEventListener('change', (e) => {
+          console.log('Checkbox changed:', {
+            label: checkbox.label,
+            checked: e.detail.checked
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

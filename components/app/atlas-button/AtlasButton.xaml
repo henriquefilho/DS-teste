@@ -1,0 +1,91 @@
+<borders:RoundedBorder
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:borders="clr-namespace:Asaas.Framework.Shared.Components.Borders;assembly=Asaas.Framework"
+    xmlns:custom="clr-namespace:Asaas.Framework.Shared.Handlers.Labels.Custom;assembly=Asaas.Framework"
+    xmlns:activityIndicator="clr-namespace:Asaas.Framework.Shared.Components.ActivityIndicator;assembly=Asaas.Framework"
+    xmlns:generic="clr-namespace:Asaas.Framework.Shared.DesignSystems.Generic;assembly=Asaas.Framework"
+    xmlns:attachedProperties1="clr-namespace:Asaas.Views.Utils.Shared.AttachedProperties;assembly=Asaas.Views.Utils"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:icons="clr-namespace:Atlas.Components;assembly=Atlas.Components"
+    x:Class="Asaas.Framework.Shared.Atlas.Components.Buttons.AtlasButton"
+    x:Name="Root"
+    generic:GenericStyle.CornerRadius="PILL"
+    attachedProperties1:Accessibility.Button="{Binding Text, Source={x:Reference Root}}"
+    Padding="24,12">
+
+    <borders:RoundedBorder.Resources>
+        <ResourceDictionary>
+            <VisualStateGroupList x:Key="CommonStates">
+                <VisualStateGroup x:Name="CommonStates">
+                    
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="generic:GenericStyle.BackgroundColor" Value="{Binding BackgroundColorNormal, Source={x:Reference Root}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="generic:GenericStyle.BackgroundColor" Value="{Binding BackgroundColorPressed, Source={x:Reference Root}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="generic:GenericStyle.BackgroundColor" Value="{Binding BackgroundColorDisabled, Source={x:Reference Root}}" />
+                            <Setter TargetName="TextLabel" Property="Label.TextColor" Value="{Binding TextColorDisabled, Source={x:Reference Root}}" />
+                            <Setter TargetName="IconLeft" Property="icons:AtlasIcon.Color" Value="{Binding TextColorDisabled, Source={x:Reference Root}}" />
+                            <Setter Property="generic:GenericStyle.BorderColor" Value="{Binding BorderColorDisabled, Source={x:Reference Root}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </ResourceDictionary>
+    </borders:RoundedBorder.Resources>
+
+    <borders:RoundedBorder.Shadow>
+        <Shadow Brush="Transparent" />
+    </borders:RoundedBorder.Shadow>
+
+    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
+        
+        <!-- Ícone Esquerdo -->
+        <icons:AtlasIcon
+            x:Name="IconLeft"
+            Grid.Column="0"
+            Glyph="{Binding IconGlyph, Source={x:Reference Root}}"
+            Size="{Binding IconSizeName, Source={x:Reference Root}}"
+            Color="{Binding IconColorComputed, Source={x:Reference Root}}"
+            IsVisible="{Binding ShowIcon, Source={x:Reference Root}}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+
+        <!-- Spinner de Loading -->
+        <activityIndicator:AsaasActivityIndicator
+            x:Name="ActivityIndicator"
+            Grid.Column="0"
+            IsVisible="{Binding IsLoading, Source={x:Reference Root}}"
+            IsRunning="{Binding IsLoading, Source={x:Reference Root}}"
+            Color="{Binding TextColorNormal, Source={x:Reference Root}}"
+            WidthRequest="{Binding IconSize, Source={x:Reference Root}}"
+            HeightRequest="{Binding IconSize, Source={x:Reference Root}}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+
+        <!-- Texto do Botão -->
+        <custom:CustomLabel 
+            x:Name="TextLabel"
+            Grid.Column="1"
+            Text="{Binding Text, Source={x:Reference Root}}"
+            TextColor="{Binding TextColorNormal, Source={x:Reference Root}}"
+            FontFamily="OpenSansSemibold"
+            FontSize="{Binding FontSize, Source={x:Reference Root}}"
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            LineBreakMode="NoWrap" />
+
+    </Grid>
+
+</borders:RoundedBorder>

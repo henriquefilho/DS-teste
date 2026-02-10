@@ -1,0 +1,256 @@
+{
+  "component": "atlas-link-button",
+  "type": "web-component",
+  "description": "Componente híbrido que visualmente se comporta como um link (sem bordas ou backgrounds sólidos), mas funcionalmente pode disparar uma ação de sistema ou navegar para outra página",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "label",
+      "type": "string",
+      "default": "Link button",
+      "required": true,
+      "description": "Texto exibido no link-button"
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "values": ["primary", "success", "danger", "white", "black"],
+      "default": "primary",
+      "required": false,
+      "description": "Cor semântica do link-button"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "values": ["sm", "md", "lg"],
+      "default": "md",
+      "required": false,
+      "description": "Tamanho do link-button (Small, Medium, Large)"
+    },
+
+    {
+      "name": "icon",
+      "type": "boolean",
+      "default": true,
+      "required": false,
+      "description": "Se true, habilita o ícone no botão (usa atlas-icon)"
+    },
+
+
+    {
+      "name": "icon-name",
+      "type": "string",
+      "default": "arrow-up-right",
+      "required": false,
+      "description": "Nome do ícone à direita do texto (atlas-icon). Padrão: arrow-up-right para indicar link externo"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado desabilitado"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado de carregamento com spinner"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "URL de destino (se usar como link). Se não fornecido, renderiza como button"
+    },
+    {
+      "name": "target",
+      "type": "enum",
+      "values": ["_self", "_blank", "_parent", "_top"],
+      "default": "_self",
+      "required": false,
+      "description": "Target do link (apenas se href estiver definido)"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão do link-button sem interação",
+      "tokens": {
+        "typography-primary": "--atlas-button-typography-color-interaction-primary-default",
+        "typography-danger": "--atlas-button-typography-color-interaction-error-default",
+        "typography-success": "--atlas-button-typography-color-interaction-success-default",
+        "typography-white": "--atlas-button-typography-color-interaction-white-default",
+        "typography-black": "--atlas-button-typography-color-interaction-black-default",
+        "icon": "Usa mesmo token do typography"
+      }
+    },
+    {
+      "name": "hover",
+      "description": "Estado ao passar o mouse - adiciona underline e muda cor",
+      "tokens": {
+        "typography-primary": "--atlas-button-typography-color-interaction-primary-hover",
+        "typography-danger": "--atlas-button-typography-color-interaction-error-hover",
+        "typography-success": "--atlas-button-typography-color-interaction-success-hover",
+        "typography-white": "--atlas-button-typography-color-interaction-white-hover",
+        "typography-black": "--atlas-button-typography-color-interaction-black-hover",
+        "text-decoration": "underline",
+        "icon": "Usa mesmo token do typography"
+      }
+    },
+    {
+      "name": "focus",
+      "description": "Estado de foco do teclado - mesmo visual do hover + outline azul",
+      "tokens": {
+        "typography": "Mesmos tokens do hover",
+        "text-decoration": "underline",
+        "outline-color": "--atlas-focus-outline-color (#3359c7)",
+        "outline-width": "--atlas-focus-outline-size (2px)",
+        "outline-offset": "2px",
+        "border-radius": "--atlas-radius-standalone-md (4px)"
+      }
+    },
+    {
+      "name": "pressed",
+      "description": "Estado ao clicar - cor mais escura",
+      "tokens": {
+        "typography-primary": "--atlas-button-typography-color-interaction-primary-pressed",
+        "typography-danger": "--atlas-button-typography-color-interaction-error-pressed",
+        "typography-success": "--atlas-button-typography-color-interaction-success-pressed",
+        "typography-white": "--atlas-button-typography-color-interaction-white-pressed",
+        "typography-black": "--atlas-button-typography-color-interaction-black-pressed",
+        "icon": "Usa mesmo token do typography"
+      }
+    },
+    {
+      "name": "disabled",
+      "description": "Estado desabilitado",
+      "tokens": {
+        "typography-default": "--atlas-button-typography-color-disabled-default (padrão, success, danger, black)",
+        "typography-inverse": "--atlas-button-typography-color-disabled-inverse (white)",
+        "icon": "Usa mesmo token do typography"
+      }
+    },
+    {
+      "name": "loading",
+      "description": "Estado de carregamento - exibe spinner animado à direita",
+      "tokens": {
+        "typography": "Mesmos tokens do disabled",
+        "spinner-default": "--atlas-button-icon-color-disabled-default (cores padrão)",
+        "spinner-inverse": "--atlas-button-icon-color-disabled-inverse (white)"
+      },
+      "behavior": "Exibe spinner animado, mantém texto visível, desabilita interação"
+    }
+  ],
+  "layout": {
+    "display": "inline-flex",
+    "gap": "var(--atlas-gap-2xs, 4px) entre texto e ícone",
+    "padding": "Nenhum (link puro)",
+    "border": "Nenhum",
+    "background": "Transparente (nenhum)",
+    "text-decoration": {
+      "default": "none",
+      "hover": "underline",
+      "focus": "underline"
+    }
+  },
+  "typography": {
+    "sm": {
+      "font-size": "--atlas-typescale-label-block-sm-size (14px)",
+      "font-weight": "600 (Semi Bold)",
+      "line-height": "1.4",
+      "letter-spacing": "--atlas-typescale-label-block-sm-letter-spacing (0px)",
+      "font-family": "'Open Sans', sans-serif"
+    },
+    "md": {
+      "font-size": "--atlas-typescale-label-block-md-size (16px)",
+      "font-weight": "600 (Semi Bold)",
+      "line-height": "1.4",
+      "letter-spacing": "--atlas-typescale-label-block-md-letter-spacing (0px)",
+      "font-family": "'Open Sans', sans-serif"
+    },
+    "lg": {
+      "font-size": "--atlas-typescale-label-block-lg-size (18px)",
+      "font-weight": "600 (Semi Bold)",
+      "line-height": "1.4",
+      "letter-spacing": "--atlas-typescale-label-block-lg-letter-spacing (0px)",
+      "font-family": "'Open Sans', sans-serif"
+    }
+  },
+  "iconSizes": {
+    "sm": "16px (sm do atlas-icon)",
+    "md": "16px (sm do atlas-icon)",
+    "lg": "24px (md do atlas-icon)"
+  },
+  "variations": [
+    {
+      "description": "5 cores × 3 tamanhos × 6 estados = 90 combinações",
+      "colors": 5,
+      "sizes": 3,
+      "states": 6,
+      "total": 90
+    }
+  ],
+  "dependencies": [
+    "atlas-design-tokens.css (tokens globais - OBRIGATÓRIO)",
+    "assets/fonts/style.css (Atlas-Icons font - OBRIGATÓRIO)",
+    "atlas-icon (para ícones à direita)",
+    "Google Fonts Open Sans (tipografia)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Link button",
+    "node-id": "71525-8820",
+    "inspected": "2026-02-08"
+  },
+  "notes": [
+    "CRÍTICO: Este é um componente HÍBRIDO - visualmente é um link, mas pode funcionar como button ou <a>",
+    "Renderizar como <a> se href for fornecido, caso contrário <button>",
+    "Estado Disabled: cores padrão (primary, success, danger, black) usam disabled-default; white usa disabled-inverse",
+    "Estado Loading: igual ao disabled visualmente + spinner animado à direita",
+    "Hover/Focus: SEMPRE adiciona text-decoration: underline",
+    "Focus: adiciona outline azul (#3359c7) com offset de 2px e border-radius de 4px",
+    "Ícone padrão: arrow-up-right (indica link externo)",
+    "Ícone sempre à DIREITA do texto (nunca à esquerda)",
+    "Gap de 4px entre texto e ícone",
+    "Não tem background ou border - é um link puro",
+    "Cursor: pointer (padrão), default (disabled/loading)",
+    "White é para uso em fundos escuros (inverse)",
+    "Tokens de interação porque o texto muda de cor em hover/pressed"
+  ],
+  "tokenMapping": {
+    "primary": {
+      "default": "--atlas-button-typography-color-interaction-primary-default",
+      "hover": "--atlas-button-typography-color-interaction-primary-hover",
+      "pressed": "--atlas-button-typography-color-interaction-primary-pressed",
+      "disabled": "--atlas-button-typography-color-disabled-default"
+    },
+    "danger": {
+      "default": "--atlas-button-typography-color-interaction-error-default",
+      "hover": "--atlas-button-typography-color-interaction-error-hover",
+      "pressed": "--atlas-button-typography-color-interaction-error-pressed",
+      "disabled": "--atlas-button-typography-color-disabled-default"
+    },
+    "success": {
+      "default": "--atlas-button-typography-color-interaction-success-default",
+      "hover": "--atlas-button-typography-color-interaction-success-hover",
+      "pressed": "--atlas-button-typography-color-interaction-success-pressed",
+      "disabled": "--atlas-button-typography-color-disabled-default"
+    },
+    "white": {
+      "default": "--atlas-button-typography-color-interaction-white-default",
+      "hover": "--atlas-button-typography-color-interaction-white-hover",
+      "pressed": "--atlas-button-typography-color-interaction-white-pressed",
+      "disabled": "--atlas-button-typography-color-disabled-inverse"
+    },
+    "black": {
+      "default": "--atlas-button-typography-color-interaction-black-default",
+      "hover": "--atlas-button-typography-color-interaction-black-hover",
+      "pressed": "--atlas-button-typography-color-interaction-black-pressed",
+      "disabled": "--atlas-button-typography-color-disabled-default"
+    }
+  },
+  "inconsistencies": []
+}

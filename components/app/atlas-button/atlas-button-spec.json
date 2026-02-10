@@ -1,0 +1,233 @@
+{
+  "component": "AtlasButton",
+  "type": "maui-component",
+  "description": "Componente de botão principal do Atlas Design System para MAUI. Suporta múltiplas variantes (Filled, Outlined, Ghost), cores e tamanhos com estados interativos completos.",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "Text",
+      "type": "string",
+      "bindableProperty": "TextProperty",
+      "values": null,
+      "default": "Button",
+      "required": false,
+      "description": "Texto exibido no botão"
+    },
+    {
+      "name": "Type",
+      "type": "AtlasButtonType",
+      "bindableProperty": "TypeProperty",
+      "values": ["Filled", "Outlined", "Ghost"],
+      "default": "Filled",
+      "required": false,
+      "description": "Variante visual do botão"
+    },
+    {
+      "name": "Style",
+      "type": "AtlasButtonStyle",
+      "bindableProperty": "StyleProperty",
+      "values": ["Primary", "Danger", "Success", "Warning", "Info", "Inverse"],
+      "default": "Primary",
+      "required": false,
+      "description": "Cor/estilo semântico do botão"
+    },
+    {
+      "name": "Size",
+      "type": "AtlasButtonSize",
+      "bindableProperty": "SizeProperty",
+      "values": ["Small", "Default", "Large", "ExtraLarge"],
+      "default": "Default",
+      "required": false,
+      "description": "Tamanho do botão (altura e padding)"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "bindableProperty": "IsEnabledProperty",
+      "values": null,
+      "default": "true",
+      "required": false,
+      "description": "Estado habilitado do botão (sobrescreve propriedade base)"
+    },
+    {
+      "name": "IsLoading",
+      "type": "bool",
+      "bindableProperty": "IsLoadingProperty",
+      "values": null,
+      "default": "false",
+      "required": false,
+      "description": "Exibe spinner de carregamento e desabilita automaticamente o botão"
+    },
+
+    {
+      "name": "IsIcon",
+      "type": "bool",
+      "bindableProperty": "IsIconProperty",
+      "values": null,
+      "default": "false",
+      "required": false,
+      "description": "Exibe ícone à esquerda do texto (requer propriedade IconName)"
+    },
+
+    {
+      "name": "IconName",
+      "type": "AtlasIcon",
+      "bindableProperty": "IconProperty",
+      "values": null,
+      "default": "plus",
+      "required": false,
+      "description": "Ícone exibido no botão (enum do sistema de ícones - Default: plus)"
+    },
+    {
+      "name": "IconColor",
+      "type": "Color",
+      "bindableProperty": "IconColorProperty",
+      "values": null,
+      "default": "null",
+      "required": false,
+      "description": "Cor customizada do ícone (sobrescreve cor padrão do estilo)"
+    },
+    {
+      "name": "Command",
+      "type": "ISafeCommand",
+      "bindableProperty": "CommandProperty",
+      "values": null,
+      "default": "null",
+      "required": false,
+      "description": "Comando executado ao clicar (ISafeCommand com try-catch interno)"
+    },
+    {
+      "name": "DisabledCommand",
+      "type": "ISafeCommand",
+      "bindableProperty": "DisabledCommandProperty",
+      "values": null,
+      "default": "null",
+      "required": false,
+      "description": "Comando executado ao clicar quando desabilitado"
+    },
+    {
+      "name": "HasRipple",
+      "type": "bool",
+      "bindableProperty": "HasRippleProperty",
+      "values": null,
+      "default": "true",
+      "required": false,
+      "description": "Habilita efeito ripple ao tocar no botão"
+    }
+  ],
+  "enums": [
+    {
+      "name": "AtlasButtonType",
+      "values": ["NONE", "FILLED", "OUTLINED", "GHOST"],
+      "description": "Variantes visuais do botão com diferentes tratamentos de fundo e borda"
+    },
+    {
+      "name": "AtlasButtonStyle",
+      "values": ["NONE", "PRIMARY", "DANGER", "SUCCESS", "WARNING", "INFO", "INVERSE"],
+      "description": "Estilos semânticos que definem as cores do botão"
+    },
+    {
+      "name": "AtlasButtonSize",
+      "values": ["SMALL", "DEFAULT", "LARGE", "EXTRALARGE"],
+      "description": "Tamanhos predefinidos com altura e padding específicos"
+    }
+  ],
+  "visualStates": [
+    {
+      "name": "Normal",
+      "description": "Estado padrão do botão",
+      "resources": {
+        "BackgroundColor": "AtlasButton{Type}{Style}Default (ex: AtlasButtonBackgroundColorFilledPrimaryDefault)",
+        "TextColor": "AtlasButtonTypography{Context}{Style} (ex: AtlasButtonTypographyColorStaticInverse para Filled)",
+        "IconColor": "AtlasButtonIcon{Context}{Style}",
+        "BorderColor": "AtlasButtonBorderColor{Style} (apenas Outlined)"
+      },
+      "behavior": "Aplicado automaticamente ao inicializar"
+    },
+    {
+      "name": "Pressed",
+      "description": "Estado quando o botão está sendo tocado",
+      "resources": {
+        "BackgroundColor": "AtlasButton{Type}{Style}Pressed"
+      },
+      "behavior": "Ativado programaticamente via TapGestureRecognizer com delay de 150ms para retornar ao Normal"
+    },
+    {
+      "name": "Disabled",
+      "description": "Estado quando IsEnabled=false",
+      "resources": {
+        "BackgroundColor": "AtlasButtonBackgroundColorFilledDisabled (Filled) ou Transparent (Outlined/Ghost)",
+        "TextColor": "AtlasButtonTypographyColorStaticInverse (Filled) ou AtlasButtonTypographyColorDisabledDefault (Outlined/Ghost)",
+        "IconColor": "Mesma regra do texto",
+        "BorderColor": "AtlasButtonBorderColorDisabled (apenas Outlined)"
+      },
+      "behavior": "CRÍTICO: Filled mantém texto BRANCO, Outlined/Ghost usam texto CINZA"
+    }
+  ],
+  "layout": {
+    "padding": {
+      "Small": "Thickness(16, 8)",
+      "Default": "Thickness(24, 12)",
+      "Large": "Thickness(32, 16)",
+      "ExtraLarge": "Thickness(40, 20)"
+    },
+    "spacing": "Thickness(4) entre ícone e texto",
+    "cornerRadius": "{StaticResource AtlasRadiusCompositePill} ou 9999px",
+    "minHeight": {
+      "Small": "32",
+      "Default": "40",
+      "Large": "48",
+      "ExtraLarge": "56"
+    }
+  },
+  "typography": {
+    "fontSize": {
+      "Small": "14",
+      "Default": "16",
+      "Large": "18",
+      "ExtraLarge": "20"
+    },
+    "fontAttributes": "Bold",
+    "fontFamily": "OpenSansSemibold"
+  },
+  "variations": [
+    {
+      "description": "Total de combinações possíveis",
+      "count": "3 Types × 6 Styles × 4 Sizes = 72 variações base + estados (Normal, Pressed, Disabled) = 216 estados totais"
+    }
+  ],
+  "dependencies": [
+    "atlas-design-tokens.xaml (OBRIGATÓRIO)",
+    "AtlasIcon (se Icon != None)",
+    "Asaas.Framework.Shared.Components.Borders.RoundedBorder",
+    "Asaas.Framework.Shared.Handlers.Labels.Custom.CustomLabel",
+    "Asaas.Framework.Shared.Components.ActivityIndicator.AsaasActivityIndicator",
+    "Asaas.Framework.Shared.Helpers.Commands (ISafeCommand, SafeCommand)",
+    "Asaas.Segment.Shared.Managers.Segment (SegmentManager)",
+    "Asaas.Views.Utils.Shared.Builders (BindablePropertyBuilder)",
+    "Asaas.Framework.Shared.Effects (RippleEffect)",
+    "Asaas.Framework.Shared.Atlas.Styleguide.Colors (AtlasColors)",
+    "Asaas.Framework.Shared.Atlas.Styleguide.Icons (AtlasIcon enum)",
+    "Asaas.Framework.Shared.Utils (ImageUtils)"
+  ],
+  "figma": {
+    "file": "Atlas Design System",
+    "component": "Button",
+    "node-id": null,
+    "inspected": "2026-02-09"
+  },
+  "notes": [
+    "Estado Hover ignorado - não aplicável a interfaces touch",
+    "Filled Disabled: fundo cinza COM texto branco (exceção importante)",
+    "Outlined/Ghost Disabled: texto cinza sem fundo",
+    "IsLoading automaticamente define IsEnabled=false",
+    "Font-weight do ícone DEVE ser normal !important para evitar herança",
+    "Analytics tracking obrigatório via SegmentManager.Track('mobile_button_cta_tapped')",
+    "RippleEffect controlado via HasRipple property",
+    "TapGestureRecognizer programático no construtor (não no XAML)",
+    "PropertyChanged centralizado em vez de callbacks individuais",
+    "Enums declarados FORA da classe no final do arquivo",
+    "Root element: RoundedBorder em vez de ContentView",
+    "Acessibilidade: attachedProperties1:Accessibility.Button binding obrigatório"
+  ]
+}

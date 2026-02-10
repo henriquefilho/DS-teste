@@ -1,0 +1,17 @@
+<!-- ✅ ATUALIZADO: Sem declaração XML em controles parciais -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Atlas.Components.AtlasIcon"
+             x:Name="Root">
+    
+    <!-- ✅ MUDANÇA: FontAttributes="None" é CRÍTICO para evitar herdar font-weight -->
+    <Label x:Name="IconLabel"
+           Text="{Binding UnicodeCharacter, Source={x:Reference Root}}"
+           TextColor="{Binding Color, Source={x:Reference Root}}"
+           FontSize="{Binding IconFontSize, Source={x:Reference Root}}"
+           FontFamily="AtlasIcons"
+           FontAttributes="None"
+           HorizontalTextAlignment="Center"
+           VerticalTextAlignment="Center" />
+    
+</ContentView>

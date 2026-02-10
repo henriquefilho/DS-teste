@@ -1,0 +1,166 @@
+{
+  "component": "atlas-segmented-control",
+  "type": "web-component",
+  "description": "Controle de entrada que permite ao usuário alternar entre diferentes visualizações ou categorias de conteúdo relacionadas dentro de um mesmo contexto. Sua principal função é fornecer uma navegação local e imediata entre duas ou três opções relacionadas.",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "size",
+      "type": "enum",
+      "values": ["sm", "md", "lg"],
+      "default": "md",
+      "required": false,
+      "description": "Tamanho do componente. sm=32px altura, md=40px altura, lg=48px altura"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Define se o componente está desabilitado"
+    },
+    {
+      "name": "selected-index",
+      "type": "number",
+      "values": ["0", "1", "2"],
+      "default": "0",
+      "required": false,
+      "description": "Índice do botão selecionado (0-indexed). Suporta 2 ou 3 botões."
+    },
+    {
+      "name": "labels",
+      "type": "string",
+      "values": [],
+      "default": "Label 1,Label 2",
+      "required": false,
+      "description": "Labels dos botões separados por vírgula. Ex: 'Opção 1,Opção 2,Opção 3'"
+    },
+    {
+      "name": "helper-text",
+      "type": "string",
+      "values": [],
+      "default": "",
+      "required": false,
+      "description": "Texto de ajuda exibido abaixo do componente quando disabled=true"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão do componente",
+      "tokens": {
+        "border-color": "--atlas-color-border-primary-hard",
+        "background-container": "--atlas-color-surface-static-container-neutral-ultra-soft",
+        "button-active-background": "--atlas-color-surface-control-active-default",
+        "button-active-text": "--atlas-color-text-static-neutral-ultra-soft",
+        "button-inactive-background": "--atlas-color-surface-control-inactive-default",
+        "button-inactive-text": "--atlas-color-text-static-primary-medium"
+      },
+      "behavior": "Botão selecionado tem fundo azul com texto branco. Botões não selecionados têm fundo branco com texto azul."
+    },
+    {
+      "name": "disabled",
+      "description": "Estado desabilitado do componente",
+      "tokens": {
+        "border-color": "--atlas-color-border-disabled",
+        "background-container": "--atlas-color-surface-static-container-neutral-ultra-soft",
+        "button-active-background": "--atlas-color-surface-control-active-disabled",
+        "button-active-text": "--atlas-color-text-static-disabled-level-2",
+        "button-inactive-background": "transparent",
+        "button-inactive-text": "--atlas-color-text-static-disabled-level-1",
+        "helper-text-color": "--atlas-color-text-static-neutral-medium"
+      },
+      "behavior": "Botão selecionado tem fundo cinza (#d1d6dc) com texto cinza escuro (#9aa4b3). Botões não selecionados têm texto cinza claro (#d1d6dc). Helper text é exibido quando presente."
+    },
+    {
+      "name": "hover",
+      "description": "Estado de hover nos botões inativos",
+      "tokens": {
+        "button-inactive-background-hover": "--atlas-color-surface-interaction-primary-ultra-soft-hover"
+      },
+      "behavior": "Apenas botões inativos respondem a hover (não aplicável quando disabled=true)"
+    },
+    {
+      "name": "active",
+      "description": "Estado de pressed nos botões inativos",
+      "tokens": {
+        "button-inactive-background-active": "--atlas-color-surface-interaction-primary-ultra-soft-pressed"
+      },
+      "behavior": "Apenas botões inativos respondem a pressed (não aplicável quando disabled=true)"
+    }
+  ],
+  "layout": {
+    "container-padding": "--atlas-padding-3xs (3px)",
+    "gap-between-buttons": "--atlas-gap-2xs (4px)",
+    "border-width": "--atlas-border-solid-default (1px)",
+    "border-radius": "--atlas-radius-composite-pill (999px)",
+    "button-padding-sm": "horizontal: --atlas-padding-sm (12px), vertical: --atlas-padding-xs (8px)",
+    "button-padding-md": "horizontal: --atlas-padding-xl (24px), vertical: --atlas-padding-xs (8px)",
+    "button-padding-lg": "horizontal: --atlas-padding-2xl (32px), vertical: --atlas-padding-sm (12px)",
+    "button-height-sm": "32px",
+    "button-height-md": "40px",
+    "button-height-lg": "48px",
+    "button-min-width-sm": "40px",
+    "container-width-sm": "260px (exemplo, deve ser flexível)",
+    "container-width-md-lg": "400px (exemplo, deve ser flexível)"
+  },
+  "typography": {
+    "font-family": "var(--atlas-font-face-general, 'Open Sans', sans-serif)",
+    "size-sm": {
+      "font-size": "14px",
+      "font-weight": "600",
+      "line-height": "1",
+      "letter-spacing": "0"
+    },
+    "size-md-lg": {
+      "font-size": "16px",
+      "font-weight": "600",
+      "line-height": "1",
+      "letter-spacing": "0"
+    },
+    "helper-text": {
+      "font-size": "12px",
+      "font-weight": "400",
+      "line-height": "1.4",
+      "letter-spacing": "0"
+    }
+  },
+  "variations": [
+    {
+      "description": "2 botões - 3 tamanhos - 2 estados (default, disabled)",
+      "count": "2 × 3 × 2 = 12 variações"
+    },
+    {
+      "description": "3 botões - 3 tamanhos - 2 estados (default, disabled)",
+      "count": "3 × 3 × 2 = 18 variações"
+    },
+    {
+      "description": "Total de variações possíveis",
+      "count": "30 variações"
+    }
+  ],
+  "dependencies": [
+    "atlas-design-tokens.css (sempre obrigatório)",
+    "Google Fonts: Open Sans (wght@300;400;600;700)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Segmented control",
+    "node-id": "489-18050",
+    "inspected": "2026-02-10",
+    "documentation": "https://asaasdev.atlassian.net/wiki/x/zYGaBgE"
+  },
+  "notes": [
+    "O componente suporta APENAS 2 ou 3 botões (não menos, não mais)",
+    "Estado disabled SEMPRE mostra helper text se fornecido",
+    "Tokens usados são ESTÁTICOS (--atlas-color-text-static-...) pois o texto não muda de cor no hover do container",
+    "Estados de hover e active são aplicados APENAS aos botões inativos",
+    "O botão ativo nunca muda de estado visual (não tem hover/active)",
+    "Border aparece apenas no container externo, não nos botões individuais",
+    "Gap de 4px entre botões é visual - implementado com padding do container",
+    "Componente deve emitir evento 'change' quando seleção muda",
+    "Width do componente deve ser 100% do container pai (flexível)",
+    "Helper text aparece apenas quando disabled=true E helper-text não está vazio"
+  ]
+}

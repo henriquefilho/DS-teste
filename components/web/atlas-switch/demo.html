@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Switch - Demo & Playground</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Atlas Tokens -->
+  <link rel="stylesheet" href="../../tokens/atlas-design-tokens.css">
+  
+  <!-- Atlas Icons -->
+  <link rel="stylesheet" href="../../assets/fonts/style.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #F2F4F7;
+      color: #1d2125;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1d2125;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #5e6877;
+      margin-bottom: 32px;
+    }
+
+    .docs-link {
+      display: inline-block;
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      background: #0030B9;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .docs-link:hover {
+      background: #002694;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1d2125;
+    }
+
+    /* Playground Controls */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1d2125;
+    }
+
+    .control-group input[type="text"],
+    .control-group select {
+      padding: 8px 12px;
+      border: 1px solid #0030B9;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      background: white;
+    }
+
+    .control-group input[type="text"]:focus,
+    .control-group select:focus {
+      outline: none;
+      border-color: #0030B9;
+      box-shadow: 0 0 0 3px rgba(0, 48, 185, 0.1);
+    }
+
+    /* Switch Toggle Styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #D1D6DC;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #0030B9;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .control-group.switch-control {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-group.switch-control label {
+      margin-bottom: 0;
+    }
+
+    /* Preview Area */
+    .preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      padding: 40px;
+    }
+
+    .preview.dark {
+      background: #1d2125;
+    }
+
+    /* Examples Grid */
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .example-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .example-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1d2125;
+    }
+
+    .example-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .example-card.dark-bg {
+      background: #1d2125;
+    }
+
+    .example-card.dark-bg .example-title {
+      color: white;
+    }
+
+    /* Code Display */
+    .code-section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    .code-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1d2125;
+    }
+
+    pre {
+      background: #F2F4F7;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    code {
+      color: #1d2125;
+    }
+
+    .divider {
+      height: 1px;
+      background: #D1D6DC;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Atlas Switch</h1>
+    <p class="subtitle">É usado para alternar rapidamente entre dois estados possíveis, que normalmente são "liga/desliga".</p>
+    
+    <a href="https://asaasdev.atlassian.net/wiki/spaces/EQDESIGN/pages/4849172517/Switch" target="_blank" class="docs-link">
+      📖 Ver Documentação Completa
+    </a>
+
+    <!-- Playground -->
+    <div class="layout">
+      <div class="card">
+        <h2 class="card-title">⚙️ Playground</h2>
+        <div class="controls">
+          
+          <div class="control-group">
+            <label for="label">Label</label>
+            <input type="text" id="label" value="Enable notifications">
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="checked">
+              <span class="slider"></span>
+            </label>
+            <label for="checked">Checked</label>
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="strongLabel">
+              <span class="slider"></span>
+            </label>
+            <label for="strongLabel">Strong Label</label>
+          </div>
+
+          <div class="control-group">
+            <label for="alignment">Alignment</label>
+            <select id="alignment">
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="state">State</label>
+            <select id="state">
+              <option value="default">Default</option>
+              <option value="disabled">Disabled</option>
+              <option value="read-only">Read-only</option>
+              <option value="error">Error</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" value="" placeholder="Optional description text">
+          </div>
+
+          <div class="control-group">
+            <label for="errorText">Error Text</label>
+            <input type="text" id="errorText" value="This field is required" placeholder="Error message">
+          </div>
+
+          <div class="control-group switch-control">
+            <label class="switch">
+              <input type="checkbox" id="iconPopover">
+              <span class="slider"></span>
+            </label>
+            <label for="iconPopover">Icon Popover</label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">👁️ Preview</h2>
+        <div class="preview" id="preview">
+          <atlas-switch
+            id="demoSwitch"
+            label="Enable notifications"
+          ></atlas-switch>
+        </div>
+        <div style="background: #F2F4F7; padding: 12px; border-radius: 8px; margin-top: 16px; font-size: 13px; color: #5e6877;">
+          <strong style="color: #1d2125;">💡 Cor da Thumb:</strong>
+          <div id="thumbColorInfo" style="margin-top: 4px;">
+            Azul Primário (#0030B9) - Default Unchecked
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Examples -->
+    <h2 class="card-title" style="margin-bottom: 12px;">📚 Exemplos</h2>
+    <div style="background: #E6EAF8; border-left: 4px solid #0030B9; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <p style="margin: 0; color: #1d2125; font-size: 14px;">
+        <strong>💡 Dica:</strong> Observe as cores da <strong>thumb (círculo)</strong> em cada estado. 
+        Estados <strong>Default</strong> e <strong>Error</strong>: quando unchecked usam thumb <strong>azul primário (#0030B9)</strong>, quando checked usam <strong>branco (#FCFCFD)</strong>. 
+        Estado <strong>Read-only</strong>: usa thumb <strong>cinza neutro (#B8C0CB)</strong> para ambos checked/unchecked. 
+        Estado <strong>Disabled</strong>: usa cinza claro (#D1D6DC) quando unchecked e cinza médio (#9AA4B3) quando checked.
+      </p>
+    </div>
+    
+    <div class="examples-grid">
+      <div class="example-card">
+        <h3 class="example-title">Estados Básicos</h3>
+        <div class="example-content">
+          <atlas-switch label="Default unchecked"></atlas-switch>
+          <atlas-switch label="Default checked" checked></atlas-switch>
+          <atlas-switch label="Disabled unchecked" state="disabled"></atlas-switch>
+          <atlas-switch label="Disabled checked" state="disabled" checked></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">🎨 Cores da Thumb</h3>
+        <div class="example-content">
+          <p style="font-size: 12px; color: #5e6877; margin-bottom: 8px;">
+            <strong>Azul (#0030B9):</strong> Default e Error (quando unchecked)
+          </p>
+          <atlas-switch label="Default unchecked (thumb azul)"></atlas-switch>
+          <atlas-switch label="Error unchecked (thumb azul)" state="error"></atlas-switch>
+          
+          <p style="font-size: 12px; color: #5e6877; margin: 16px 0 8px;">
+            <strong>Branco (#FCFCFD):</strong> Default e Error (quando checked)
+          </p>
+          <atlas-switch label="Default checked (thumb branco)" checked></atlas-switch>
+          <atlas-switch label="Error checked (thumb branco)" state="error" checked></atlas-switch>
+          
+          <p style="font-size: 12px; color: #5e6877; margin: 16px 0 8px;">
+            <strong>Cinza Neutro (#B8C0CB):</strong> Read-only (checked e unchecked)
+          </p>
+          <atlas-switch label="Read-only unchecked (thumb cinza neutro)" state="read-only"></atlas-switch>
+          <atlas-switch label="Read-only checked (thumb cinza neutro)" state="read-only" checked></atlas-switch>
+          
+          <p style="font-size: 12px; color: #5e6877; margin: 16px 0 8px;">
+            <strong>Cinza (#D1D6DC / #9AA4B3):</strong> Disabled
+          </p>
+          <atlas-switch label="Disabled unchecked (thumb cinza claro)" state="disabled"></atlas-switch>
+          <atlas-switch label="Disabled checked (thumb cinza médio)" state="disabled" checked></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Com Descrição</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Email notifications" 
+            description="Receive email updates about your account"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Push notifications" 
+            description="Get push notifications on your device"
+            checked
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Strong Label</h3>
+        <div class="example-content">
+          <atlas-switch label="Normal Label"></atlas-switch>
+          <atlas-switch label="Strong Label" strong-label></atlas-switch>
+          <atlas-switch 
+            label="Strong with Description" 
+            strong-label
+            description="This label uses semi-bold font weight"
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Alignment</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Left aligned (default)" 
+            alignment="left"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Right aligned" 
+            alignment="right"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Right with description" 
+            alignment="right"
+            description="Control is on the right side"
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Estado de Erro</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Accept terms" 
+            state="error"
+            error-text="You must accept the terms"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Accept terms" 
+            state="error"
+            error-text="You must accept the terms"
+            checked
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Read-only</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Read-only unchecked" 
+            state="read-only"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Read-only checked" 
+            state="read-only"
+            checked
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Com Ícone</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Privacy settings" 
+            icon-popover
+            description="Click icon for more info"
+          ></atlas-switch>
+          <atlas-switch 
+            label="Advanced options" 
+            icon-popover
+            strong-label
+          ></atlas-switch>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3 class="example-title">Casos de Uso</h3>
+        <div class="example-content">
+          <atlas-switch 
+            label="Dark mode" 
+            description="Enable dark theme"
+            checked
+          ></atlas-switch>
+          <atlas-switch 
+            label="Two-factor authentication" 
+            description="Add an extra layer of security"
+            strong-label
+          ></atlas-switch>
+          <atlas-switch 
+            label="Auto-save" 
+            description="Automatically save changes"
+          ></atlas-switch>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Code Examples -->
+    <div class="code-section">
+      <h2 class="code-title">💻 Como Usar</h2>
+      
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Básico</h3>
+      <pre><code>&lt;atlas-switch label="Enable notifications"&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Com Descrição</h3>
+      <pre><code>&lt;atlas-switch 
+  label="Email notifications"
+  description="Receive email updates about your account"
+&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Checked</h3>
+      <pre><code>&lt;atlas-switch 
+  label="Push notifications"
+  checked
+&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Estado de Erro</h3>
+      <pre><code>&lt;atlas-switch 
+  label="Accept terms"
+  state="error"
+  error-text="You must accept the terms"
+&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Alignment Right</h3>
+      <pre><code>&lt;atlas-switch 
+  label="Advanced setting"
+  alignment="right"
+&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">Disabled</h3>
+      <pre><code>&lt;atlas-switch 
+  label="Disabled option"
+  state="disabled"
+&gt;&lt;/atlas-switch&gt;</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">JavaScript - Listening to Changes</h3>
+      <pre><code>const switchElement = document.querySelector('atlas-switch');
+
+switchElement.addEventListener('change', (event) => {
+  console.log('Switch changed:', event.detail.checked);
+});</code></pre>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 16px;">JavaScript - Programmatic Control</h3>
+      <pre><code>const switchElement = document.querySelector('atlas-switch');
+
+// Get current state
+console.log(switchElement.checked);
+
+// Set state
+switchElement.checked = true;
+
+// Change attributes
+switchElement.setAttribute('state', 'error');
+switchElement.setAttribute('error-text', 'Custom error message');</code></pre>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Design Tokens & Colors -->
+    <div class="code-section">
+      <h2 class="code-title">🎨 Design Tokens & Cores</h2>
+      
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 18px; font-weight: 600;">Cores da Thumb (Círculo)</h3>
+      <p style="margin-bottom: 16px; color: #5e6877;">A thumb muda de cor dependendo do estado do componente:</p>
+      
+      <div style="background: #F2F4F7; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Azul Primário (#0030B9)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estados: Default e Error (quando <strong>unchecked</strong>)</li>
+            <li>Token: <code>--atlas-color-surface-static-shape-primary-hard</code></li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Branco (#FCFCFD)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estados: Default e Error (quando <strong>checked</strong>)</li>
+            <li>Token: <code>--atlas-color-pale-sky-10</code></li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Cinza Neutro (#B8C0CB)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estado: Read-only (<strong>ambos checked e unchecked</strong>)</li>
+            <li>Token: <code>--atlas-color-surface-static-shape-neutral-soft</code></li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Cinza Claro (#D1D6DC)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estado: Disabled unchecked</li>
+            <li>Token: <code>--atlas-color-pale-sky-200</code></li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color: #1d2125;">Cinza Médio (#9AA4B3)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estado: Disabled checked</li>
+            <li>Token: <code>--atlas-color-pale-sky-400</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 18px; font-weight: 600;">Borda do Switch (Estado Unchecked)</h3>
+      <div style="background: #F2F4F7; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Azul Primário (#0030B9)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estado: Default unchecked</li>
+            <li>Token: <code>--atlas-color-border-primary-hard</code></li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <strong style="color: #1d2125;">Vermelho (#B02A37)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estado: Error unchecked</li>
+            <li>Token: <code>--atlas-color-border-error-hard</code></li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color: #1d2125;">Cinza (#D1D6DC)</strong>
+          <ul style="margin: 8px 0 0 20px; color: #5e6877;">
+            <li>Estados: Disabled e Read-only unchecked</li>
+            <li>Tokens: <code>--atlas-color-border-disabled</code>, <code>--atlas-color-border-default</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 18px; font-weight: 600;">Cores de Background</h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px;">
+        <thead>
+          <tr style="background: #F2F4F7; text-align: left;">
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Estado</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Checked</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Unchecked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><strong>Default</strong></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #0030B9; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #0030B9
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #FCFCFD; border: 1px solid #D1D6DC; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #FCFCFD
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><strong>Hover</strong></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #002694; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #002694
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #99ACE3; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #99ACE3
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><strong>Disabled</strong></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #D1D6DC; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #D1D6DC
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #FCFCFD; border: 1px solid #D1D6DC; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #FCFCFD
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><strong>Read-only</strong></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #B8C0CB; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #B8C0CB
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #FCFCFD; border: 1px solid #D1D6DC; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #FCFCFD
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;"><strong>Error</strong></td>
+            <td style="padding: 12px;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #B02A37; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #B02A37
+            </td>
+            <td style="padding: 12px;">
+              <span style="display: inline-block; width: 16px; height: 16px; background: #FCFCFD; border: 1px solid #B02A37; border-radius: 3px; vertical-align: middle; margin-right: 8px;"></span>
+              #FCFCFD
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 18px; font-weight: 600;">Especificações</h3>
+      <ul style="color: #5e6877; line-height: 1.8;">
+        <li><strong>Dimensões do controle:</strong> 42px × 24px</li>
+        <li><strong>Tamanho da thumb:</strong> 18px (diâmetro)</li>
+        <li><strong>Gap entre controle e label:</strong> 8px (--atlas-gap-xs)</li>
+        <li><strong>Border radius:</strong> 9999px (pill shape)</li>
+        <li><strong>Transição:</strong> 0.2s ease (transform e background)</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Properties Table -->
+    <div class="code-section">
+      <h2 class="code-title">📋 Propriedades</h2>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead>
+          <tr style="background: #F2F4F7; text-align: left;">
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Propriedade</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Tipo</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Padrão</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>label</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">string</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"Label"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Texto do label</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>checked</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">boolean</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">false</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Estado ativo/inativo</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>alignment</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"left" | "right"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"left"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Posição do controle</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>strong-label</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">boolean</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">false</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Usa fonte semi-bold</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>description</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">string</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">""</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Texto descritivo</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>state</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"default" | "disabled" | "read-only" | "error"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"default"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Estado visual e funcional</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;"><code>error-text</code></td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">string</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">"Error text"</td>
+            <td style="padding: 12px; border-bottom: 1px solid #E5E8EC;">Mensagem de erro</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px;"><code>icon-popover</code></td>
+            <td style="padding: 12px;">boolean</td>
+            <td style="padding: 12px;">false</td>
+            <td style="padding: 12px;">Exibe ícone de info</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Events -->
+    <div class="code-section">
+      <h2 class="code-title">🎯 Eventos</h2>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead>
+          <tr style="background: #F2F4F7; text-align: left;">
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Evento</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Descrição</th>
+            <th style="padding: 12px; border-bottom: 2px solid #D1D6DC;">Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px;"><code>change</code></td>
+            <td style="padding: 12px;">Disparado quando o estado do switch muda</td>
+            <td style="padding: 12px;"><code>{ checked: boolean }</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import '../atlas-icon/atlas-icon.js';
+    import './atlas-switch.js';
+  </script>
+
+  <script>
+    // Playground functionality
+    const demoSwitch = document.getElementById('demoSwitch');
+    const preview = document.getElementById('preview');
+
+    // Event listener for the demo switch
+    demoSwitch.addEventListener('change', (event) => {
+      console.log('Switch changed:', event.detail.checked);
+    });
+
+    // Controls
+    const labelInput = document.getElementById('label');
+    const checkedInput = document.getElementById('checked');
+    const strongLabelInput = document.getElementById('strongLabel');
+    const alignmentSelect = document.getElementById('alignment');
+    const stateSelect = document.getElementById('state');
+    const descriptionInput = document.getElementById('description');
+    const errorTextInput = document.getElementById('errorText');
+    const iconPopoverInput = document.getElementById('iconPopover');
+    const thumbColorInfo = document.getElementById('thumbColorInfo');
+
+    function updateThumbColorInfo() {
+      const state = stateSelect.value;
+      const isChecked = checkedInput.checked;
+      
+      let thumbInfo = '';
+      
+      if (state === 'disabled') {
+        if (isChecked) {
+          thumbInfo = 'Cinza Médio (#9AA4B3) - Disabled Checked';
+        } else {
+          thumbInfo = 'Cinza Claro (#D1D6DC) - Disabled Unchecked';
+        }
+      } else if (state === 'read-only') {
+        thumbInfo = 'Cinza Neutro (#B8C0CB) - Read-only';
+      } else {
+        // Default e Error: azul quando unchecked, branco quando checked
+        if (isChecked) {
+          thumbInfo = `Branco (#FCFCFD) - ${state.charAt(0).toUpperCase() + state.slice(1)} Checked`;
+        } else {
+          thumbInfo = `Azul Primário (#0030B9) - ${state.charAt(0).toUpperCase() + state.slice(1)} Unchecked`;
+        }
+      }
+      
+      thumbColorInfo.textContent = thumbInfo;
+    }
+
+    function updateSwitch() {
+      demoSwitch.setAttribute('label', labelInput.value);
+      
+      if (checkedInput.checked) {
+        demoSwitch.setAttribute('checked', '');
+      } else {
+        demoSwitch.removeAttribute('checked');
+      }
+
+      if (strongLabelInput.checked) {
+        demoSwitch.setAttribute('strong-label', '');
+      } else {
+        demoSwitch.removeAttribute('strong-label');
+      }
+
+      demoSwitch.setAttribute('alignment', alignmentSelect.value);
+      demoSwitch.setAttribute('state', stateSelect.value);
+
+      if (descriptionInput.value) {
+        demoSwitch.setAttribute('description', descriptionInput.value);
+      } else {
+        demoSwitch.removeAttribute('description');
+      }
+
+      demoSwitch.setAttribute('error-text', errorTextInput.value);
+
+      if (iconPopoverInput.checked) {
+        demoSwitch.setAttribute('icon-popover', '');
+      } else {
+        demoSwitch.removeAttribute('icon-popover');
+      }
+
+      updateThumbColorInfo();
+    }
+
+    // Add event listeners
+    labelInput.addEventListener('input', updateSwitch);
+    checkedInput.addEventListener('change', updateSwitch);
+    strongLabelInput.addEventListener('change', updateSwitch);
+    alignmentSelect.addEventListener('change', updateSwitch);
+    stateSelect.addEventListener('change', updateSwitch);
+    descriptionInput.addEventListener('input', updateSwitch);
+    errorTextInput.addEventListener('input', updateSwitch);
+    iconPopoverInput.addEventListener('change', updateSwitch);
+
+    // Initialize thumb color info on page load
+    updateThumbColorInfo();
+
+    // Console log for all switches
+    document.querySelectorAll('atlas-switch').forEach(sw => {
+      sw.addEventListener('change', (e) => {
+        console.log(`Switch "${sw.getAttribute('label')}" changed to:`, e.detail.checked);
+      });
+    });
+  </script>
+</body>
+</html>

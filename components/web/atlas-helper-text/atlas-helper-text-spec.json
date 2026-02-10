@@ -1,0 +1,95 @@
+{
+  "component": "atlas-helper-text",
+  "type": "web-component",
+  "description": "Texto curto e contextual posicionado abaixo de campos de entrada (Input, Textarea, Select, Segmented Control). Fornece orientações, informações úteis e feedbacks sobre o estado do campo.",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "state",
+      "type": "enum",
+      "values": ["default", "error", "warning"],
+      "default": "default",
+      "required": false,
+      "description": "Estado visual do helper text. Define a cor do texto conforme o contexto."
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "values": [],
+      "default": "",
+      "required": false,
+      "description": "Conteúdo do texto de ajuda. Pode ser definido via atributo ou slot."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão para informações neutras",
+      "tokens": {
+        "text-color": "--atlas-color-text-static-neutral-medium"
+      },
+      "behavior": "Exibe texto em cinza para informações gerais e orientações"
+    },
+    {
+      "name": "error",
+      "description": "Estado de erro para validações negativas",
+      "tokens": {
+        "text-color": "--atlas-color-text-static-error-medium"
+      },
+      "behavior": "Exibe texto em vermelho para mensagens de erro"
+    },
+    {
+      "name": "warning",
+      "description": "Estado de aviso para alertas e atenções",
+      "tokens": {
+        "text-color": "--atlas-color-text-static-warning-medium"
+      },
+      "behavior": "Exibe texto em laranja para mensagens de aviso"
+    }
+  ],
+  "layout": {
+    "display": "flex",
+    "align-items": "center",
+    "justify-content": "center",
+    "width": "100% (herda do container pai)",
+    "min-height": "auto (conforme conteúdo)"
+  },
+  "typography": {
+    "font-family": "--atlas-font-face-general",
+    "font-size": "--atlas-typescale-label-block-xs-size",
+    "font-weight": "--atlas-font-weight-400",
+    "line-height": "--atlas-font-line-height-500",
+    "letter-spacing": "--atlas-typescale-label-block-xs-letter-spacing",
+    "white-space": "normal (permite quebra de linha)",
+    "text-align": "left"
+  },
+  "variations": [
+    {
+      "description": "3 estados visuais (default, error, warning)",
+      "count": "3 variações"
+    }
+  ],
+  "dependencies": [
+    "atlas-design-tokens.css (sempre obrigatório)",
+    "Google Fonts: Open Sans (wght@400)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": ".Helper text",
+    "node-id": "23805-26422",
+    "inspected": "2026-02-10",
+    "documentation": "https://asaasdev.atlassian.net/wiki/x/TYFSEQE"
+  },
+  "notes": [
+    "Componente auxiliar usado por Input, Textarea, Select e Segmented Control",
+    "Todos os tokens são ESTÁTICOS (--atlas-color-text-static-...) - não possuem estados de interação",
+    "O texto deve permitir quebra de linha para acomodar mensagens longas",
+    "Não possui padding próprio - deve ser posicionado pelo componente pai",
+    "Não possui ícones - apenas texto simples",
+    "O componente é puramente apresentacional (não emite eventos)",
+    "Pode receber conteúdo via atributo 'text' ou via slot <slot></slot>",
+    "Width deve ser 100% para se adaptar ao container pai",
+    "Font weight é sempre 400 (Regular) - nunca Bold",
+    "Cores mapeadas: Default=#5e6877, Error=#b02a37, Warning=#b45309"
+  ]
+}

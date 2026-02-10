@@ -1,0 +1,726 @@
+@font-face {
+  font-family: 'Atlas-Icons';
+  src:  url('fonts/Atlas-Icons.eot?4nkf9l');
+  src:  url('fonts/Atlas-Icons.eot?4nkf9l#iefix') format('embedded-opentype'),
+    url('fonts/Atlas-Icons.ttf?4nkf9l') format('truetype'),
+    url('fonts/Atlas-Icons.woff?4nkf9l') format('woff'),
+    url('fonts/Atlas-Icons.svg?4nkf9l#Atlas-Icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.atlas-icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Atlas-Icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ati-address-book:before {
+  content: "\e900";
+}
+.ati-alert:before {
+  content: "\e901";
+}
+.ati-alert-circle:before {
+  content: "\e902";
+}
+.ati-alert-triangle:before {
+  content: "\e903";
+}
+.ati-alert-triangle-filled:before {
+  content: "\e9ca";
+}
+.ati-align-justify:before {
+  content: "\e904";
+}
+.ati-android:before {
+  content: "\e9cc";
+}
+.ati-apps:before {
+  content: "\e905";
+}
+.ati-arrow-down:before {
+  content: "\e906";
+}
+.ati-arrow-down-circle:before {
+  content: "\e907";
+}
+.ati-arrow-left:before {
+  content: "\e908";
+}
+.ati-arrow-right:before {
+  content: "\e909";
+}
+.ati-arrow-right-left:before {
+  content: "\e90a";
+}
+.ati-arrow-up:before {
+  content: "\e90b";
+}
+.ati-arrow-up-circle:before {
+  content: "\e90c";
+}
+.ati-arrow-up-right:before {
+  content: "\e90d";
+}
+.ati-asaas-logo:before {
+  content: "\e90e";
+}
+.ati-award:before {
+  content: "\e9cd";
+}
+.ati-backspace:before {
+  content: "\e90f";
+}
+.ati-banco-abc-brasil:before {
+  content: "\e9ac";
+}
+.ati-banco-bmg:before {
+  content: "\e9ad";
+}
+.ati-banco-brb:before {
+  content: "\e9ae";
+}
+.ati-banco-da-amazonia:before {
+  content: "\e9af";
+}
+.ati-banco-do-brasil:before {
+  content: "\e910";
+}
+.ati-banco-industrial-do-brasil:before {
+  content: "\e9b0";
+}
+.ati-banco-original:before {
+  content: "\e9b1";
+}
+.ati-banese:before {
+  content: "\e9b2";
+}
+.ati-bank:before {
+  content: "\e911";
+}
+.ati-bank-of-america:before {
+  content: "\e9b3";
+}
+.ati-banpara:before {
+  content: "\e9b4";
+}
+.ati-bar-chart:before {
+  content: "\e912";
+}
+.ati-barcode:before {
+  content: "\e913";
+}
+.ati-bars:before {
+  content: "\e914";
+}
+.ati-base-logo:before {
+  content: "\e915";
+}
+.ati-bell:before {
+  content: "\e916";
+}
+.ati-bnb:before {
+  content: "\e9b5";
+}
+.ati-box:before {
+  content: "\e917";
+}
+.ati-bradesco:before {
+  content: "\e9b6";
+}
+.ati-briefcase:before {
+  content: "\e918";
+}
+.ati-btg-pactual:before {
+  content: "\e9b7";
+}
+.ati-c6-bank:before {
+  content: "\e9b8";
+}
+.ati-caixa:before {
+  content: "\e919";
+}
+.ati-calendar:before {
+  content: "\e91a";
+}
+.ati-calendar-check:before {
+  content: "\e952";
+}
+.ati-calendar-clock:before {
+  content: "\e9a9";
+}
+.ati-calendar-magnifier:before {
+  content: "\e9aa";
+}
+.ati-calendar-sync:before {
+  content: "\e91b";
+}
+.ati-camera:before {
+  content: "\e91c";
+}
+.ati-card:before {
+  content: "\e91d";
+}
+.ati-card-mastercard:before {
+  content: "\e91e";
+}
+.ati-cash-machine-with-ticket:before {
+  content: "\e9cf";
+}
+.ati-cash-machine-with-ticket-1:before {
+  content: "\e9d0";
+}
+.ati-celebrate:before {
+  content: "\e91f";
+}
+.ati-chart-line:before {
+  content: "\e9d1";
+}
+.ati-check:before {
+  content: "\e920";
+}
+.ati-check-circle:before {
+  content: "\e921";
+}
+.ati-check-filled:before {
+  content: "\e922";
+}
+.ati-chevron-down:before {
+  content: "\e923";
+}
+.ati-chevron-left:before {
+  content: "\e924";
+}
+.ati-chevron-right:before {
+  content: "\e925";
+}
+.ati-chevron-up:before {
+  content: "\e926";
+}
+.ati-circle:before {
+  content: "\e927";
+}
+.ati-citi-bank:before {
+  content: "\e9b9";
+}
+.ati-clock:before {
+  content: "\e928";
+}
+.ati-clock-filled:before {
+  content: "\e929";
+}
+.ati-cloud:before {
+  content: "\e9d2";
+}
+.ati-cog:before {
+  content: "\e92a";
+}
+.ati-color-picker:before {
+  content: "\e9c8";
+}
+.ati-companies:before {
+  content: "\e9d3";
+}
+.ati-concentric-circles:before {
+  content: "\e92b";
+}
+.ati-contactless:before {
+  content: "\e92c";
+}
+.ati-copy:before {
+  content: "\e92d";
+}
+.ati-corner-up-right:before {
+  content: "\e92e";
+}
+.ati-credisis:before {
+  content: "\e92f";
+}
+.ati-cutlery:before {
+  content: "\e9cb";
+}
+.ati-dashboard:before {
+  content: "\e930";
+}
+.ati-daycoval:before {
+  content: "\e9ba";
+}
+.ati-deutsche-bank:before {
+  content: "\e9bb";
+}
+.ati-discord:before {
+  content: "\e9d4";
+}
+.ati-dollar-sign:before {
+  content: "\e931";
+}
+.ati-dollar-zap:before {
+  content: "\e932";
+}
+.ati-double-check:before {
+  content: "\e933";
+}
+.ati-download:before {
+  content: "\e934";
+}
+.ati-email:before {
+  content: "\e9d5";
+}
+.ati-envelope:before {
+  content: "\e935";
+}
+.ati-equal:before {
+  content: "\e9c6";
+}
+.ati-external-link:before {
+  content: "\e9c7";
+}
+.ati-eye:before {
+  content: "\e936";
+}
+.ati-eye-filled:before {
+  content: "\e937";
+}
+.ati-eye-off:before {
+  content: "\e938";
+}
+.ati-eye-off-filled:before {
+  content: "\e939";
+}
+.ati-facebook:before {
+  content: "\e93a";
+}
+.ati-file:before {
+  content: "\e93b";
+}
+.ati-file-check:before {
+  content: "\e93c";
+}
+.ati-file-dollar:before {
+  content: "\e93d";
+}
+.ati-file-import:before {
+  content: "\e9d6";
+}
+.ati-file-invoice:before {
+  content: "\e9ab";
+}
+.ati-file-plus:before {
+  content: "\e9d7";
+}
+.ati-file-text:before {
+  content: "\e93e";
+}
+.ati-file-users:before {
+  content: "\e93f";
+}
+.ati-files:before {
+  content: "\e940";
+}
+.ati-filter:before {
+  content: "\e941";
+}
+.ati-flapp-store-logo:before {
+  content: "\e942";
+}
+.ati-flash:before {
+  content: "\e943";
+}
+.ati-gift:before {
+  content: "\e944";
+}
+.ati-github:before {
+  content: "\e945";
+}
+.ati-globe:before {
+  content: "\e946";
+}
+.ati-hammer:before {
+  content: "\e947";
+}
+.ati-hand-card:before {
+  content: "\e948";
+}
+.ati-hand-holding-money:before {
+  content: "\e949";
+}
+.ati-hand-shake:before {
+  content: "\e94a";
+}
+.ati-headset:before {
+  content: "\e9d8";
+}
+.ati-help-circle:before {
+  content: "\e94b";
+}
+.ati-hierarchy:before {
+  content: "\e94c";
+}
+.ati-home:before {
+  content: "\e94d";
+}
+.ati-id-card:before {
+  content: "\e94e";
+}
+.ati-image:before {
+  content: "\e9d9";
+}
+.ati-info:before {
+  content: "\e94f";
+}
+.ati-instagram:before {
+  content: "\e950";
+}
+.ati-inter:before {
+  content: "\e951";
+}
+.ati-itau:before {
+  content: "\e953";
+}
+.ati-key:before {
+  content: "\e954";
+}
+.ati-keyboard:before {
+  content: "\e955";
+}
+.ati-link:before {
+  content: "\e956";
+}
+.ati-linkedin:before {
+  content: "\e957";
+}
+.ati-list:before {
+  content: "\e958";
+}
+.ati-loader:before {
+  content: "\e959";
+}
+.ati-lock:before {
+  content: "\e95a";
+}
+.ati-lock-filled:before {
+  content: "\e95b";
+}
+.ati-log-in:before {
+  content: "\e95c";
+}
+.ati-magnifier:before {
+  content: "\e95d";
+}
+.ati-mail-box:before {
+  content: "\e95e";
+}
+.ati-map-pin:before {
+  content: "\e95f";
+}
+.ati-market-pin:before {
+  content: "\e960";
+}
+.ati-maximize:before {
+  content: "\e961";
+}
+.ati-megaphone:before {
+  content: "\e962";
+}
+.ati-mercado-pago:before {
+  content: "\e9bc";
+}
+.ati-message-circle:before {
+  content: "\e963";
+}
+.ati-message-circle-dollar:before {
+  content: "\e9da";
+}
+.ati-message-circles:before {
+  content: "\e9db";
+}
+.ati-mic:before {
+  content: "\e964";
+}
+.ati-minus:before {
+  content: "\e965";
+}
+.ati-minus-circle:before {
+  content: "\e966";
+}
+.ati-money:before {
+  content: "\e967";
+}
+.ati-money-filled:before {
+  content: "\e968";
+}
+.ati-money-notes:before {
+  content: "\e969";
+}
+.ati-monitor:before {
+  content: "\e96a";
+}
+.ati-monitor-chart-up:before {
+  content: "\e96b";
+}
+.ati-moon:before {
+  content: "\e96c";
+}
+.ati-neon:before {
+  content: "\e9bd";
+}
+.ati-nubank:before {
+  content: "\e96d";
+}
+.ati-open-finance:before {
+  content: "\e96e";
+}
+.ati-pagbank:before {
+  content: "\e9be";
+}
+.ati-paperclip:before {
+  content: "\e96f";
+}
+.ati-pencil:before {
+  content: "\e970";
+}
+.ati-percentage:before {
+  content: "\e9dc";
+}
+.ati-phone:before {
+  content: "\e971";
+}
+.ati-pic-pay:before {
+  content: "\e9bf";
+}
+.ati-pix:before {
+  content: "\e972";
+}
+.ati-pix-filled:before {
+  content: "\e9c5";
+}
+.ati-play:before {
+  content: "\e9dd";
+}
+.ati-plus:before {
+  content: "\e973";
+}
+.ati-plus-circle:before {
+  content: "\e974";
+}
+.ati-power:before {
+  content: "\e975";
+}
+.ati-printer:before {
+  content: "\e976";
+}
+.ati-qrcode:before {
+  content: "\e9c9";
+}
+.ati-quotation-marks:before {
+  content: "\e9de";
+}
+.ati-receipt:before {
+  content: "\e977";
+}
+.ati-refresh:before {
+  content: "\e978";
+}
+.ati-refresh-dollar:before {
+  content: "\e979";
+}
+.ati-repeat:before {
+  content: "\e97a";
+}
+.ati-reverse-clock:before {
+  content: "\e9df";
+}
+.ati-rotate:before {
+  content: "\e97b";
+}
+.ati-rotate-cw:before {
+  content: "\e9e0";
+}
+.ati-rotate-dollar:before {
+  content: "\e97c";
+}
+.ati-safra:before {
+  content: "\e9c0";
+}
+.ati-santander:before {
+  content: "\e97d";
+}
+.ati-send:before {
+  content: "\e97e";
+}
+.ati-serasa:before {
+  content: "\e97f";
+}
+.ati-share:before {
+  content: "\e980";
+}
+.ati-shield:before {
+  content: "\e981";
+}
+.ati-shopping-bag:before {
+  content: "\e982";
+}
+.ati-shopping-cart-down:before {
+  content: "\e983";
+}
+.ati-shopping-cart-right:before {
+  content: "\e984";
+}
+.ati-sicoob:before {
+  content: "\e9c1";
+}
+.ati-sicredi:before {
+  content: "\e9c2";
+}
+.ati-slash:before {
+  content: "\e985";
+}
+.ati-sliders:before {
+  content: "\e986";
+}
+.ati-smartphone:before {
+  content: "\e987";
+}
+.ati-smartphone-contactless:before {
+  content: "\e988";
+}
+.ati-smile-face:before {
+  content: "\e9e1";
+}
+.ati-sort:before {
+  content: "\e989";
+}
+.ati-sort-amount-down:before {
+  content: "\e9e2";
+}
+.ati-sort-amount-up:before {
+  content: "\e9e3";
+}
+.ati-sort-horizontal:before {
+  content: "\e9e4";
+}
+.ati-spanner:before {
+  content: "\e98a";
+}
+.ati-split-arrows:before {
+  content: "\e98b";
+}
+.ati-spotify:before {
+  content: "\e9e5";
+}
+.ati-square:before {
+  content: "\e98c";
+}
+.ati-square-signs:before {
+  content: "\e98d";
+}
+.ati-star:before {
+  content: "\e98e";
+}
+.ati-star-filled:before {
+  content: "\e98f";
+}
+.ati-stone:before {
+  content: "\e9c3";
+}
+.ati-sun:before {
+  content: "\e990";
+}
+.ati-tag:before {
+  content: "\e991";
+}
+.ati-target:before {
+  content: "\e9e6";
+}
+.ati-three-dots:before {
+  content: "\e992";
+}
+.ati-three-dots-horinzontal:before {
+  content: "\e993";
+}
+.ati-thumbs-down:before {
+  content: "\e994";
+}
+.ati-thumbs-up:before {
+  content: "\e995";
+}
+.ati-ticket:before {
+  content: "\e996";
+}
+.ati-tiktok:before {
+  content: "\e9e7";
+}
+.ati-trash:before {
+  content: "\e997";
+}
+.ati-truck:before {
+  content: "\e998";
+}
+.ati-unlink:before {
+  content: "\e999";
+}
+.ati-unlock:before {
+  content: "\e99a";
+}
+.ati-unlock-filled:before {
+  content: "\e99b";
+}
+.ati-upload:before {
+  content: "\e99c";
+}
+.ati-user:before {
+  content: "\e99d";
+}
+.ati-user-filled:before {
+  content: "\e99e";
+}
+.ati-user-plus:before {
+  content: "\e99f";
+}
+.ati-users:before {
+  content: "\e9a0";
+}
+.ati-video:before {
+  content: "\e9a1";
+}
+.ati-virtual-card:before {
+  content: "\e9a2";
+}
+.ati-wallet:before {
+  content: "\e9a3";
+}
+.ati-whatsapp:before {
+  content: "\e9a4";
+}
+.ati-x:before {
+  content: "\e9a5";
+}
+.ati-x-circle:before {
+  content: "\e9a8";
+}
+.ati-x-filled:before {
+  content: "\e9a6";
+}
+.ati-x-logo:before {
+  content: "\e9e8";
+}
+.ati-xp-investimentos:before {
+  content: "\e9c4";
+}
+.ati-youtube:before {
+  content: "\e9a7";
+}
+.ati-zero:before {
+  content: "\e9e9";
+}

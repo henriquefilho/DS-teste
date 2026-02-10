@@ -1,0 +1,232 @@
+{
+  "component": "atlas-checkbox",
+  "type": "web-component",
+  "description": "Checkbox para seleção binária ou múltipla com suporte a estados Default, Read-only, Disabled e Error",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Define se o checkbox está marcado"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "values": [true, false],
+      "default": false,
+      "required": false,
+      "description": "Estado intermediário para seleção parcial (pai com filhos parcialmente selecionados)"
+    },
+    {
+      "name": "state",
+      "type": "enum",
+      "values": ["default", "read-only", "disabled", "error"],
+      "default": "default",
+      "required": false,
+      "description": "Estado do checkbox: default (interativo), read-only (apenas leitura), disabled (desabilitado), error (erro de validação)"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "values": [],
+      "default": "",
+      "required": false,
+      "description": "Texto da label ao lado do checkbox"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "values": [],
+      "default": "",
+      "required": false,
+      "description": "Atributo name para formulários HTML"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "values": [],
+      "default": "",
+      "required": false,
+      "description": "Atributo value para formulários HTML"
+    }
+  ],
+  "states": [
+    {
+      "name": "default-unchecked",
+      "figma_tokens": {
+        "background": "var(--atlas/color/surface/control/inactive/default, #fcfcfd)",
+        "border": "var(--atlas/border/solid/default, 1px) solid var(--atlas/color/border/primary/hard, #0030b9)"
+      },
+      "icon": "nenhum",
+      "behavior": "Estado padrão não marcado"
+    },
+    {
+      "name": "default-checked",
+      "figma_tokens": {
+        "background": "SVG img6 (background preenchido)"
+      },
+      "icon": "check (✓)",
+      "behavior": "Estado padrão marcado"
+    },
+    {
+      "name": "default-indeterminate",
+      "figma_tokens": {
+        "background": "SVG img7 (background preenchido com minus)"
+      },
+      "icon": "minus (−)",
+      "behavior": "Estado intermediário para seleção parcial"
+    },
+    {
+      "name": "error-unchecked",
+      "figma_tokens": {
+        "background": "var(--atlas/color/surface/control/inactive/error, #fcfcfd)",
+        "border": "var(--atlas/border/solid/default, 1px) solid var(--atlas/color/border/error/hard, #b02a37)"
+      },
+      "label_color": "var(--atlas/color/text/static/error/medium, #b02a37)",
+      "icon": "nenhum",
+      "behavior": "Estado de erro não marcado"
+    },
+    {
+      "name": "error-checked",
+      "figma_tokens": {
+        "background": "SVG img4 (background preenchido)"
+      },
+      "label_color": "var(--atlas/color/text/static/error/medium, #b02a37)",
+      "icon": "check (✓)",
+      "behavior": "Estado de erro marcado"
+    },
+    {
+      "name": "error-indeterminate",
+      "figma_tokens": {
+        "background": "SVG img5 (background preenchido com minus)"
+      },
+      "label_color": "var(--atlas/color/text/static/error/medium, #b02a37)",
+      "icon": "minus (−)",
+      "behavior": "Estado de erro intermediário"
+    },
+    {
+      "name": "read-only-unchecked",
+      "figma_tokens": {
+        "background": "var(--atlas/color/surface/control/inactive/read-only, #fcfcfd)",
+        "border": "var(--atlas/border/solid/default, 1px) solid var(--atlas/color/border/default, #d1d6dc)"
+      },
+      "icon": "nenhum",
+      "behavior": "Apenas leitura não marcado"
+    },
+    {
+      "name": "read-only-checked",
+      "figma_tokens": {
+        "background": "SVG img2 (background preenchido)"
+      },
+      "icon": "check (✓)",
+      "behavior": "Apenas leitura marcado"
+    },
+    {
+      "name": "read-only-indeterminate",
+      "figma_tokens": {
+        "background": "SVG img3 (background preenchido com minus)"
+      },
+      "icon": "minus (−)",
+      "behavior": "Apenas leitura intermediário"
+    },
+    {
+      "name": "disabled-unchecked",
+      "figma_tokens": {
+        "background": "var(--atlas/color/surface/control/inactive/disabled, #fcfcfd)",
+        "border": "var(--atlas/border/solid/default, 1px) solid var(--atlas/color/border/disabled, #d1d6dc)"
+      },
+      "label_color": "var(--atlas/color/text/static/disabled/level-1, #d1d6dc)",
+      "icon": "nenhum",
+      "cursor": "not-allowed",
+      "behavior": "Desabilitado não marcado - sem interação"
+    },
+    {
+      "name": "disabled-checked",
+      "figma_tokens": {
+        "background": "SVG img (background preenchido cinza)"
+      },
+      "label_color": "var(--atlas/color/text/static/disabled/level-1, #d1d6dc)",
+      "icon": "check (✓) cinza",
+      "cursor": "not-allowed",
+      "behavior": "Desabilitado marcado"
+    },
+    {
+      "name": "disabled-indeterminate",
+      "figma_tokens": {
+        "background": "SVG img1 (background preenchido cinza com minus)"
+      },
+      "label_color": "var(--atlas/color/text/static/disabled/level-1, #d1d6dc)",
+      "icon": "minus (−) cinza",
+      "cursor": "not-allowed",
+      "behavior": "Desabilitado intermediário"
+    },
+    {
+      "name": "focus",
+      "outline": "shadow-[0px_0px_0px_var(--atlas/focus/outline/size,2px)_var(--atlas/focus/outline/color,#3359c7)]",
+      "outline_offset": "border-radius 6px",
+      "behavior": "Outline de foco via teclado (:focus-visible)"
+    }
+  ],
+  "layout": {
+    "checkbox_size": "24px × 24px (container externo)",
+    "content_size": "20px × 20px (box interno do checkbox)",
+    "border_radius": "var(--atlas/radius/standalone/md, 4px)",
+    "border_width": "var(--atlas/border/solid/default, 1px)",
+    "gap": "var(--atlas/gap/xs, 8px) (entre checkbox e label)"
+  },
+  "typography": {
+    "font_family": "var(--atlas/font-face/general, 'Open Sans')",
+    "font_size": "var(--atlas/typescale/label/inline/md/size, 16px)",
+    "font_weight": "var(--atlas/typescale/label/inline/md/weight/default, normal) = 400",
+    "line_height": "1 (leading-none)",
+    "letter_spacing": "var(--atlas/typescale/label/inline/md/letter-spacing, 0px)",
+    "color_default": "var(--atlas/color/text/static/neutral/hard, #1d2125)",
+    "color_error": "var(--atlas/color/text/static/error/medium, #b02a37)",
+    "color_disabled": "var(--atlas/color/text/static/disabled/level-1, #d1d6dc)"
+  },
+  "icons": {
+    "check": "SVG inline nos assets (img, img2, img4, img6)",
+    "minus": "SVG inline nos assets (img1, img3, img5, img7)"
+  },
+  "variations": [
+    {
+      "description": "4 estados (Default, Error, Read-only, Disabled) × 3 variações (unchecked, checked, indeterminate)",
+      "count": 12
+    }
+  ],
+  "dependencies": [
+    "../../tokens/atlas-design-tokens.css (tokens CSS do Figma)",
+    "Google Fonts: Open Sans (400)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Checkbox default",
+    "node-id": "119:478",
+    "inspected": "2026-02-09",
+    "documentation": "https://style.asaas.com/800892364/v/0/p/628992-checks-radios--switches/t/909e3d"
+  },
+  "notes": [
+    "✅ TOKENS EXTRAÍDOS DO FIGMA:",
+    "1. NÃO existe hover no checkbox (só focus-visible)",
+    "2. Estados: Default, Error, Read-only, Disabled",
+    "3. Variações: unchecked, checked, indeterminate (intermitate no Figma)",
+    "4. Label muda de cor em Error (#b02a37) e Disabled (#d1d6dc)",
+    "5. Border width: 1px (var(--atlas/border/solid/default))",
+    "6. Focus: shadow com 2px em #3359c7",
+    "7. Ícones vêm como SVG inline (não fonte de ícones)",
+    "",
+    "⚠️ ALERTA: SVG ASSETS NÃO DISPONÍVEIS:",
+    "O Figma retornou SVGs como localhost URLs que não são acessíveis.",
+    "Alternativa: Usar atlas-icon component com glyphs 'check' e 'minus'",
+    "",
+    "IMPLEMENTAÇÃO:",
+    "- Use <input type='checkbox'> com appearance: none",
+    "- SVG inline OU atlas-icon com glyph='check' / glyph='minus'",
+    "- Focus: usar :focus-visible (não :focus)",
+    "- Indeterminate: setar via JS → input.indeterminate = true",
+    "- aria-checked='mixed' para indeterminate"
+  ]
+}

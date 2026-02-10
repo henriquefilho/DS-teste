@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Link Button - Demo</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Atlas Design Tokens -->
+  <link rel="stylesheet" href="../../../tokens/atlas-design-tokens.css">
+  
+  <!-- Atlas Icons Font -->
+  <link rel="stylesheet" href="../../../assets/fonts/style.css">
+  
+  <!-- Components -->
+  <script src="../atlas-icon/atlas-icon.js"></script>
+  <script src="./atlas-link-button.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      padding: 40px;
+      background: #F2F4F7;
+      color: #1D2125;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1D2125;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #5E6877;
+      margin-bottom: 32px;
+    }
+
+    .section {
+      background: white;
+      padding: 32px;
+      margin-bottom: 24px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1D2125;
+    }
+
+    .section-description {
+      font-size: 14px;
+      color: #5E6877;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .demo-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .demo-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5E6877;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .demo-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Background escuro para testar white variant */
+    .dark-bg {
+      background: #1D2125;
+      padding: 24px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1D2125;
+    }
+
+    .control-group select,
+    .control-group input {
+      padding: 8px 12px;
+      border: 1px solid #D1D6DC;
+      border-radius: 4px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+    }
+
+    .code-block {
+      background: #1D2125;
+      color: #FCFCFD;
+      padding: 16px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 24px;
+      padding: 16px;
+      background: #E6EAF8;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #5E6877;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      color: #0030B9;
+      font-weight: 700;
+    }
+
+    .interactive-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      background: #F2F4F7;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .event-log {
+      max-height: 200px;
+      overflow-y: auto;
+      background: #F2F4F7;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #1D2125;
+    }
+
+    .event-log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid #D1D6DC;
+    }
+
+    .event-log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: #D1D6DC;
+      margin: 24px 0;
+    }
+
+    /* Toggle Switch Styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #D1D6DC;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #0055CC;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 0 2px rgba(0, 85, 204, 0.2);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .control-group.switch-control {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-group.switch-control label {
+      margin: 0;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Atlas Link Button</h1>
+    <p class="subtitle">Componente híbrido que visualmente se comporta como um link, mas funcionalmente pode disparar uma ação de sistema ou navegar para outra página</p>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-label">CORES</span>
+        <span class="stat-value">5</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">TAMANHOS</span>
+        <span class="stat-value">3</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">ESTADOS</span>
+        <span class="stat-value">6</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">VARIAÇÕES</span>
+        <span class="stat-value">90</span>
+      </div>
+    </div>
+
+    <!-- Interactive Playground -->
+    <div class="section">
+      <h2 class="section-title">🎮 Playground Interativo</h2>
+      <p class="section-description">Customize o link-button em tempo real</p>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="playgroundLabel">Label</label>
+          <input type="text" id="playgroundLabel" value="Link button" style="min-width: 200px;">
+        </div>
+        <div class="control-group">
+          <label for="playgroundColor">Color</label>
+          <select id="playgroundColor">
+            <option value="primary">Primary</option>
+            <option value="success">Success</option>
+            <option value="danger">Danger</option>
+            <option value="white">White</option>
+            <option value="black">Black</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="playgroundSize">Size</label>
+          <select id="playgroundSize">
+            <option value="sm">Small</option>
+            <option value="md" selected>Medium</option>
+            <option value="lg">Large</option>
+          </select>
+        </div>
+        <div class="control-group switch-control">
+          <label class="switch">
+            <input type="checkbox" id="playgroundIcon" checked>
+            <span class="slider"></span>
+          </label>
+          <label for="playgroundIcon">Mostrar Ícone</label>
+        </div>
+        <div class="control-group">
+          <label for="playgroundIconName">Nome do Ícone</label>
+          <input type="text" id="playgroundIconName" value="arrow-up-right" style="min-width: 200px;">
+        </div>
+        <div class="control-group">
+          <label for="playgroundHref">Href</label>
+          <input type="text" id="playgroundHref" placeholder="https://example.com">
+        </div>
+        <div class="control-group switch-control">
+          <label class="switch">
+            <input type="checkbox" id="playgroundDisabled">
+            <span class="slider"></span>
+          </label>
+          <label for="playgroundDisabled">Disabled</label>
+        </div>
+        <div class="control-group switch-control">
+          <label class="switch">
+            <input type="checkbox" id="playgroundLoading">
+            <span class="slider"></span>
+          </label>
+          <label for="playgroundLoading">Loading</label>
+        </div>
+      </div>
+
+      <div class="interactive-demo" id="playgroundContainer">
+        <atlas-link-button id="playgroundButton" label="Link button" color="primary" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+      </div>
+
+      <div class="code-block" id="playgroundCode">
+        &lt;atlas-link-button label="Link button" color="primary" size="md" icon icon-name="arrow-up-right"&gt;&lt;/atlas-link-button&gt;
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Event Log</h3>
+      <div class="event-log" id="eventLog">
+        <div style="color: #5E6877; font-style: italic;">Clique no link-button para ver os eventos...</div>
+      </div>
+    </div>
+
+    <!-- Colors -->
+    <div class="section">
+      <h2 class="section-title">🎨 Cores (5 variações)</h2>
+      <p class="section-description">Cores semânticas para diferentes contextos</p>
+      
+      <div class="grid">
+        <div class="demo-item">
+          <span class="demo-label">Primary</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Success</span>
+          <atlas-link-button label="Link button" color="success" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Danger</span>
+          <atlas-link-button label="Link button" color="danger" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Black</span>
+          <atlas-link-button label="Link button" color="black" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+      </div>
+
+      <div class="dark-bg">
+        <div class="demo-item">
+          <span class="demo-label" style="color: #D1D6DC;">White (Inverse)</span>
+          <atlas-link-button label="Link button" color="white" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sizes -->
+    <div class="section">
+      <h2 class="section-title">📏 Tamanhos (3 variações)</h2>
+      <p class="section-description">Tamanhos para diferentes hierarquias visuais</p>
+      
+      <div class="demo-content">
+        <atlas-link-button label="Small (14px)" color="primary" size="sm" icon icon-name="arrow-up-right"></atlas-link-button>
+        <atlas-link-button label="Medium (16px)" color="primary" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+        <atlas-link-button label="Large (18px)" color="primary" size="lg" icon icon-name="arrow-up-right"></atlas-link-button>
+      </div>
+    </div>
+
+    <!-- States -->
+    <div class="section">
+      <h2 class="section-title">🔄 Estados (6 variações)</h2>
+      <p class="section-description">Estados de interação e feedback</p>
+      
+      <div class="grid">
+        <div class="demo-item">
+          <span class="demo-label">Default</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Hover (passe o mouse)</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Focus (tab/click)</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Pressed (clique)</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Disabled</span>
+          <atlas-link-button label="Link button" color="primary" icon icon-name="arrow-up-right" disabled></atlas-link-button>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Loading</span>
+          <atlas-link-button label="Link button" color="primary" loading></atlas-link-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- With/Without Icon -->
+    <div class="section">
+      <h2 class="section-title">🎯 Com/Sem Ícone</h2>
+      <p class="section-description">Ícone opcional à direita do texto</p>
+      
+      <div class="demo-content">
+        <atlas-link-button label="Sem ícone" color="primary"></atlas-link-button>
+        <atlas-link-button label="Com ícone padrão" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+        <atlas-link-button label="Download" color="success" icon icon-name="download"></atlas-link-button>
+        <atlas-link-button label="Compartilhar" color="black" icon icon-name="share"></atlas-link-button>
+      </div>
+    </div>
+
+    <!-- As Link vs Button -->
+    <div class="section">
+      <h2 class="section-title">🔗 Link vs Button</h2>
+      <p class="section-description">Renderiza como &lt;a&gt; ou &lt;button&gt; dependendo do atributo href</p>
+      
+      <div class="grid">
+        <div class="demo-item">
+          <span class="demo-label">Como Button (sem href)</span>
+          <atlas-link-button label="Ação de sistema" color="primary" icon icon-name="arrow-up-right"></atlas-link-button>
+          <div class="code-block" style="margin-top: 8px; padding: 8px; font-size: 11px;">
+            &lt;button type="button"&gt;
+          </div>
+        </div>
+        <div class="demo-item">
+          <span class="demo-label">Como Link (com href)</span>
+          <atlas-link-button label="Ir para Google" color="primary" href="https://google.com" target="_blank" icon icon-name="external-link"></atlas-link-button>
+          <div class="code-block" style="margin-top: 8px; padding: 8px; font-size: 11px;">
+            &lt;a href="..." target="_blank"&gt;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Colors x Sizes -->
+    <div class="section">
+      <h2 class="section-title">📊 Matriz Completa (Cores × Tamanhos)</h2>
+      <p class="section-description">Todas as 15 combinações de cores e tamanhos</p>
+      
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding: 12px; border-bottom: 2px solid #D1D6DC; font-size: 14px;">Cor</th>
+            <th style="text-align: left; padding: 12px; border-bottom: 2px solid #D1D6DC; font-size: 14px;">Small</th>
+            <th style="text-align: left; padding: 12px; border-bottom: 2px solid #D1D6DC; font-size: 14px;">Medium</th>
+            <th style="text-align: left; padding: 12px; border-bottom: 2px solid #D1D6DC; font-size: 14px;">Large</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC; font-weight: 600;">Primary</td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="primary" size="sm" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="primary" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="primary" size="lg" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC; font-weight: 600;">Success</td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="success" size="sm" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="success" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="success" size="lg" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC; font-weight: 600;">Danger</td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="danger" size="sm" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="danger" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="danger" size="lg" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC; font-weight: 600;">Black</td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="black" size="sm" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="black" size="md" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px; border-bottom: 1px solid #D1D6DC;">
+              <atlas-link-button label="Link button" color="black" size="lg" icon icon-name="arrow-up-right"></atlas-link-button>
+            </td>
+          </tr>
+          <tr style="background: #1D2125;">
+            <td style="padding: 12px; font-weight: 600; color: white;">White</td>
+            <td style="padding: 12px;">
+              <atlas-link-button label="Link button" color="white" size="sm" icon="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px;">
+              <atlas-link-button label="Link button" color="white" size="md" icon="arrow-up-right"></atlas-link-button>
+            </td>
+            <td style="padding: 12px;">
+              <atlas-link-button label="Link button" color="white" size="lg" icon="arrow-up-right"></atlas-link-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Examples -->
+    <div class="section">
+      <h2 class="section-title">💻 Exemplos de Uso</h2>
+      
+      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; margin-top: 24px;">Link externo básico</h3>
+      <div class="code-block">&lt;atlas-link-button 
+  label="Ver documentação" 
+  color="primary" 
+  href="https://docs.example.com" 
+  target="_blank"
+  icon
+  icon-name="external-link"
+&gt;&lt;/atlas-link-button&gt;</div>
+
+      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; margin-top: 24px;">Ação de sistema (button)</h3>
+      <div class="code-block">&lt;atlas-link-button 
+  label="Excluir item" 
+  color="danger" 
+  size="sm"
+&gt;&lt;/atlas-link-button&gt;
+
+&lt;script&gt;
+  document.querySelector('atlas-link-button').addEventListener('click', () => {
+    console.log('Item excluído!');
+  });
+&lt;/script&gt;</div>
+
+      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; margin-top: 24px;">Loading state</h3>
+      <div class="code-block">&lt;atlas-link-button 
+  label="Salvando..." 
+  color="success" 
+  loading
+&gt;&lt;/atlas-link-button&gt;</div>
+
+      <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; margin-top: 24px;">Disabled state</h3>
+      <div class="code-block">&lt;atlas-link-button 
+  label="Indisponível" 
+  color="primary" 
+  disabled
+&gt;&lt;/atlas-link-button&gt;</div>
+    </div>
+  </div>
+
+  <script>
+    // Playground Interativo
+    const playgroundButton = document.getElementById('playgroundButton');
+    const playgroundCode = document.getElementById('playgroundCode');
+    const playgroundContainer = document.getElementById('playgroundContainer');
+    const eventLog = document.getElementById('eventLog');
+
+    function updatePlayground() {
+      const label = document.getElementById('playgroundLabel').value;
+      const color = document.getElementById('playgroundColor').value;
+      const size = document.getElementById('playgroundSize').value;
+      const iconEnabled = document.getElementById('playgroundIcon').checked;
+      const iconName = document.getElementById('playgroundIconName').value;
+      const href = document.getElementById('playgroundHref').value;
+      const disabled = document.getElementById('playgroundDisabled').checked;
+      const loading = document.getElementById('playgroundLoading').checked;
+
+      // Atualizar atributos
+      playgroundButton.setAttribute('label', label);
+      playgroundButton.setAttribute('color', color);
+      playgroundButton.setAttribute('size', size);
+      
+      // Ícone boolean + icon-name
+      if (iconEnabled) {
+        playgroundButton.setAttribute('icon', '');
+        playgroundButton.setAttribute('icon-name', iconName);
+        document.getElementById('playgroundIconName').disabled = false;
+      } else {
+        playgroundButton.removeAttribute('icon');
+        document.getElementById('playgroundIconName').disabled = true;
+      }
+
+      if (href) {
+        playgroundButton.setAttribute('href', href);
+        playgroundButton.setAttribute('target', '_blank');
+      } else {
+        playgroundButton.removeAttribute('href');
+        playgroundButton.removeAttribute('target');
+      }
+
+      if (disabled) {
+        playgroundButton.setAttribute('disabled', '');
+      } else {
+        playgroundButton.removeAttribute('disabled');
+      }
+
+      if (loading) {
+        playgroundButton.setAttribute('loading', '');
+      } else {
+        playgroundButton.removeAttribute('loading');
+      }
+
+      // Atualizar background se for white
+      if (color === 'white') {
+        playgroundContainer.style.background = '#1D2125';
+      } else {
+        playgroundContainer.style.background = '#F2F4F7';
+      }
+
+      // Gerar código
+      let code = `<atlas-link-button`;
+      code += `\n  label="${label}"`;
+      code += `\n  color="${color}"`;
+      code += `\n  size="${size}"`;
+      if (iconEnabled) {
+        code += `\n  icon`;
+        code += `\n  icon-name="${iconName}"`;
+      }
+      if (href) code += `\n  href="${href}" target="_blank"`;
+      if (disabled) code += `\n  disabled`;
+      if (loading) code += `\n  loading`;
+      code += `\n></atlas-link-button>`;
+
+      playgroundCode.textContent = code;
+    }
+
+    // Event listeners para controles
+    document.getElementById('playgroundLabel').addEventListener('input', updatePlayground);
+    document.getElementById('playgroundColor').addEventListener('change', updatePlayground);
+    document.getElementById('playgroundSize').addEventListener('change', updatePlayground);
+    document.getElementById('playgroundIcon').addEventListener('change', updatePlayground);
+    document.getElementById('playgroundIconName').addEventListener('input', updatePlayground);
+    document.getElementById('playgroundHref').addEventListener('input', updatePlayground);
+    document.getElementById('playgroundDisabled').addEventListener('change', updatePlayground);
+    document.getElementById('playgroundLoading').addEventListener('change', updatePlayground);
+
+    // Event log
+    let eventCount = 0;
+    playgroundButton.addEventListener('click', (e) => {
+      eventCount++;
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'event-log-entry';
+      entry.innerHTML = `<strong>#${eventCount}</strong> [${timestamp}] <span style="color: #0030B9;">click</span> event fired`;
+      
+      if (eventLog.querySelector('div[style*="italic"]')) {
+        eventLog.innerHTML = '';
+      }
+      
+      eventLog.insertBefore(entry, eventLog.firstChild);
+      
+      // Limitar a 10 entradas
+      if (eventLog.children.length > 10) {
+        eventLog.removeChild(eventLog.lastChild);
+      }
+    });
+
+    // Inicializar
+    updatePlayground();
+  </script>
+</body>
+</html>

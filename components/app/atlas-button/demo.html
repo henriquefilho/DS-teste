@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Button - MAUI Component Demo</title>
+    <style>
+        @font-face {
+            font-family: 'AtlasIcons';
+            src: url('../../../assets/fonts/fonts/Atlas-Icons.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 30px;
+        }
+        .controls {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .controls h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .control-group input[type="text"],
+        .control-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        .control-group input[type="text"]:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        /* Toggle Switch Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #667eea; }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .control-group.switch-control {
+            flex-direction: row;
+            align-items: center;
+            display: flex;
+            gap: 12px;
+        }
+        .control-group.switch-control label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .preview {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .preview h2 {
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 20px;
+        }
+        .button-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        /* Button Emulation */
+        .maui-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border: none;
+            font-family: 'Segoe UI Semibold', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-radius: 9999px;
+        }
+        .maui-button:disabled { cursor: not-allowed; }
+        .btn__icon,
+        .btn__spinner {
+            font-family: 'AtlasIcons';
+            font-weight: normal !important;
+            font-style: normal !important;
+        }
+        .maui-button .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Sizes */
+        .maui-button.size-small { height: 32px; padding: 8px 16px; font-size: 14px; }
+        .maui-button.size-default { height: 40px; padding: 12px 24px; font-size: 16px; }
+        .maui-button.size-large { height: 48px; padding: 16px 32px; font-size: 18px; }
+        .maui-button.size-extralarge { height: 56px; padding: 20px 40px; font-size: 20px; gap: 8px; }
+
+        /* Filled Styles */
+        .maui-button.filled.primary { background: #0055CC; color: white; }
+        .maui-button.filled.primary:active:not(:disabled) { background: #00429E; }
+        .maui-button.filled.primary:disabled { background: #D1D6DC; color: #FCFCFD; }
+
+        .maui-button.filled.danger { background: #D93838; color: white; }
+        .maui-button.filled.danger:active:not(:disabled) { background: #AB2828; }
+        .maui-button.filled.danger:disabled { background: #D1D6DC; color: #FCFCFD; }
+
+        .maui-button.filled.success { background: #00875F; color: white; }
+        .maui-button.filled.success:active:not(:disabled) { background: #006341; }
+        .maui-button.filled.success:disabled { background: #D1D6DC; color: #FCFCFD; }
+
+        .maui-button.filled.warning { background: #D97706; color: white; }
+        .maui-button.filled.warning:active:not(:disabled) { background: #AB5B04; }
+        .maui-button.filled.warning:disabled { background: #D1D6DC; color: #FCFCFD; }
+
+        .maui-button.filled.info { background: #0D6EFD; color: white; }
+        .maui-button.filled.info:active:not(:disabled) { background: #0A58CA; }
+        .maui-button.filled.info:disabled { background: #D1D6DC; color: #FCFCFD; }
+
+        .maui-button.filled.inverse { background: #FCFCFD; color: #1D2125; }
+        .maui-button.filled.inverse:active:not(:disabled) { background: #E5E7EB; }
+        .maui-button.filled.inverse:disabled { background: #D1D6DC; color: rgba(252,252,253,0.5); }
+
+        /* Outlined Styles */
+        .maui-button.outlined { background: transparent; }
+        .maui-button.outlined.primary { border: 1px solid #0055CC; color: #0055CC; }
+        .maui-button.outlined.primary:active:not(:disabled) { background: rgba(0,85,204,0.16); }
+        .maui-button.outlined.primary:disabled { border-color: #D1D6DC; color: #9CA3AF; }
+
+        .maui-button.outlined.danger { border: 1px solid #D93838; color: #D93838; }
+        .maui-button.outlined.danger:active:not(:disabled) { background: rgba(217,56,56,0.16); }
+        .maui-button.outlined.danger:disabled { border-color: #D1D6DC; color: #9CA3AF; }
+
+        .maui-button.outlined.success { border: 1px solid #00875F; color: #00875F; }
+        .maui-button.outlined.success:active:not(:disabled) { background: rgba(0,135,95,0.16); }
+        .maui-button.outlined.success:disabled { border-color: #D1D6DC; color: #9CA3AF; }
+
+        .maui-button.outlined.warning { border: 1px solid #D97706; color: #D97706; }
+        .maui-button.outlined.warning:active:not(:disabled) { background: rgba(217,119,6,0.16); }
+        .maui-button.outlined.warning:disabled { border-color: #D1D6DC; color: #9CA3AF; }
+
+        .maui-button.outlined.info { border: 1px solid #0D6EFD; color: #0D6EFD; }
+        .maui-button.outlined.info:active:not(:disabled) { background: rgba(13,110,253,0.16); }
+        .maui-button.outlined.info:disabled { border-color: #D1D6DC; color: #9CA3AF; }
+
+        .maui-button.outlined.inverse { border: 1px solid #FCFCFD; color: #FCFCFD; }
+        .maui-button.outlined.inverse:active:not(:disabled) { background: rgba(252,252,253,0.16); }
+        .maui-button.outlined.inverse:disabled { border-color: #D1D6DC; color: rgba(252,252,253,0.5); }
+
+        /* Ghost Styles */
+        .maui-button.ghost { background: transparent; border: none; }
+        .maui-button.ghost.primary { color: #0055CC; }
+        .maui-button.ghost.primary:active:not(:disabled) { background: rgba(0,85,204,0.16); }
+        .maui-button.ghost.primary:disabled { color: #9CA3AF; }
+
+        .maui-button.ghost.danger { color: #D93838; }
+        .maui-button.ghost.danger:active:not(:disabled) { background: rgba(217,56,56,0.16); }
+        .maui-button.ghost.danger:disabled { color: #9CA3AF; }
+
+        .maui-button.ghost.success { color: #00875F; }
+        .maui-button.ghost.success:active:not(:disabled) { background: rgba(0,135,95,0.16); }
+        .maui-button.ghost.success:disabled { color: #9CA3AF; }
+
+        .maui-button.ghost.warning { color: #D97706; }
+        .maui-button.ghost.warning:active:not(:disabled) { background: rgba(217,119,6,0.16); }
+        .maui-button.ghost.warning:disabled { color: #9CA3AF; }
+
+        .maui-button.ghost.info { color: #0D6EFD; }
+        .maui-button.ghost.info:active:not(:disabled) { background: rgba(13,110,253,0.16); }
+        .maui-button.ghost.info:disabled { color: #9CA3AF; }
+
+        .maui-button.ghost.inverse { color: #FCFCFD; }
+        .maui-button.ghost.inverse:active:not(:disabled) { background: rgba(252,252,253,0.16); }
+        .maui-button.ghost.inverse:disabled { color: rgba(252,252,253,0.5); }
+
+        .code-section {
+            margin-top: 30px;
+        }
+        .code-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        .type { color: #4ec9b0; }
+        .property { color: #9cdcfe; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Atlas Button - MAUI Component</h1>
+    
+    <div class="container">
+        <div class="controls">
+            <h2>⚙️ Configurações</h2>
+            
+            <div class="control-group">
+                <label for="text">Text</label>
+                <input type="text" id="text" value="Click me">
+            </div>
+
+            <div class="control-group">
+                <label for="type">Type</label>
+                <select id="type">
+                    <option value="filled" selected>Filled</option>
+                    <option value="outlined">Outlined</option>
+                    <option value="ghost">Ghost</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="style">Style</label>
+                <select id="style">
+                    <option value="primary" selected>Primary</option>
+                    <option value="danger">Danger</option>
+                    <option value="success">Success</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="inverse">Inverse</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="size">Size</label>
+                <select id="size">
+                    <option value="small">Small (32px)</option>
+                    <option value="default" selected>Default (40px)</option>
+                    <option value="large">Large (48px)</option>
+                    <option value="extralarge">ExtraLarge (56px)</option>
+                </select>
+            </div>
+
+            <div class="control-group switch-control">
+                <label class="switch">
+                    <input type="checkbox" id="isEnabled" checked>
+                    <span class="slider"></span>
+                </label>
+                <label for="isEnabled">Enabled</label>
+            </div>
+
+            <div class="control-group switch-control">
+                <label class="switch">
+                    <input type="checkbox" id="isLoading">
+                    <span class="slider"></span>
+                </label>
+                <label for="isLoading">Loading</label>
+            </div>
+
+            <div class="control-group switch-control">
+                <label class="switch">
+                    <input type="checkbox" id="hasIcon">
+                    <span class="slider"></span>
+                </label>
+                <label for="hasIcon">Has Icon</label>
+            </div>
+        </div>
+
+        <div class="preview">
+            <h2>👁️ Preview</h2>
+            <div class="button-preview" id="buttonPreview">
+                <button class="maui-button filled primary size-default" id="demoButton">
+                    <span class="text">Click me</span>
+                </button>
+            </div>
+
+            <div class="code-section">
+                <h3>📄 XAML Code</h3>
+                <pre id="xamlCode"></pre>
+            </div>
+
+            <div class="code-section">
+                <h3>💻 C# Code</h3>
+                <pre id="csharpCode"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const button = document.getElementById('demoButton');
+        const buttonPreview = document.getElementById('buttonPreview');
+        const xamlCode = document.getElementById('xamlCode');
+        const csharpCode = document.getElementById('csharpCode');
+
+        function updateButton() {
+            const text = document.getElementById('text').value;
+            const type = document.getElementById('type').value;
+            const style = document.getElementById('style').value;
+            const size = document.getElementById('size').value;
+            const isEnabled = document.getElementById('isEnabled').checked;
+            const isLoading = document.getElementById('isLoading').checked;
+            const hasIcon = document.getElementById('hasIcon').checked;
+
+            // Update button classes
+            button.className = `maui-button ${type} ${style} size-${size}`;
+            button.disabled = !isEnabled || isLoading;
+
+            // Update button content
+            let content = '';
+            if (isLoading) {
+                content = '<span class="spinner"></span>';
+            } else if (hasIcon) {
+                // Unicode do ícone "plus" da fonte Atlas-Icons
+                content = '<span class="btn__icon">\ue973</span>';
+            }
+            content += `<span class="text">${text}</span>`;
+            button.innerHTML = content;
+
+            // Update background for inverse style demo
+            if (style === 'inverse') {
+                buttonPreview.style.background = '#1D2125';
+            } else {
+                buttonPreview.style.background = '#f8f9fa';
+            }
+
+            // Update XAML code
+            const typeEnum = type.charAt(0).toUpperCase() + type.slice(1);
+            const styleEnum = style.charAt(0).toUpperCase() + style.slice(1);
+            const sizeEnum = size === 'extralarge' ? 'ExtraLarge' : size.charAt(0).toUpperCase() + size.slice(1);
+            
+            xamlCode.innerHTML = `<span class="comment">&lt;!-- Atlas Button Component --&gt;</span>
+<span class="keyword">&lt;borders:</span><span class="type">AtlasButton</span>
+    <span class="property">Text</span>=<span class="string">"${text}"</span>
+    <span class="property">Type</span>=<span class="string">"${typeEnum}"</span>
+    <span class="property">Style</span>=<span class="string">"${styleEnum}"</span>
+    <span class="property">Size</span>=<span class="string">"${sizeEnum}"</span>
+    <span class="property">IsEnabled</span>=<span class="string">"${isEnabled}"</span>
+    <span class="property">IsLoading</span>=<span class="string">"${isLoading}"</span>${hasIcon ? `
+    <span class="property">Icon</span>=<span class="string">"plus"</span>` : ''}
+    <span class="property">Command</span>=<span class="string">"{Binding ButtonCommand}"</span> <span class="keyword">/&gt;</span>`;
+
+            // Update C# code
+            csharpCode.innerHTML = `<span class="comment">// BindableProperty Declarations</span>
+<span class="keyword">public static readonly</span> <span class="type">BindableProperty</span> TextProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">string</span>&gt;(<span class="keyword">nameof</span>(Text));
+
+<span class="keyword">public static readonly</span> <span class="type">BindableProperty</span> IconProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">string</span>&gt;(<span class="keyword">nameof</span>(Icon));
+
+<span class="keyword">public static readonly</span> <span class="type">BindableProperty</span> TypeProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">AtlasButtonType</span>&gt;(<span class="keyword">nameof</span>(Type));
+
+<span class="keyword">public static readonly</span> <span class="type">BindableProperty</span> StyleProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">AtlasButtonStyle</span>&gt;(<span class="keyword">nameof</span>(Style));
+
+<span class="keyword">public static new readonly</span> <span class="type">BindableProperty</span> IsEnabledProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">bool</span>&gt;(<span class="keyword">nameof</span>(IsEnabled), defaultValue: <span class="keyword">true</span>);
+
+<span class="keyword">public static readonly</span> <span class="type">BindableProperty</span> CommandProperty = 
+    <span class="type">BindablePropertyBuilder</span>.Build&lt;<span class="type">AtlasButton</span>, <span class="type">ISafeCommand</span>&gt;(<span class="keyword">nameof</span>(Command));
+
+<span class="comment">// Icon property - glyph name from AtlasIcon</span>
+<span class="keyword">public</span> <span class="type">string</span> Icon { <span class="keyword">get</span>; <span class="keyword">set</span>; } <span class="comment">// Ex: "plus", "arrow-right"</span>
+
+<span class="comment">// Enums (declared outside class)</span>
+<span class="keyword">public enum</span> <span class="type">AtlasButtonType</span> { NONE, FILLED, OUTLINED, GHOST }
+<span class="keyword">public enum</span> <span class="type">AtlasButtonStyle</span> { NONE, PRIMARY, DANGER, SUCCESS, WARNING, INFO, INVERSE }
+<span class="keyword">public enum</span> <span class="type">AtlasButtonSize</span> { SMALL, DEFAULT, LARGE, EXTRALARGE }`;
+        }
+
+        // Event listeners
+        document.getElementById('text').addEventListener('input', updateButton);
+        document.getElementById('type').addEventListener('change', updateButton);
+        document.getElementById('style').addEventListener('change', updateButton);
+        document.getElementById('size').addEventListener('change', updateButton);
+        document.getElementById('isEnabled').addEventListener('change', updateButton);
+        document.getElementById('isLoading').addEventListener('change', updateButton);
+        document.getElementById('hasIcon').addEventListener('change', updateButton);
+
+        // Initial update
+        updateButton();
+    </script>
+</body>
+</html>

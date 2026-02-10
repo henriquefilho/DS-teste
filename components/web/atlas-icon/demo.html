@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Icon - Demo</title>
+    <link rel="stylesheet" href="../../../tokens/atlas-design-tokens.css">
+    <link rel="stylesheet" href="../../../assets/fonts/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="./atlas-icon.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--atlas-color-surface-static-container-neutral-ultra-soft);
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            color: var(--atlas-color-text-static-neutral-hard);
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: var(--atlas-color-text-static-neutral-medium);
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--atlas-color-text-static-neutral-hard);
+            margin-bottom: 8px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--atlas-color-border-neutral-soft);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--atlas-color-border-primary-hard);
+            box-shadow: 0 0 0 3px var(--atlas-color-surface-interaction-primary-ultra-soft-default);
+        }
+
+        .size-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--atlas-color-border-neutral-soft);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-select:focus {
+            outline: none;
+            border-color: var(--atlas-color-border-primary-hard);
+            box-shadow: 0 0 0 3px var(--atlas-color-surface-interaction-primary-ultra-soft-default);
+        }
+
+        .stats {
+            background: var(--atlas-color-surface-static-container-info-ultra-soft);
+            border-left: 4px solid var(--atlas-color-border-info-hard);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .stats-text {
+            font-size: 14px;
+            color: var(--atlas-color-text-static-info-medium);
+        }
+
+        .stats-text strong {
+            color: var(--atlas-color-text-static-info-hard);
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 16px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border: 1px solid var(--atlas-color-border-neutral-soft);
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+            min-height: 100px;
+        }
+
+        .icon-item:hover {
+            background-color: var(--atlas-color-surface-interaction-primary-ultra-soft-hover);
+            border-color: var(--atlas-color-border-primary-hard);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-item.copied {
+            background-color: var(--atlas-color-surface-interaction-success-ultra-soft-default);
+            border-color: var(--atlas-color-border-success-hard);
+        }
+
+        .icon-item atlas-icon {
+            color: var(--atlas-color-icon-static-primary-medium);
+            transition: color 0.2s;
+        }
+
+        .icon-item:hover atlas-icon {
+            color: var(--atlas-color-icon-static-primary-hard);
+        }
+
+        .icon-name {
+            font-size: 11px;
+            color: var(--atlas-color-text-static-neutral-medium);
+            text-align: center;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--atlas-color-text-static-neutral-medium);
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .no-results-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: fixed;
+            background: var(--atlas-color-surface-static-neutral-ultra-hard);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Atlas Icon</h1>
+            <p class="subtitle">Componente Web - 231 Ícones Disponíveis</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label class="control-label" for="search">🔍 Buscar Ícone</label>
+                <input 
+                    type="text" 
+                    id="search" 
+                    class="search-input" 
+                    placeholder="Digite o nome do ícone (ex: star, home, user...)"
+                    autocomplete="off">
+            </div>
+            <div class="control-group" style="flex: 0 0 200px;">
+                <label class="control-label" for="size-select">📏 Tamanho</label>
+                <select id="size-select" class="size-select">
+                    <option value="sm">sm (16px)</option>
+                    <option value="md" selected>md (24px)</option>
+                    <option value="lg">lg (32px)</option>
+                    <option value="xl">xl (40px)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <p class="stats-text">
+                <strong id="visible-count">231</strong> de <strong>231</strong> ícones exibidos
+                <span style="margin-left: 16px;">💡 Clique em um ícone para copiar o nome</span>
+            </p>
+        </div>
+
+        <!-- All Icons -->
+        <div class="section">
+            <div class="icon-grid" id="icon-grid">
+                <!-- Icons will be populated by JavaScript -->
+            </div>
+            <div class="no-results" id="no-results" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <div class="no-results-text">Nenhum ícone encontrado</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Extract all icon names from AtlasIcon.iconMap
+        const allIcons = Object.keys(AtlasIcon.iconMap);
+
+        const iconGrid = document.getElementById('icon-grid');
+        const searchInput = document.getElementById('search');
+        const sizeSelect = document.getElementById('size-select');
+        const visibleCount = document.getElementById('visible-count');
+        const noResults = document.getElementById('no-results');
+        const tooltip = document.getElementById('tooltip');
+
+        // Size mapping (matching AtlasIcon component)
+        const sizeMap = {
+            'xs': 8,
+            'sm': 16,
+            'md': 24,
+            'lg': 32,
+            'xl': 40,
+            'xxl': 48
+        };
+
+        let currentSize = 'md';
+
+        // Render all icons
+        function renderIcons(filter = '') {
+            const filteredIcons = allIcons.filter(icon => 
+                icon.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            iconGrid.innerHTML = '';
+            
+            if (filteredIcons.length === 0) {
+                noResults.style.display = 'block';
+                iconGrid.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                iconGrid.style.display = 'grid';
+                
+                filteredIcons.forEach(iconName => {
+                    const item = document.createElement('div');
+                    item.className = 'icon-item';
+                    item.setAttribute('data-icon', iconName);
+                    
+                    item.innerHTML = `
+                        <atlas-icon name="${iconName}" size="${currentSize}"></atlas-icon>
+                        <span class="icon-name">${iconName}</span>
+                    `;
+                    
+                    // Click to copy
+                    item.addEventListener('click', () => copyIconName(iconName, item));
+                    
+                    iconGrid.appendChild(item);
+                });
+            }
+
+            visibleCount.textContent = filteredIcons.length;
+        }
+
+        // Copy icon name to clipboard
+        function copyIconName(name, element) {
+            navigator.clipboard.writeText(name).then(() => {
+                // Visual feedback
+                element.classList.add('copied');
+                showTooltip('Nome copiado! ✓', element);
+                
+                setTimeout(() => {
+                    element.classList.remove('copied');
+                }, 1000);
+            });
+        }
+
+        // Show tooltip
+        function showTooltip(text, element) {
+            const rect = element.getBoundingClientRect();
+            tooltip.textContent = text;
+            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 8 + 'px';
+            tooltip.classList.add('show');
+
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            renderIcons(e.target.value);
+        });
+
+        // Size change
+        sizeSelect.addEventListener('change', (e) => {
+            currentSize = e.target.value;
+            renderIcons(searchInput.value);
+        });
+
+        // Initial render
+        renderIcons();
+    </script>
+</body>
+</html>
