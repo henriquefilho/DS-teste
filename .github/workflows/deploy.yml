@@ -1,0 +1,22 @@
+name: Build and Publish Storybook
+on:
+  push:
+    branches: ['main'] # ou 'master'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build-storybook # ou npm run build-storybook -- -o dist
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: storybook-static # pasta de build padrão do Storybook
+          branch: gh-pages # branch de publicação

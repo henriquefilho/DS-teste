@@ -1,0 +1,30 @@
+{
+  "name": "ds-teste",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "deploy": "storybook build && gh-pages -d storybook-static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henriquefilho/DS-teste.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henriquefilho/DS-teste/issues"
+  },
+  "homepage": "https://henriquefilho.github.io",
+  "devDependencies": {
+    "storybook": "^8.0.0",
+    "@storybook/html-vite": "^8.0.0",
+    "@chromatic-com/storybook": "^1.0.0",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.0.0"
+  }
+}
