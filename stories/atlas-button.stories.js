@@ -14,6 +14,9 @@
  * - Acessibilidade com ARIA
  */
 
+import '../components/web/atlas-icon/atlas-icon.js';
+import '../components/web/atlas-button/atlas-button.js';
+
 export default {
   title: 'Components/Atlas Button',
   tags: ['autodocs'],
@@ -21,23 +24,39 @@ export default {
     const button = document.createElement('atlas-button');
     
     // Content
-    if (args.label) button.setAttribute('label', args.label);
+    button.setAttribute('label', args.label);
     
     // Appearance
-    if (args.variant) button.setAttribute('variant', args.variant);
-    if (args.color) button.setAttribute('color', args.color);
-    if (args.size) button.setAttribute('size', args.size);
+    button.setAttribute('variant', args.variant);
+    button.setAttribute('color', args.color);
+    button.setAttribute('size', args.size);
     
     // Icon
     if (args.icon) {
       button.setAttribute('icon', '');
-      if (args.iconName) button.setAttribute('icon-name', args.iconName);
+      button.setAttribute('icon-name', args.iconName);
+    } else {
+      button.removeAttribute('icon');
     }
     
     // Status
-    if (args.disabled) button.setAttribute('disabled', '');
-    if (args.loading) button.setAttribute('loading', '');
-    if (args.fullWidth) button.setAttribute('full-width', '');
+    if (args.disabled) {
+      button.setAttribute('disabled', '');
+    } else {
+      button.removeAttribute('disabled');
+    }
+    
+    if (args.loading) {
+      button.setAttribute('loading', '');
+    } else {
+      button.removeAttribute('loading');
+    }
+    
+    if (args.fullWidth) {
+      button.setAttribute('full-width', '');
+    } else {
+      button.removeAttribute('full-width');
+    }
     
     // Action
     button.addEventListener('click', args.onClick);
@@ -147,6 +166,17 @@ export default {
         type: { summary: '() => void' }
       }
     }
+  },
+  args: {
+    label: 'Button',
+    variant: 'filled',
+    color: 'primary',
+    size: 'md',
+    icon: false,
+    iconName: 'plus',
+    disabled: false,
+    loading: false,
+    fullWidth: false
   }
 };
 

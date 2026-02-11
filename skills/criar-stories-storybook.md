@@ -14,6 +14,10 @@ Você é um Especialista em Design System e Engenheiro Front-end Staff. Sua miss
 ## 📁 Organização de Arquivos
 * **Localização das Stories:** Todas as stories devem ser criadas **obrigatoriamente** dentro da pasta `/stories` na raiz do projeto.
 * **Nomenclatura:** Utilize o padrão `[nome-do-componente].stories.js` ou `[nome-do-componente].stories.tsx` (ex: `atlas-button.stories.tsx`).
+* **Importações Necessárias:** No início de cada story de Web Components, sempre importe o arquivo JavaScript do componente:
+  ```javascript
+  import '../components/web/[nome-do-componente]/[nome-do-componente].js';
+  ```
 
 ---
 
@@ -35,7 +39,9 @@ Defina a tabela de propriedades no `argTypes`, categorizando por grupos lógicos
 ### 3. Implementação da Story (`.stories.tsx`)
 O código deve usar a sintaxe **Component Story Format 3 (CSF3)** com TypeScript:
 * **Meta:** Configuração de `title`, `component`, `argTypes` (com descrições claras e tipos de controle adequados: `select`, `boolean`, `text`, `radio`).
-* **Template:** Uma story `Playground` (Default) que herda todos os args.
+* **Args Padrão:** Sempre defina `args` no meta object com valores padrão para TODOS os controles. Isso garante que o painel de controles seja exibido corretamente.
+* **Render Function:** Implemente uma função `render` no meta object que recebe os `args` e retorna o elemento DOM do componente, aplicando os atributos dinamicamente.
+* **Template:** Uma story `Playground` (Default) que herda todos os args do meta.
 * **Variations:** Stories específicas para casos de uso comuns (ex: `LoadingState`, `WithIcon`, `SmallVariant`).
 
 ### 4. Documentação da API (Markdown Table)
@@ -57,6 +63,108 @@ Um exemplo de "Copy & Paste" do componente sendo invocado em um arquivo React/Ne
 
 ---
 
-## 📝 Exemplo de Referência (Baseado na Imagem)
+## 📝 Exemplo Completo de Estrutura CSF3
 
-Quando o usuário enviar um componente, a configuração do `argTypes` deve refletir este
+```javascript
+import '../components/web/meu-componente/meu-componente.js';
+
+export default {
+  title: 'Components/Meu Componente',
+  tags: ['autodocs'],
+  render: (args) => {
+    const element = document.createElement('meu-componente');
+    
+    // Aplicar atributos dinamicamente baseado nos args
+    element.setAttribute('label', args.label);
+    element.setAttribute('variant', args.variant);
+    
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    } else {
+      element.removeAttribute('disabled');
+    }
+    
+    element.addEventListener('click', args.onClick);
+    
+    return element;
+  },
+  argTypes: {
+    label: {
+      control: 'text',
+      description: 'Texto do componente',
+      table: {
+        category: 'Content',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'Label' }
+      }
+    },
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary'],
+      description: 'Variante visual',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'primary' | 'secondary'" },
+        defaultValue: { summary: 'primary' }
+      }
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Desabilita o componente',
+      table: {
+        category: 'Status',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false }
+      }
+    },
+    onClick: {
+      action: 'clicked',
+      table: { category: 'Actions' }
+    }
+  },
+  args: {
+    label: 'Meu Componente',
+    variant: 'primary',
+    disabled: false
+  }
+};
+
+// Story padrão (Playground)
+export const Playground = {
+  args: {
+    label: 'Meu Componente',
+    variant: 'primary',
+    disabled: false
+  }
+};
+
+// Variações específicas
+export const Secondary = {
+  args: {
+    label: 'Secundário',
+    variant: 'secondary'
+  }
+};
+
+export const Disabled = {
+  args: {
+    label: 'Desabilitado',
+    disabled: true
+  }
+};
+```
+
+---
+
+## ✅ Checklist de Qualidade
+
+Antes de finalizar uma story, verifique:
+- [ ] Importação do componente Web Component no topo do arquivo
+- [ ] Meta object com `title`, `tags`, `render`, `argTypes` e `args`
+- [ ] Args padrão definidos no meta para todos os controles
+- [ ] Função `render` que aplica atributos dinamicamente
+- [ ] ArgTypes organizados por categorias (Content, Appearance, Status, Actions)
+- [ ] Documentação clara em cada `argType`
+- [ ] Story `Playground` exportada
+- [ ] Stories de variações específicas exportadas
+- [ ] Remoção correta de atributos booleanos quando false (removeAttribute)
