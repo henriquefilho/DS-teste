@@ -69,7 +69,15 @@ class AtlasSegmentedControl extends HTMLElement {
 
   get labels() {
     const labelsAttr = this.getAttribute('labels') || 'Label 1,Label 2';
-    return labelsAttr.split(',').map(label => label.trim());
+    const allLabels = labelsAttr.split(',').map(label => label.trim());
+    
+    // Limita a no máximo 3 labels
+    if (allLabels.length > 3) {
+      console.warn('AtlasSegmentedControl: O componente suporta no máximo 3 botões. Labels excedentes serão ignorados.');
+      return allLabels.slice(0, 3);
+    }
+    
+    return allLabels;
   }
 
   set labels(value) {
@@ -93,10 +101,8 @@ class AtlasSegmentedControl extends HTMLElement {
 
     const oldIndex = this.selectedIndex;
     if (oldIndex !== index) {
-      // Protege contra re-renderização durante a mudança
-      this._isRendering = true;
+      // Atualiza o atributo (vai disparar attributeChangedCallback e re-render)
       this.setAttribute('selected-index', index.toString());
-      this._isRendering = false;
 
       // Emitir evento de mudança
       this.dispatchEvent(new CustomEvent('change', {
@@ -130,8 +136,8 @@ class AtlasSegmentedControl extends HTMLElement {
     const showHelperText = disabled && helperText;
 
     // Validação: suporta apenas 2 ou 3 botões
-    if (labels.length < 2 || labels.length > 3) {
-      console.warn('AtlasSegmentedControl: O componente suporta apenas 2 ou 3 botões');
+    if (labels.length < 2) {
+      console.warn('AtlasSegmentedControl: O componente requer no mínimo 2 botões');
     }
 
     this.shadowRoot.innerHTML = `

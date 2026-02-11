@@ -48,7 +48,7 @@ export default {
     // ========== CONTENT ==========
     labels: {
       control: 'text',
-      description: 'Labels dos botões separados por vírgula (suporta 2 ou 3 botões)',
+      description: 'Labels dos botões separados por vírgula. Mínimo: 2 botões. Máximo: 3 botões. Labels excedentes são ignorados.',
       table: {
         category: 'Content',
         type: { summary: 'string' },
@@ -419,6 +419,42 @@ export const FocusStates = {
   }
 };
 
+// ========== VALIDATION EXAMPLE ==========
+export const MaxThreeButtons = {
+  render: () => {
+    const container = document.createElement('div');
+    container.style.cssText = 'display: flex; flex-direction: column; gap: 16px; max-width: 500px;';
+    
+    const info = document.createElement('div');
+    info.style.cssText = 'padding: 16px; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 4px;';
+    info.innerHTML = `
+      <p style="margin: 0 0 8px 0; font-weight: 600; font-family: 'Open Sans', sans-serif; color: #92400E;">⚠️ Limite de Labels</p>
+      <p style="margin: 0; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #92400E;">
+        Este exemplo tenta passar 5 labels, mas o componente limita automaticamente a 3.
+        Apenas os 3 primeiros serão exibidos. Verifique o console para ver o aviso.
+      </p>
+    `;
+    
+    const control = document.createElement('atlas-segmented-control');
+    control.setAttribute('labels', 'Opção 1,Opção 2,Opção 3,Opção 4,Opção 5');
+    control.setAttribute('size', 'md');
+    control.setAttribute('selected-index', '0');
+    
+    container.appendChild(info);
+    container.appendChild(control);
+    
+    return container;
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: 'O componente suporta **no máximo 3 botões**. Labels excedentes são automaticamente ignorados e um aviso é exibido no console.'
+      }
+    }
+  }
+};
+
 export const AccessibilityBestPractices = {
   render: () => {
     const container = document.createElement('div');
@@ -432,7 +468,7 @@ export const AccessibilityBestPractices = {
       <ul style="margin: 0; padding-left: 24px; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #065F46;">
         <li>Use labels claros e concisos (1-2 palavras)</li>
         <li>Forneça aria-label quando o contexto não for óbvio</li>
-        <li>Mantenha o número de opções entre 2-3 para clareza</li>
+        <li>Use exatamente 2 ou 3 opções (nunca menos, nunca mais)</li>
         <li>Use helper-text quando desabilitado para explicar o motivo</li>
         <li>Garanta contraste adequado dos botões selecionados</li>
       </ul>
@@ -454,7 +490,8 @@ export const AccessibilityBestPractices = {
       <h4 style="margin: 0 0 12px 0; font-family: 'Open Sans', sans-serif; color: #991B1B;">❌ Anti-Patterns (Evite)</h4>
       <ul style="margin: 0; padding-left: 24px; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #991B1B;">
         <li>Labels muito longos que causam truncamento excessivo</li>
-        <li>Mais de 3 botões (use dropdown ou tabs nesse caso)</li>
+        <li>Mais de 3 botões (componente limita automático, use dropdown)</li>
+        <li>Menos de 2 botões (não faz sentido ter apenas 1 opção)</li>
         <li>Desabilitar sem explicação (sempre use helper-text)</li>
         <li>Usar para navegação entre páginas (use tabs)</li>
         <li>Omitir aria-label em contextos ambíguos</li>
