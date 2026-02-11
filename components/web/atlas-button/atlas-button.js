@@ -79,9 +79,8 @@ class AtlasButton extends HTMLElement {
         : '';
 
     this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/tokens/atlas-design-tokens.css">
       <style>
-        @import url('../../tokens/atlas-design-tokens.css');
-
         :host {
           display: ${this.fullWidth ? 'block' : 'inline-block'};
           width: ${this.fullWidth ? '100%' : 'auto'};

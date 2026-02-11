@@ -1,5 +1,20 @@
-import './atlas-button.js';
-import '../atlas-icon/atlas-icon.js';
+import '../components/web/atlas-button/atlas-button.js';
+import '../components/web/atlas-icon/atlas-icon.js';
+
+// Lista de ícones populares para o seletor
+const popularIcons = [
+  'plus', 'minus', 'check', 'x', 'arrow-right', 'arrow-left', 
+  'arrow-up', 'arrow-down', 'chevron-right', 'chevron-left',
+  'chevron-down', 'chevron-up', 'trash', 'pencil', 'copy',
+  'eye', 'eye-off', 'download', 'upload', 'send',
+  'magnifier', 'filter', 'cog', 'bell', 'user',
+  'home', 'calendar', 'clock', 'envelope', 'lock',
+  'unlock', 'star', 'star-filled', 'heart', 'loader',
+  'info', 'alert-circle', 'alert-triangle', 'check-circle', 'x-circle',
+  'help-circle', 'external-link', 'link', 'share', 'refresh',
+  'pix', 'money', 'card', 'bank', 'dollar-sign',
+  'shopping-cart-right', 'shopping-bag', 'gift', 'file', 'files'
+];
 
 export default {
   title: 'Components/AtlasButton',
@@ -11,73 +26,90 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'Button' },
+        category: 'Conteúdo',
       },
     },
     variant: {
-      control: 'select',
+      control: { type: 'radio' },
       options: ['filled', 'outlined', 'ghost'],
-      description: 'Variante do botão',
+      description: 'Variante visual do botão',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'filled' },
+        category: 'Aparência',
       },
     },
     color: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'danger', 'success', 'warning', 'info', 'inverse'],
-      description: 'Cor do botão',
+      description: 'Cor temática do botão',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'primary' },
+        category: 'Aparência',
       },
     },
     size: {
-      control: 'select',
+      control: { type: 'radio' },
       options: ['sm', 'md', 'lg', 'xl'],
-      description: 'Tamanho do botão',
+      description: 'Tamanho do botão (sm: 32px, md: 40px, lg: 48px, xl: 56px)',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'md' },
-      },
-    },
-    iconName: {
-      control: 'text',
-      description: 'Nome do ícone',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'plus' },
+        category: 'Aparência',
       },
     },
     icon: {
-      control: 'boolean',
-      description: 'Mostrar ícone',
+      control: { type: 'boolean' },
+      description: 'Ativar/desativar ícone no botão',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
+        category: 'Ícone',
+      },
+    },
+    iconName: {
+      control: { type: 'select' },
+      options: popularIcons,
+      description: 'Selecione o ícone a ser exibido',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'plus' },
+        category: 'Ícone',
       },
     },
     disabled: {
-      control: 'boolean',
-      description: 'Botão desabilitado',
+      control: { type: 'boolean' },
+      description: 'Desabilitar o botão (impede interação)',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
+        category: 'Estado',
       },
     },
     loading: {
-      control: 'boolean',
-      description: 'Estado de carregamento',
+      control: { type: 'boolean' },
+      description: 'Ativar estado de carregamento (mostra spinner)',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
+        category: 'Estado',
       },
     },
     fullWidth: {
-      control: 'boolean',
-      description: 'Largura total',
+      control: { type: 'boolean' },
+      description: 'Botão ocupa 100% da largura disponível',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: false },
+        category: 'Layout',
+      },
+    },
+    onClick: {
+      action: 'clicked',
+      description: 'Evento disparado ao clicar no botão',
+      table: {
+        category: 'Eventos',
       },
     },
   },
@@ -97,10 +129,15 @@ const Template = (args) => {
   if (args.loading) button.setAttribute('loading', '');
   if (args.fullWidth) button.setAttribute('full-width', '');
   
+  // Adicionar listener de clique para action
+  if (args.onClick) {
+    button.addEventListener('click', args.onClick);
+  }
+  
   return button;
 };
 
-// Story padrão
+// Story padrão - Playground interativo
 export const Default = Template.bind({});
 Default.args = {
   label: 'Button',
@@ -108,9 +145,17 @@ Default.args = {
   color: 'primary',
   size: 'md',
   icon: false,
+  iconName: 'plus',
   disabled: false,
   loading: false,
   fullWidth: false,
+};
+Default.parameters = {
+  docs: {
+    description: {
+      story: 'Use os controles abaixo para experimentar todas as propriedades do botão de forma interativa.',
+    },
+  },
 };
 
 // Variantes
@@ -121,6 +166,13 @@ Filled.args = {
   color: 'primary',
   size: 'md',
 };
+Filled.parameters = {
+  docs: {
+    description: {
+      story: 'Variante Filled: estilo sólido com fundo colorido, ideal para ações primárias.',
+    },
+  },
+};
 
 export const Outlined = Template.bind({});
 Outlined.args = {
@@ -129,6 +181,13 @@ Outlined.args = {
   color: 'primary',
   size: 'md',
 };
+Outlined.parameters = {
+  docs: {
+    description: {
+      story: 'Variante Outlined: botão com borda e fundo transparente, ideal para ações secundárias.',
+    },
+  },
+};
 
 export const Ghost = Template.bind({});
 Ghost.args = {
@@ -136,6 +195,13 @@ Ghost.args = {
   variant: 'ghost',
   color: 'primary',
   size: 'md',
+};
+Ghost.parameters = {
+  docs: {
+    description: {
+      story: 'Variante Ghost: sem borda, apenas texto e hover sutil, ideal para ações terciárias.',
+    },
+  },
 };
 
 // Cores
@@ -156,6 +222,8 @@ export const AllColors = () => {
     const label = document.createElement('span');
     label.textContent = color.charAt(0).toUpperCase() + color.slice(1);
     label.style.minWidth = '80px';
+    label.style.fontWeight = '600';
+    label.style.fontSize = '14px';
     row.appendChild(label);
     
     ['filled', 'outlined', 'ghost'].forEach(variant => {
@@ -172,6 +240,14 @@ export const AllColors = () => {
   
   return container;
 };
+AllColors.parameters = {
+  docs: {
+    description: {
+      story: 'Todas as cores disponíveis (primary, danger, success, warning, info, inverse) em cada variante.',
+    },
+  },
+  controls: { disable: true },
+};
 
 // Tamanhos
 export const Sizes = () => {
@@ -182,22 +258,37 @@ export const Sizes = () => {
   container.style.alignItems = 'flex-start';
   
   const sizes = [
-    { name: 'Small (32px)', value: 'sm' },
-    { name: 'Medium (40px)', value: 'md' },
-    { name: 'Large (48px)', value: 'lg' },
-    { name: 'Extra Large (56px)', value: 'xl' }
+    { name: 'Small', value: 'sm', height: '32px' },
+    { name: 'Medium', value: 'md', height: '40px' },
+    { name: 'Large', value: 'lg', height: '48px' },
+    { name: 'Extra Large', value: 'xl', height: '56px' }
   ];
   
-  sizes.forEach(({ name, value }) => {
+  sizes.forEach(({ name, value, height }) => {
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '16px';
+    
     const button = document.createElement('atlas-button');
-    button.setAttribute('label', name);
+    button.setAttribute('label', `${name} (${height})`);
     button.setAttribute('variant', 'filled');
     button.setAttribute('color', 'primary');
     button.setAttribute('size', value);
-    container.appendChild(button);
+    row.appendChild(button);
+    
+    container.appendChild(row);
   });
   
   return container;
+};
+Sizes.parameters = {
+  docs: {
+    description: {
+      story: 'Quatro tamanhos disponíveis para se adaptar a diferentes contextos de uso.',
+    },
+  },
+  controls: { disable: true },
 };
 
 // Com ícone
@@ -210,6 +301,13 @@ WithIcon.args = {
   icon: true,
   iconName: 'plus',
 };
+WithIcon.parameters = {
+  docs: {
+    description: {
+      story: 'Botão com ícone à esquerda do texto. Use o controle "iconName" para mudar o ícone.',
+    },
+  },
+};
 
 // Estados
 export const Disabled = Template.bind({});
@@ -220,6 +318,13 @@ Disabled.args = {
   size: 'md',
   disabled: true,
 };
+Disabled.parameters = {
+  docs: {
+    description: {
+      story: 'Estado desabilitado: impede interação do usuário e aplica estilo visual reduzido.',
+    },
+  },
+};
 
 export const Loading = Template.bind({});
 Loading.args = {
@@ -229,6 +334,13 @@ Loading.args = {
   size: 'md',
   loading: true,
 };
+Loading.parameters = {
+  docs: {
+    description: {
+      story: 'Estado de carregamento: mostra um spinner animado e desabilita a interação.',
+    },
+  },
+};
 
 export const FullWidth = Template.bind({});
 FullWidth.args = {
@@ -237,6 +349,13 @@ FullWidth.args = {
   color: 'primary',
   size: 'md',
   fullWidth: true,
+};
+FullWidth.parameters = {
+  docs: {
+    description: {
+      story: 'Botão ocupa 100% da largura do container pai.',
+    },
+  },
 };
 
 // Todos os estados
@@ -263,6 +382,8 @@ export const AllStates = () => {
     const labelSpan = document.createElement('span');
     labelSpan.textContent = label;
     labelSpan.style.minWidth = '100px';
+    labelSpan.style.fontWeight = '600';
+    labelSpan.style.fontSize = '14px';
     row.appendChild(labelSpan);
     
     const button = document.createElement('atlas-button');
@@ -291,6 +412,14 @@ export const AllStates = () => {
   
   return container;
 };
+AllStates.parameters = {
+  docs: {
+    description: {
+      story: 'Comparação visual de todos os estados do botão.',
+    },
+  },
+  controls: { disable: true },
+};
 
 // Exemplos de uso
 export const UsageExamples = () => {
@@ -304,11 +433,14 @@ export const UsageExamples = () => {
   const title1 = document.createElement('h3');
   title1.textContent = 'Botões de Ação';
   title1.style.marginBottom = '12px';
+  title1.style.fontSize = '16px';
+  title1.style.fontWeight = '600';
   section1.appendChild(title1);
   
   const actions = document.createElement('div');
   actions.style.display = 'flex';
   actions.style.gap = '8px';
+  actions.style.flexWrap = 'wrap';
   
   const saveBtn = document.createElement('atlas-button');
   saveBtn.setAttribute('label', 'Salvar');
@@ -332,16 +464,21 @@ export const UsageExamples = () => {
   const title2 = document.createElement('h3');
   title2.textContent = 'Botões de Navegação';
   title2.style.marginBottom = '12px';
+  title2.style.fontSize = '16px';
+  title2.style.fontWeight = '600';
   section2.appendChild(title2);
   
   const navigation = document.createElement('div');
   navigation.style.display = 'flex';
   navigation.style.gap = '8px';
+  navigation.style.flexWrap = 'wrap';
   
   const backBtn = document.createElement('atlas-button');
   backBtn.setAttribute('label', 'Voltar');
   backBtn.setAttribute('variant', 'ghost');
   backBtn.setAttribute('color', 'primary');
+  backBtn.setAttribute('icon', '');
+  backBtn.setAttribute('icon-name', 'arrow-left');
   navigation.appendChild(backBtn);
   
   const nextBtn = document.createElement('atlas-button');
@@ -360,11 +497,14 @@ export const UsageExamples = () => {
   const title3 = document.createElement('h3');
   title3.textContent = 'Botões de Alerta';
   title3.style.marginBottom = '12px';
+  title3.style.fontSize = '16px';
+  title3.style.fontWeight = '600';
   section3.appendChild(title3);
   
   const alerts = document.createElement('div');
   alerts.style.display = 'flex';
   alerts.style.gap = '8px';
+  alerts.style.flexWrap = 'wrap';
   
   const deleteBtn = document.createElement('atlas-button');
   deleteBtn.setAttribute('label', 'Excluir');
@@ -387,6 +527,14 @@ export const UsageExamples = () => {
   
   return container;
 };
+UsageExamples.parameters = {
+  docs: {
+    description: {
+      story: 'Exemplos práticos de uso em diferentes contextos: ações, navegação e alertas.',
+    },
+  },
+  controls: { disable: true },
+};
 
 // Matriz completa
 export const CompleteMatrix = () => {
@@ -404,6 +552,8 @@ export const CompleteMatrix = () => {
     const title = document.createElement('h3');
     title.textContent = variant.charAt(0).toUpperCase() + variant.slice(1);
     title.style.marginBottom = '12px';
+    title.style.fontSize = '16px';
+    title.style.fontWeight = '600';
     section.appendChild(title);
     
     const grid = document.createElement('div');
@@ -416,12 +566,14 @@ export const CompleteMatrix = () => {
       card.style.padding = '16px';
       card.style.border = '1px solid #e0e0e0';
       card.style.borderRadius = '8px';
+      card.style.backgroundColor = '#fafafa';
       
       const colorLabel = document.createElement('div');
       colorLabel.textContent = color.charAt(0).toUpperCase() + color.slice(1);
       colorLabel.style.fontSize = '12px';
       colorLabel.style.marginBottom = '8px';
       colorLabel.style.color = '#666';
+      colorLabel.style.fontWeight = '600';
       card.appendChild(colorLabel);
       
       const btnContainer = document.createElement('div');
@@ -455,4 +607,83 @@ export const CompleteMatrix = () => {
   });
   
   return container;
+};
+CompleteMatrix.parameters = {
+  docs: {
+    description: {
+      story: 'Matriz completa mostrando todas as combinações de variantes, cores e estados.',
+    },
+  },
+  controls: { disable: true },
+};
+
+// Galeria de ícones
+export const IconGallery = () => {
+  const container = document.createElement('div');
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.gap = '24px';
+  
+  const title = document.createElement('h3');
+  title.textContent = 'Ícones Disponíveis';
+  title.style.marginBottom = '12px';
+  title.style.fontSize = '16px';
+  title.style.fontWeight = '600';
+  container.appendChild(title);
+  
+  const description = document.createElement('p');
+  description.textContent = 'Use qualquer um desses ícones no controle "iconName" do botão padrão.';
+  description.style.fontSize = '14px';
+  description.style.color = '#666';
+  description.style.marginBottom = '8px';
+  container.appendChild(description);
+  
+  const grid = document.createElement('div');
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+  grid.style.gap = '12px';
+  
+  popularIcons.forEach(iconName => {
+    const button = document.createElement('atlas-button');
+    button.setAttribute('label', iconName);
+    button.setAttribute('variant', 'outlined');
+    button.setAttribute('color', 'primary');
+    button.setAttribute('size', 'sm');
+    button.setAttribute('icon', '');
+    button.setAttribute('icon-name', iconName);
+    button.style.fontSize = '10px';
+    grid.appendChild(button);
+  });
+  
+  container.appendChild(grid);
+  return container;
+};
+IconGallery.parameters = {
+  docs: {
+    description: {
+      story: 'Galeria visual de todos os ícones populares disponíveis no seletor.',
+    },
+  },
+  controls: { disable: true },
+};
+
+// Playground interativo avançado
+export const InteractivePlayground = Template.bind({});
+InteractivePlayground.args = {
+  label: 'Clique aqui',
+  variant: 'filled',
+  color: 'primary',
+  size: 'md',
+  icon: true,
+  iconName: 'star',
+  disabled: false,
+  loading: false,
+  fullWidth: false,
+};
+InteractivePlayground.parameters = {
+  docs: {
+    description: {
+      story: 'Experimente livremente todas as combinações de propriedades. Ative o ícone e depois selecione diferentes opções no controle "iconName".',
+    },
+  },
 };
