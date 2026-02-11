@@ -1,24 +1,27 @@
 name: Build and Publish Storybook
 on:
   push:
-    branches: ['main'] # ou 'master'
+    branches: ['main'] # Certifique-se de que sua branch principal se chama main
+
+permissions:
+  contents: write # Permissão essencial para o robô fazer push na branch gh-pages
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Install and Build
+      - name: Install and Build 🔧
         run: |
           npm install
-          npm run build-storybook # ou npm run build-storybook -- -o dist
+          npm run build-storybook
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: storybook-static # pasta de build padrão do Storybook
-          branch: gh-pages # branch de publicação
-permissions:
-  contents: write  # Isso permite que o robô escreva na branch gh-pages
+          folder: storybook-static # Pasta gerada pelo build
+          branch: gh-pages         # Branch onde o site será publicado
+          token: ${{ secrets.GITHUB_TOKEN }} # Usa o token automático com a permissão acima
+          clean: true              # Remove arquivos antigos da branch de deploy
