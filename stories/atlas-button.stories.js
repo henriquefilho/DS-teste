@@ -39,6 +39,13 @@ export default {
       button.removeAttribute('icon');
     }
     
+    // Accessibility
+    if (args.ariaLabel) {
+      button.setAttribute('aria-label', args.ariaLabel);
+    } else {
+      button.removeAttribute('aria-label');
+    }
+    
     // Status
     if (args.disabled) {
       button.setAttribute('disabled', '');
@@ -128,6 +135,17 @@ export default {
       }
     },
 
+    // ========== ACCESSIBILITY ==========
+    ariaLabel: {
+      control: 'text',
+      description: 'Label de acessibilidade para leitores de tela. Use quando o label visual não for suficientemente descritivo',
+      table: {
+        category: 'Accessibility',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' }
+      }
+    },
+
     // ========== STATUS ==========
     disabled: {
       control: 'boolean',
@@ -174,6 +192,7 @@ export default {
     size: 'md',
     icon: false,
     iconName: 'plus',
+    ariaLabel: '',
     disabled: false,
     loading: false,
     fullWidth: false
@@ -189,6 +208,7 @@ export const Playground = {
     size: 'md',
     icon: false,
     iconName: 'plus',
+    ariaLabel: '',
     disabled: false,
     loading: false,
     fullWidth: false
@@ -325,19 +345,6 @@ export const WithIcon = {
   }
 };
 
-export const IconOnly = {
-  render: () => {
-    const button = document.createElement('atlas-button');
-    button.setAttribute('variant', 'filled');
-    button.setAttribute('color', 'primary');
-    button.setAttribute('size', 'md');
-    button.setAttribute('icon', '');
-    button.setAttribute('icon-name', 'search');
-    button.setAttribute('label', ''); // Label vazio para icon-only
-    return button;
-  }
-};
-
 // ========== STATES ==========
 
 export const LoadingState = {
@@ -370,6 +377,217 @@ export const FullWidthButton = {
   },
   parameters: {
     layout: 'padded'
+  }
+};
+
+// ========== ACCESSIBILITY ==========
+
+export const WithAriaLabel = {
+  args: {
+    label: 'Delete',
+    variant: 'filled',
+    color: 'danger',
+    size: 'md',
+    icon: true,
+    iconName: 'trash',
+    ariaLabel: 'Excluir item permanentemente da lista de produtos'
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Use `aria-label` para fornecer contexto adicional aos leitores de tela quando o label visual for muito curto ou ambíguo.'
+      }
+    }
+  }
+};
+
+export const FocusStates = {
+  render: () => {
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.gap = '24px';
+    container.style.padding = '20px';
+
+    const wrapper1 = document.createElement('div');
+    wrapper1.style.display = 'flex';
+    wrapper1.style.flexDirection = 'column';
+    wrapper1.style.gap = '8px';
+
+    const title1 = document.createElement('p');
+    title1.textContent = 'Estado de foco (use Tab para navegar):';
+    title1.style.margin = '0';
+    title1.style.fontSize = '14px';
+    title1.style.fontWeight = '600';
+    title1.style.color = '#333';
+
+    const buttonRow = document.createElement('div');
+    buttonRow.style.display = 'flex';
+    buttonRow.style.gap = '12px';
+
+    const variants = [
+      { variant: 'filled', label: 'Filled' },
+      { variant: 'outlined', label: 'Outlined' },
+      { variant: 'ghost', label: 'Ghost' }
+    ];
+
+    variants.forEach(({ variant, label }) => {
+      const button = document.createElement('atlas-button');
+      button.setAttribute('label', label);
+      button.setAttribute('variant', variant);
+      button.setAttribute('color', 'primary');
+      button.setAttribute('size', 'md');
+      buttonRow.appendChild(button);
+    });
+
+    wrapper1.appendChild(title1);
+    wrapper1.appendChild(buttonRow);
+
+    const wrapper2 = document.createElement('div');
+    wrapper2.style.display = 'flex';
+    wrapper2.style.flexDirection = 'column';
+    wrapper2.style.gap = '8px';
+    wrapper2.style.marginTop = '16px';
+
+    const title2 = document.createElement('p');
+    title2.textContent = 'Navegação por teclado:';
+    title2.style.margin = '0';
+    title2.style.fontSize = '14px';
+    title2.style.fontWeight = '600';
+    title2.style.color = '#333';
+
+    const list = document.createElement('ul');
+    list.style.margin = '0';
+    list.style.paddingLeft = '20px';
+    list.style.fontSize = '14px';
+    list.style.color = '#666';
+
+    const items = [
+      'Tab: Navega para o próximo botão',
+      'Shift + Tab: Navega para o botão anterior',
+      'Enter ou Space: Ativa o botão',
+      'O outline de foco é visível em todos os estados'
+    ];
+
+    items.forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      li.style.marginBottom = '4px';
+      list.appendChild(li);
+    });
+
+    wrapper2.appendChild(title2);
+    wrapper2.appendChild(list);
+
+    container.appendChild(wrapper1);
+    container.appendChild(wrapper2);
+
+    return container;
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: 'Todos os botões suportam navegação por teclado e exibem um outline de foco visível. Use Tab para navegar entre os botões e Enter/Space para ativá-los.'
+      }
+    }
+  }
+};
+
+export const AccessibilityBestPractices = {
+  render: () => {
+    const container = document.createElement('div');
+    container.style.padding = '20px';
+    container.style.maxWidth = '800px';
+
+    const title = document.createElement('h3');
+    title.textContent = 'Boas Práticas de Acessibilidade';
+    title.style.marginTop = '0';
+    title.style.marginBottom = '16px';
+    title.style.fontSize = '18px';
+    title.style.color = '#333';
+
+    const sections = [
+      {
+        title: '✅ Labels Descritivos',
+        description: 'Use labels que descrevam claramente a ação do botão. Evite labels genéricos como "Clique aqui".',
+        example: { label: 'Salvar alterações', good: true }
+      },
+      {
+        title: '✅ Aria-label para Contexto',
+        description: 'Adicione aria-label quando o label visual for muito curto ou precisar de contexto adicional.',
+        example: { label: 'Excluir', ariaLabel: 'Excluir produto "iPhone 14" do carrinho', good: true }
+      },
+      {
+        title: '✅ Estados Visíveis',
+        description: 'Estados de loading e disabled são comunicados visualmente e para leitores de tela via aria-busy e disabled.',
+        example: { label: 'Processando...', loading: true, good: true }
+      },
+      {
+        title: '❌ Evite Ícones Sem Label',
+        description: 'Nunca use botões apenas com ícone sem um label de texto ou aria-label.',
+        example: { iconOnly: true, good: false }
+      }
+    ];
+
+    sections.forEach(({ title: sectionTitle, description, example }) => {
+      const section = document.createElement('div');
+      section.style.marginBottom = '24px';
+      section.style.padding = '16px';
+      section.style.border = '1px solid #e0e0e0';
+      section.style.borderRadius = '8px';
+      section.style.backgroundColor = example.good ? '#f0f9ff' : '#fff5f5';
+
+      const h4 = document.createElement('h4');
+      h4.textContent = sectionTitle;
+      h4.style.margin = '0 0 8px 0';
+      h4.style.fontSize = '16px';
+      h4.style.color = example.good ? '#0c4a6e' : '#991b1b';
+
+      const p = document.createElement('p');
+      p.textContent = description;
+      p.style.margin = '0 0 12px 0';
+      p.style.fontSize = '14px';
+      p.style.color = '#666';
+      p.style.lineHeight = '1.6';
+
+      section.appendChild(h4);
+      section.appendChild(p);
+
+      if (!example.iconOnly) {
+        const button = document.createElement('atlas-button');
+        button.setAttribute('label', example.label);
+        button.setAttribute('variant', 'filled');
+        button.setAttribute('color', 'primary');
+        button.setAttribute('size', 'md');
+        if (example.ariaLabel) button.setAttribute('aria-label', example.ariaLabel);
+        if (example.loading) button.setAttribute('loading', '');
+        section.appendChild(button);
+      } else {
+        const warning = document.createElement('code');
+        warning.textContent = '<atlas-button icon="search" /> ❌ Inacessível!';
+        warning.style.padding = '8px 12px';
+        warning.style.backgroundColor = '#fee2e2';
+        warning.style.border = '1px solid #fecaca';
+        warning.style.borderRadius = '4px';
+        warning.style.fontSize = '13px';
+        warning.style.color = '#991b1b';
+        section.appendChild(warning);
+      }
+
+      container.appendChild(section);
+    });
+
+    container.insertBefore(title, container.firstChild);
+    return container;
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: 'Guia completo de boas práticas de acessibilidade para o componente Atlas Button.'
+      }
+    }
   }
 };
 

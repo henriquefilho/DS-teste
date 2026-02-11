@@ -163,7 +163,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -182,7 +182,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -201,7 +201,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -220,7 +220,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -239,7 +239,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -258,7 +258,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-filled.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -293,7 +293,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -313,7 +313,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -333,7 +333,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -353,7 +353,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -373,7 +373,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -393,7 +393,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-outlined.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -429,7 +429,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -449,7 +449,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -469,7 +469,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -489,7 +489,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -509,7 +509,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -529,7 +529,7 @@ class AtlasButton extends HTMLElement {
         }
 
         button.variant-ghost.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 

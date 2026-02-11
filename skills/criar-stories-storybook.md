@@ -31,10 +31,11 @@ Sempre que solicitado a criar uma Story, siga rigorosamente esta estrutura:
 
 ### 2. Painel de Controles (Controls/Args)
 Defina a tabela de propriedades no `argTypes`, categorizando por grupos lógicos:
-* **Text/Label:** Propriedades de texto bruto e loading text.
-* **Visual/Styles:** Variant, size, color schemes, icons.
-* **Boolean Flags:** Disabled, showSpinner, newTab.
-* **Events/Actions:** Handlers como onClick ou configurações de href.
+* **Content:** Propriedades de texto (label, text, placeholder).
+* **Appearance:** Variant, size, color schemes, icons.
+* **Accessibility:** aria-label, aria-describedby, role customizado.
+* **Status:** Disabled, loading, readonly, error states.
+* **Actions/Events:** Handlers como onClick, onChange ou configurações de href.
 
 ### 3. Implementação da Story (`.stories.tsx`)
 O código deve usar a sintaxe **Component Story Format 3 (CSF3)** com TypeScript:
@@ -60,6 +61,104 @@ Um exemplo de "Copy & Paste" do componente sendo invocado em um arquivo React/Ne
 * **Acessibilidade (a11y):** Garanta que as stories demonstrem o uso de `aria-label`, `role` e estados de foco.
 * **Organização de Controles:** Utilize `table: { category: '...' }` no Storybook para agrupar propriedades relacionadas no painel lateral.
 * **Interatividade:** Utilize `play functions` (do `@storybook/testing-library`) para simular interações se o componente possuir estados complexos.
+
+---
+
+## ♿ Acessibilidade nas Stories
+
+Sempre inclua demonstrações e controles de acessibilidade nas stories:
+
+### Controles de Acessibilidade
+Adicione uma categoria **Accessibility** no `argTypes` com controles para:
+- **aria-label**: Para fornecer contexto adicional aos leitores de tela
+- **aria-describedby**: Referência a descrições mais detalhadas
+- **role**: Quando o papel semântico precisar ser customizado
+
+```javascript
+argTypes: {
+  // ... outros controles
+  
+  // ========== ACCESSIBILITY ==========
+  ariaLabel: {
+    control: 'text',
+    description: 'Label de acessibilidade para leitores de tela',
+    table: {
+      category: 'Accessibility',
+      type: { summary: 'string' },
+      defaultValue: { summary: 'undefined' }
+    }
+  }
+}
+```
+
+### Stories de Acessibilidade Obrigatórias
+
+Sempre crie pelo menos estas stories relacionadas a a11y:
+
+1. **WithAriaLabel** - Exemplo prático de uso de aria-label
+```javascript
+export const WithAriaLabel = {
+  args: {
+    label: 'Delete',
+    ariaLabel: 'Excluir item permanentemente da lista'
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Use aria-label para contexto adicional aos leitores de tela.'
+      }
+    }
+  }
+};
+```
+
+2. **FocusStates** - Demonstração visual de estados de foco e navegação por teclado
+```javascript
+export const FocusStates = {
+  render: () => {
+    // Container com múltiplos componentes para testar navegação Tab
+    // Incluir instruções visuais sobre navegação por teclado
+  },ariaLabel: {
+      control: 'text',
+      description: 'Label de acessibilidade para leitores de tela',
+      table: {
+        category: 'Accessibility',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' }
+      }
+    },
+    onClick: {
+      action: 'clicked',
+      table: { category: 'Actions' }
+    }
+  },
+  args: {
+    label: 'Meu Componente',
+    variant: 'primary',
+    disabled: false,
+    ariaLabel: ''
+```
+
+3. **AccessibilityBestPractices** - Guia visual de boas práticas
+```javascript
+export const AccessibilityBestPractices = {
+  render: () => {
+    // Cards visuais mostrando:
+    // ✅ Exemplos corretos (fundo azul)
+    // ❌ Anti-patterns a evitar (fundo vermelho)
+    // Cada um com exemplo funcional do componente
+  },
+  parameters: { controls: { disable: true } }
+};
+```
+
+### Checklist de Acessibilidade
+- [ ] Controle para aria-label disponível
+- [ ] Story demonstrando uso de aria-label
+- [ ] Story demonstrando navegação por teclado e foco
+- [ ] Story com guia de boas práticas visuais
+- [ ] Documentação inline explicando quando usar cada recurso
+- [ ] Exemplos de anti-patterns (o que NÃO fazer)
 
 ---
 
@@ -124,7 +223,8 @@ export default {
   },
   args: {
     label: 'Meu Componente',
-    variant: 'primary',
+    variant: 'prima,
+    ariaLabel: ''ry',
     disabled: false
   }
 };
@@ -151,6 +251,13 @@ export const Disabled = {
     label: 'Desabilitado',
     disabled: true
   }
+
+// Acessibilidade
+export const WithAriaLabel = {
+  args: {
+    label: 'Excluir',
+    ariaLabel: 'Excluir item permanentemente da lista'
+  }
 };
 ```
 
@@ -163,8 +270,13 @@ Antes de finalizar uma story, verifique:
 - [ ] Meta object com `title`, `tags`, `render`, `argTypes` e `args`
 - [ ] Args padrão definidos no meta para todos os controles
 - [ ] Função `render` que aplica atributos dinamicamente
-- [ ] ArgTypes organizados por categorias (Content, Appearance, Status, Actions)
+- [ ] ArgTypes organizados por categorias (Content, Appearance, Accessibility, Status, Actions)
 - [ ] Documentação clara em cada `argType`
 - [ ] Story `Playground` exportada
 - [ ] Stories de variações específicas exportadas
+- [ ] Remoção correta de atributos booleanos quando false (removeAttribute)
+- [ ] Controle de aria-label incluído na categoria Accessibility
+- [ ] Story demonstrando uso de aria-label
+- [ ] Story demonstrando navegação por teclado e estados de foco
+- [ ] Story com guia visual de boas práticas de acessibilidade
 - [ ] Remoção correta de atributos booleanos quando false (removeAttribute)
