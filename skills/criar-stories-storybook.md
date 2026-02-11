@@ -64,6 +64,89 @@ Um exemplo de "Copy & Paste" do componente sendo invocado em um arquivo React/Ne
 
 ---
 
+## 🚨 Prevenção de Loops e Performance
+
+### Proteção nos Web Components
+Ao criar Web Components que usam outros Web Components aninhados (como `<atlas-icon>` dentro de `<atlas-button>`), adicione proteções contra loops de re-renderização:
+
+```javascript
+class MeuComponente extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this._isRendering = false; // Flag de proteção
+  }
+
+  static get observedAttributes() {
+    return ['prop1', 'prop2'];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    // CRÍTICO: Evita re-renderizações desnecessárias
+    if (this._isRendering || oldValue === newValue) return;
+    
+    if (this.shadowRoot) {
+      this.render();
+    }
+  }
+
+  render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
+    this.shadowRoot.innerHTML = `
+      <style>/* ... */</style>
+      <div>/* ... */</div>
+    `;
+    
+    // Event listeners devem ser adicionados AQUI, no final do render
+    this.setupEventListeners();
+    
+    this._isRendering = false;
+  }
+
+  setupEventListeners() {
+    // Listeners são recriados a cada render, não acumulados
+    const button = this.shadowRoot.querySelector('button');
+    if (button) {
+      button.addEventListener('click', () => {
+        // handler
+      });
+    }
+  }
+}
+```
+
+### Regras Importantes:
+1. **NUNCA adicione event listeners no `connectedCallback()` E no `render()`** - Isso duplica listeners
+2. **SEMPRE adicione a flag `_isRendering`** para prevenir loops infinitos
+3. **SEMPRE verifique `oldValue === newValue`** no `attributeChangedCallback`
+4. **NUNCA use caminhos absolutos** para importar CSS no Shadow DOM (ex: `/tokens/file.css`)
+5. **Event listeners vão no FINAL do `render()`**, não no `connectedCallback()`
+
+### Importações no preview.js
+No `.storybook/preview.js`, importe apenas:
+- Design tokens CSS
+- Fontes globais
+
+**NUNCA importe Web Components no preview.js**, pois isso causa registro duplicado. Deixe cada story importar seus próprios componentes.
+
+```javascript
+// ❌ ERRADO - Não faça isso no preview.js
+import '../components/web/atlas-button/atlas-button.js';
+
+// ✅ CORRETO - Apenas tokens e fontes
+import '../tokens/atlas-design-tokens.css';
+import '../assets/fonts/style.css';
+```
+
+---
+
 ## ♿ Acessibilidade nas Stories
 
 Sempre inclua demonstrações e controles de acessibilidade nas stories:
@@ -265,7 +348,7 @@ export const WithAriaLabel = {
 
 ## ✅ Checklist de Qualidade
 
-Antes de finalizar uma story, verifique:
+### Stories (.stories.js)
 - [ ] Importação do componente Web Component no topo do arquivo
 - [ ] Meta object com `title`, `tags`, `render`, `argTypes` e `args`
 - [ ] Args padrão definidos no meta para todos os controles
@@ -279,4 +362,13 @@ Antes de finalizar uma story, verifique:
 - [ ] Story demonstrando uso de aria-label
 - [ ] Story demonstrando navegação por teclado e estados de foco
 - [ ] Story com guia visual de boas práticas de acessibilidade
-- [ ] Remoção correta de atributos booleanos quando false (removeAttribute)
+
+### Web Components (Performance & Loops)
+- [ ] Flag `_isRendering` declarada no constructor
+- [ ] Verificação `if (this._isRendering) return;` no início do `render()`
+- [ ] Verificação `oldValue === newValue` no `attributeChangedCallback`
+- [ ] Event listeners adicionados APENAS no final do `render()`
+- [ ] Event listeners NÃO duplicados no `connectedCallback()`
+- [ ] Nenhum caminho absoluto para CSS (ex: `/tokens/file.css`)
+- [ ] Importações de CSS relativas ao componente ou via tokens globais
+- [ ] Componentes aninhados (como `<atlas-icon>`) não causam loops

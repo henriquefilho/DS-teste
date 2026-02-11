@@ -247,6 +247,7 @@ class AtlasIcon extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   static get observedAttributes() {
@@ -257,7 +258,9 @@ class AtlasIcon extends HTMLElement {
     this.render();
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(name, oldValue, newValue) {
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
     if (this.shadowRoot) {
       this.render();
     }
@@ -280,6 +283,10 @@ class AtlasIcon extends HTMLElement {
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const unicode = this.getUnicode();
     const fontSize = this.getFontSize();
     const name = this.name;
@@ -307,6 +314,8 @@ class AtlasIcon extends HTMLElement {
       </style>
       <span class="icon ati-${name}" aria-hidden="true">${unicode}</span>
     `;
+    
+    this._isRendering = false;
   }
 }
 

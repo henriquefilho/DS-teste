@@ -2,6 +2,7 @@ class AtlasButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   static get observedAttributes() {
@@ -10,10 +11,12 @@ class AtlasButton extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.setupEventListeners();
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(name, oldValue, newValue) {
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
+    
     if (this.shadowRoot) {
       this.render();
     }
@@ -69,6 +72,10 @@ class AtlasButton extends HTMLElement {
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const isDisabled = this.disabled || this.loading;
     
     // Ícone ou Spinner
@@ -79,7 +86,6 @@ class AtlasButton extends HTMLElement {
         : '';
 
     this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/tokens/atlas-design-tokens.css">
       <style>
         :host {
           display: ${this.fullWidth ? 'block' : 'inline-block'};
@@ -565,6 +571,9 @@ class AtlasButton extends HTMLElement {
         ${this.label ? `<span class="btn__label">${this.label}</span>` : ''}
       </button>
     `;
+    
+    this._isRendering = false;
+    this.setupEventListeners();
   }
 }
 

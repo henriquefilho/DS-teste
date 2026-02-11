@@ -23,6 +23,7 @@ class AtlasLinkButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   static get observedAttributes() {
@@ -128,12 +129,16 @@ class AtlasLinkButton extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this.render();
-    }
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
+    this.render();
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const sizeConfig = AtlasLinkButton.sizeMap[this.size] || AtlasLinkButton.sizeMap['md'];
     const colorTokens = AtlasLinkButton.colorMap[this.color] || AtlasLinkButton.colorMap['primary'];
     
@@ -267,6 +272,8 @@ class AtlasLinkButton extends HTMLElement {
         }
       });
     }
+    
+    this._isRendering = false;
   }
 }
 

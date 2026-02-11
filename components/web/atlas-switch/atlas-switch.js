@@ -26,6 +26,7 @@ class AtlasSwitch extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   static get observedAttributes() {
@@ -34,16 +35,12 @@ class AtlasSwitch extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.setupEventListeners();
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this.render();
-      if (name === 'state') {
-        this.setupEventListeners();
-      }
-    }
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
+    this.render();
   }
 
   // Getters para propriedades
@@ -116,6 +113,10 @@ class AtlasSwitch extends HTMLElement {
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const isChecked = this.checked;
     const isLeft = this.alignment === 'left';
     const hasDescription = this.description.length > 0;
@@ -380,6 +381,7 @@ class AtlasSwitch extends HTMLElement {
       </div>
     `;
 
+    this._isRendering = false;
     this.setupEventListeners();
   }
 

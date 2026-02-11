@@ -23,17 +23,17 @@ class AtlasCheckbox extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   connectedCallback() {
     this.render();
-    this.attachEventListeners();
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this.render();
-    }
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
+    this.render();
   }
 
   get checked() {
@@ -162,6 +162,10 @@ class AtlasCheckbox extends HTMLElement {
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const checked = this.checked;
     const indeterminate = this.indeterminate;
     const disabled = this.disabled;
@@ -394,6 +398,8 @@ class AtlasCheckbox extends HTMLElement {
     if (input) {
       input.indeterminate = indeterminate;
     }
+    
+    this._isRendering = false;
   }
 }
 

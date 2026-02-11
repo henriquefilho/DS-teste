@@ -22,17 +22,19 @@ class AtlasSegmentedControl extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._isRendering = false;
   }
 
   connectedCallback() {
     this.render();
-    this.attachEventListeners();
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(name, oldValue, newValue) {
+    // Evita re-renderizações durante a renderização ou se o valor não mudou
+    if (this._isRendering || oldValue === newValue) return;
+    
     if (this.shadowRoot.innerHTML) {
       this.render();
-      this.attachEventListeners();
     }
   }
 
@@ -91,7 +93,10 @@ class AtlasSegmentedControl extends HTMLElement {
 
     const oldIndex = this.selectedIndex;
     if (oldIndex !== index) {
-      this.selectedIndex = index;
+      // Protege contra re-renderização durante a mudança
+      this._isRendering = true;
+      this.setAttribute('selected-index', index.toString());
+      this._isRendering = false;
 
       // Emitir evento de mudança
       this.dispatchEvent(new CustomEvent('change', {
@@ -113,6 +118,10 @@ class AtlasSegmentedControl extends HTMLElement {
   }
 
   render() {
+    // Protege contra re-renderizações durante a renderização
+    if (this._isRendering) return;
+    this._isRendering = true;
+
     const size = this.size;
     const disabled = this.disabled;
     const selectedIndex = this.selectedIndex;
@@ -273,6 +282,9 @@ class AtlasSegmentedControl extends HTMLElement {
         ` : ''}
       </div>
     `;
+    
+    this._isRendering = false;
+    this.attachEventListeners();
   }
 }
 
