@@ -1,4 +1,4 @@
-class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"})}static get observedAttributes(){return["label","variant","color","size","icon","icon-name","disabled","loading","full-width"]}connectedCallback(){this.render(),this.setupEventListeners()}attributeChangedCallback(){this.shadowRoot&&this.render()}get label(){return this.getAttribute("label")||this.textContent.trim()||"Button"}get variant(){return this.getAttribute("variant")||"filled"}get color(){return this.getAttribute("color")||"primary"}get size(){return this.getAttribute("size")||"md"}get icon(){return this.hasAttribute("icon")}get iconName(){return this.getAttribute("icon-name")||"plus"}get disabled(){return this.hasAttribute("disabled")}get loading(){return this.hasAttribute("loading")}get fullWidth(){return this.hasAttribute("full-width")}setupEventListeners(){const o=this.shadowRoot.querySelector("button");o&&o.addEventListener("click",t=>{if(this.disabled||this.loading){t.preventDefault(),t.stopPropagation();return}})}render(){const o=this.disabled||this.loading,t=this.loading?`<atlas-icon name="loader" size="${this.size==="xl"?"md":"sm"}" class="btn__spinner"></atlas-icon>`:this.icon?`<atlas-icon name="${this.iconName}" size="${this.size==="xl"?"md":"sm"}" class="btn__icon"></atlas-icon>`:"";this.shadowRoot.innerHTML=`
+class a extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"})}static get observedAttributes(){return["label","variant","color","size","icon","icon-name","disabled","loading","full-width"]}connectedCallback(){this.render(),this.setupEventListeners()}attributeChangedCallback(){this.shadowRoot&&this.render()}get label(){return this.getAttribute("label")||this.textContent.trim()||"Button"}get variant(){return this.getAttribute("variant")||"filled"}get color(){return this.getAttribute("color")||"primary"}get size(){return this.getAttribute("size")||"md"}get icon(){return this.hasAttribute("icon")}get iconName(){return this.getAttribute("icon-name")||"plus"}get disabled(){return this.hasAttribute("disabled")}get loading(){return this.hasAttribute("loading")}get fullWidth(){return this.hasAttribute("full-width")}setupEventListeners(){const o=this.shadowRoot.querySelector("button");o&&o.addEventListener("click",t=>{if(this.disabled||this.loading){t.preventDefault(),t.stopPropagation();return}})}render(){const o=this.disabled||this.loading,t=this.loading?`<atlas-icon name="loader" size="${this.size==="xl"?"md":"sm"}" class="btn__spinner"></atlas-icon>`:this.icon?`<atlas-icon name="${this.iconName}" size="${this.size==="xl"?"md":"sm"}" class="btn__icon"></atlas-icon>`:"";this.shadowRoot.innerHTML=`
       <link rel="stylesheet" href="/tokens/atlas-design-tokens.css">
       <style>
         :host {
@@ -83,7 +83,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -102,7 +102,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -121,7 +121,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -140,7 +140,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -159,7 +159,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -178,7 +178,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-filled.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -213,7 +213,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -233,7 +233,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -253,7 +253,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -273,7 +273,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -293,7 +293,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -313,7 +313,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-outlined.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -349,7 +349,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-primary:focus-visible {
-          outline: 2px solid rgba(0, 85, 204, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -369,7 +369,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-danger:focus-visible {
-          outline: 2px solid rgba(204, 0, 0, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -389,7 +389,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-success:focus-visible {
-          outline: 2px solid rgba(25, 135, 84, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -409,7 +409,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-warning:focus-visible {
-          outline: 2px solid rgba(217, 119, 6, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -429,7 +429,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-info:focus-visible {
-          outline: 2px solid rgba(13, 110, 253, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -449,7 +449,7 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         }
 
         button.variant-ghost.color-inverse:focus-visible {
-          outline: 2px solid rgba(255, 255, 255, 0.4);
+          outline: 2px solid var(--atlas-focus-outline-color);
           outline-offset: 2px;
         }
 
@@ -484,4 +484,4 @@ class r extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"
         ${t}
         ${this.label?`<span class="btn__label">${this.label}</span>`:""}
       </button>
-    `}}customElements.define("atlas-button",r);
+    `}}customElements.define("atlas-button",a);
