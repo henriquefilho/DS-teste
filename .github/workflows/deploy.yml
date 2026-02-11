@@ -20,3 +20,5 @@ jobs:
         with:
           folder: storybook-static # pasta de build padrão do Storybook
           branch: gh-pages # branch de publicação
+permissions:
+  contents: write  # Isso permite que o robô escreva na branch gh-pages
