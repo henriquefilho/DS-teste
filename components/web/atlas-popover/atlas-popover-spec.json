@@ -1,0 +1,301 @@
+{
+  "component": "atlas-popover",
+  "type": "web-component",
+  "description": "Container flutuante que exibe informações e ações contextuais. Acionado quando o usuário clica/toca em um elemento e aparece ancorado a este elemento.",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "arrow",
+      "type": "enum",
+      "values": [
+        "top-center",
+        "top-left",
+        "top-right",
+        "bottom-center",
+        "bottom-left",
+        "bottom-right",
+        "side-left",
+        "side-right",
+        "none"
+      ],
+      "default": "top-center",
+      "required": false,
+      "description": "Posição da seta indicadora que aponta para o elemento acionador"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Título do popover (opcional)"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "",
+      "required": true,
+      "description": "Texto do corpo do popover"
+    },
+    {
+      "name": "image-src",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "URL da imagem opcional a ser exibida no topo"
+    },
+    {
+      "name": "image-alt",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Texto alternativo da imagem"
+    },
+    {
+      "name": "action-type",
+      "type": "enum",
+      "values": ["button", "link", "none"],
+      "default": "none",
+      "required": false,
+      "description": "Tipo de ação no footer do popover"
+    },
+    {
+      "name": "action-label",
+      "type": "string",
+      "default": "Button",
+      "required": false,
+      "description": "Label da ação (button ou link)"
+    },
+    {
+      "name": "action-href",
+      "type": "string",
+      "default": "#",
+      "required": false,
+      "description": "URL do link (quando action-type='link')"
+    },
+    {
+      "name": "closable",
+      "type": "boolean",
+      "default": true,
+      "required": false,
+      "description": "Define se o popover pode ser fechado via botão X"
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado de visibilidade do popover"
+    },
+    {
+      "name": "max-width",
+      "type": "string",
+      "default": "278px",
+      "required": false,
+      "description": "Largura máxima do popover"
+    }
+  ],
+  "events": [
+    {
+      "name": "atlas-popover-close",
+      "description": "Disparado quando o popover é fechado via botão X ou programaticamente",
+      "detail": "{ reason: 'close-button' | 'programmatic' }"
+    },
+    {
+      "name": "atlas-popover-action",
+      "description": "Disparado quando a ação (button/link) é clicada",
+      "detail": "{ actionType: 'button' | 'link', label: string }"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão do popover quando visível",
+      "tokens": {
+        "background-color": "var(--atlas-color-surface-static-container-neutral-ultra-soft)",
+        "border-color": "var(--atlas-color-border-default)",
+        "border-width": "var(--atlas-stroke-weight-100)",
+        "border-radius": "var(--atlas-radius-composite-lg)",
+        "box-shadow": "0px var(--atlas-spacing-100) var(--atlas-blur-200) 0px var(--atlas-color-opacity-black-200)",
+        "padding": "var(--atlas-padding-md)",
+        "gap": "var(--atlas-spacing-100)"
+      }
+    }
+  ],
+  "layout": {
+    "padding": "var(--atlas-padding-md) → var(--atlas-spacing-200) → 16px ✅",
+    "gap": "var(--atlas-spacing-100) → 8px ✅ (NÃO usar --atlas-gap-sm que é 12px)",
+    "border-radius": "var(--atlas-radius-composite-lg) → var(--atlas-radius-200) → 16px ✅",
+    "border-width": "var(--atlas-stroke-weight-100) → 1px ✅",
+    "max-width": "278px (extraído do Figma)",
+    "min-width": "278px (Desktop)",
+    "mobile-min-width": "328px (Mobile/App)",
+    "box-shadow": "0px 8px 16px 0px rgba(29,33,37,0.16)"
+  },
+  "typography": {
+    "title": {
+      "font-family": "Open Sans",
+      "font-size": "var(--atlas-typescale-heading-6-size)",
+      "font-weight": "var(--atlas-typescale-heading-6-weight)",
+      "letter-spacing": "var(--atlas-typescale-heading-6-letter-spacing)",
+      "line-height": "1.2",
+      "color": "var(--atlas-color-text-static-neutral-hard)",
+      "reference": ".Old/Heading/H6 do Figma → Migrado para --atlas-typescale-heading-6",
+      "computed-values": "16px, 600 (SemiBold), letter-spacing: 0"
+    },
+    "text": {
+      "font-family": "Open Sans",
+      "font-size": "var(--atlas-typescale-body-sm-size)",
+      "font-weight": "var(--atlas-typescale-body-sm-weight-default)",
+      "letter-spacing": "var(--atlas-typescale-body-sm-letter-spacing)",
+      "line-height": "1.5",
+      "color": "var(--atlas-color-text-static-neutral-hard)",
+      "reference": ".Old/Small/Regular do Figma → Migrado para --atlas-typescale-body-sm",
+      "computed-values": "14px, 400 (Regular), letter-spacing: 0"
+    }
+  },
+  "arrow": {
+    "description": "Seta visual que aponta para o elemento acionador",
+    "implementation": "CSS puro usando ::before e ::after com border-triangle technique",
+    "size": {
+      "width": "12px (6px por lado)",
+      "height": "5px"
+    },
+    "positions": {
+      "top-center": "Centralizada no topo (top: -5px, left: 50%, transform: translateX(-50%))",
+      "top-left": "À esquerda no topo (top: -5px, left: 16px)",
+      "top-right": "À direita no topo (top: -5px, right: 16px)",
+      "bottom-center": "Centralizada na base (bottom: -5px, left: 50%, transform: translateX(-50%))",
+      "bottom-left": "À esquerda na base (bottom: -5px, left: 16px)",
+      "bottom-right": "À direita na base (bottom: -5px, right: 16px)",
+      "side-left": "Lateral esquerda (left: -5px, rotação 90°)",
+      "side-right": "Lateral direita (right: -5px, rotação -90°)",
+      "none": "Sem seta (::before/::after não renderizados)"
+    },
+    "colors": {
+      "fill": "var(--atlas-color-surface-static-container-neutral-ultra-soft)",
+      "border": "var(--atlas-color-border-default)"
+    },
+    "technique": "::before cria borda da seta, ::after cria preenchimento interno",
+    "performance": "Zero requests HTTP, zero processamento SVG, CSS puro"
+  },
+  "close-button": {
+    "description": "Botão icon-button no canto superior direito",
+    "icon": "X icon (chevron-down rotacionado ou ícone específico de fechar)",
+    "size": "24x24px",
+    "position": "absolute, top: 15px, right: 15px",
+    "padding": "var(--atlas-padding-2xs) [4px]",
+    "icon-color": "var(--atlas-color-icon-static-neutral-medium)",
+    "icon-size": "16x16px",
+    "background-hover": "var(--atlas-color-surface-interaction-neutral-ultra-soft-hover)",
+    "border-radius": "var(--atlas-radius-composite-full) [9999px]"
+  },
+  "image": {
+    "description": "Imagem opcional exibida entre o título e o texto",
+    "display": "block",
+    "width": "100%",
+    "border-radius": "Pode ter border-radius nas bordas superiores",
+    "aspect-ratio": "Livre, definido pela imagem",
+    "max-height": "Aproximadamente 146px (extraído do Figma)",
+    "object-fit": "cover"
+  },
+  "footer-actions": {
+    "button": {
+      "component": "atlas-button",
+      "default-props": {
+        "type": "filled",
+        "color": "primary",
+        "size": "small",
+        "label": "Button"
+      }
+    },
+    "link": {
+      "component": "atlas-link-button",
+      "default-props": {
+        "size": "small",
+        "label": "Link"
+      }
+    },
+    "none": {
+      "description": "Sem ação no footer"
+    }
+  },
+  "variations": [
+    {
+      "description": "Desktop - Com título, texto e botão",
+      "count": "48 combinações (6 arrow positions × 2 title × 2 image × 2 action)"
+    },
+    {
+      "description": "Mobile/App - Sem arrow, variações de conteúdo",
+      "count": "9 combinações (3 action types × 3 content variations)"
+    }
+  ],
+  "dependencies": [
+    "atlas-design-tokens.css (tokens de cor, espaçamento, borda)",
+    "assets/fonts/style.css (ícones do close button)",
+    "atlas-button (quando action-type='button')",
+    "atlas-link-button (quando action-type='link')",
+    "atlas-icon (para o close button)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Popover",
+    "node-id": "295-5934",
+    "inspected": "2026-02-12",
+    "variations-inspected": [
+      "295:5935 - Desktop, Arrow=Top-center, Action=Button, Title=True, Image=False",
+      "295:5995 - Desktop, Arrow=Top-center, Action=Button, Title=True, Image=True",
+      "295:6370 - Desktop, Arrow=Top-center, Action=None, Title=False, Image=False"
+    ]
+  },
+  "tokens-mapping": {
+    "atlas-design-tokens.css": {
+      "background": "--atlas-color-surface-static-container-neutral-ultra-soft (mapeado para #FFFFFF no Figma)",
+      "border-color": "--atlas-color-border-default (#D1D6DC - diferença de 1.5% do Figma #ced4da é imperceptível)",
+      "border-width": "--atlas-stroke-weight-100 (1px)",
+      "border-radius": "--atlas-radius-composite-lg (16px, precisa validar se existe no tokens)",
+      "padding": "--atlas-padding-md (16px)",
+      "gap": "--atlas-spacing-100 (8px)",
+      "shadow-offset-y": "--atlas-spacing-100 (8px)",
+      "shadow-blur": "--atlas-blur-200 (16px)",
+      "shadow-color": "--atlas-color-opacity-black-200 (rgba(29,33,37,0.16))",
+      "text-color": "--atlas-color-text-static-neutral-hard",
+      "icon-color": "--atlas-color-icon-static-neutral-medium",
+      "close-button-padding": "--atlas-padding-2xs (4px)",
+      "close-button-radius": "--atlas-radius-composite-full (9999px)"
+    }
+  },
+  "notes": [
+    "✅ RESOLVIDO: Todos os tokens do Figma foram mapeados com sucesso para tokens existentes do Atlas",
+    "✅ Mapeamento de Tokens Figma → Atlas:",
+    "  - atlas/components/popover/background/color → --atlas-color-surface-static-container-neutral-ultra-soft ✅",
+    "  - atlas/components/popover/stroke/color → --atlas-color-border-default ✅",
+    "  - atlas/components/popover/border/radius → --atlas-radius-composite-lg (16px) ✅",
+    "  - atlas/components/popover/spacing/padding/md → --atlas-padding-md (16px) ✅",
+    "  - atlas/components/popover/spacing/gap/sm → --atlas-spacing-100 (8px) ✅",
+    "✅ Tipografia migrada: .Old/Heading/H6 → --atlas-typescale-heading-6 | .Old/Small/Regular → --atlas-typescale-body-sm",
+    "✅ Seta implementada com CSS puro (::before/::after) - zero dependências externas",
+    "✅ Cor da borda: Diferença de 1.5% entre Figma (#ced4da) e token (#D1D6DC) é imperceptível visualmente",
+    "📱 Mobile/App: largura mínima 328px (vs 278px no Desktop), sem arrow",
+    "📦 O componente compõe atlas-button e atlas-link-button dinamicamente baseado em action-type",
+    "🔒 Close button dispara evento customizado 'atlas-popover-close'",
+    "⚡ Posicionamento do popover é responsabilidade do consumidor (via CSS/JS positioning library)",
+    "♿ Acessibilidade: role=dialog, aria-labelledby, aria-describedby, esc-key handler, focus trap quando ações presentes"
+  ],
+  "accessibility": {
+    "role": "dialog ou tooltip (definir baseado no uso)",
+    "aria-labelledby": "ID do título (se presente)",
+    "aria-describedby": "ID do texto",
+    "focus-trap": "Implementar quando action-type='button' ou 'link'",
+    "esc-key": "Deve fechar o popover",
+    "close-button-label": "aria-label='Fechar' no botão X"
+  },
+  "validations-completed": [
+    "✅ VALIDADO: --atlas-radius-composite-lg existe (16px)",
+    "✅ VALIDADO: --atlas-spacing-100 (8px) para gap interno",
+    "✅ VALIDADO: background-color mapeado para --atlas-color-surface-static-container-neutral-ultra-soft",
+    "✅ DECIDIDO: Seta implementada com CSS puro (::before/::after) - border-triangle technique",
+    "✅ DECIDIDO: Cor da borda usa --atlas-color-border-default (diferença < 2% é imperceptível)",
+    "✅ DECIDIDO: Tipografia migrada para tokens modernos (heading-6 e body-sm)",
+    "✅ APROVADO: Componente pronto para implementação - ver DECISOES-TECNICAS.md"
+  ]
+}

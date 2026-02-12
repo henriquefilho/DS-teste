@@ -279,6 +279,10 @@ class AtlasIcon extends HTMLElement {
   }
 
   getFontSize() {
+    // Se não houver atributo size, usa 'inherit' para herdar do pai
+    if (!this.hasAttribute('size')) {
+      return 'inherit';
+    }
     return AtlasIcon.sizeMap[this.size] || AtlasIcon.sizeMap['md'];
   }
 
@@ -297,6 +301,7 @@ class AtlasIcon extends HTMLElement {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          font-size: ${fontSize === 'inherit' ? 'inherit' : fontSize};
         }
 
         .icon {
@@ -307,7 +312,7 @@ class AtlasIcon extends HTMLElement {
           font-variant: normal;
           text-transform: none;
           line-height: 1;
-          font-size: ${fontSize};
+          font-size: ${fontSize === 'inherit' ? '1em' : fontSize};
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }

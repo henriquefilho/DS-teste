@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Popover - Demo</title>
+  
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../../tokens/atlas-design-tokens.css">
+  
+  <!-- Icon Font -->
+  <link rel="stylesheet" href="../../../assets/fonts/style.css">
+  
+  <!-- Components -->
+  <script src="./atlas-popover.js"></script>
+  <script src="../atlas-button/atlas-button.js"></script>
+  <script src="../atlas-link-button/atlas-link-button.js"></script>
+  <script src="../atlas-icon-button/atlas-icon-button.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      color: #1D2125;
+    }
+
+    .subtitle {
+      color: #5E6877;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+
+    .section {
+      background: white;
+      padding: 32px;
+      margin-bottom: 32px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1D2125;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .demo-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .demo-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #5E6877;
+    }
+
+    .demo-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      padding: 32px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .trigger-button {
+      margin-bottom: 16px;
+    }
+
+    .code-block {
+      background: #1D2125;
+      color: #E5E8EC;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    .event-log {
+      background: #F2F4F7;
+      border: 1px solid #D1D6DC;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .event-log-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .event-item {
+      font-size: 13px;
+      padding: 4px 0;
+      color: #464E5B;
+      font-family: monospace;
+    }
+
+    .info-box {
+      background: #E6EAF8;
+      border-left: 4px solid #0030B9;
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 16px;
+    }
+
+    .info-box p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1D2125;
+    }
+  </style>
+</head>
+<body>
+  <h1>🗨️ Atlas Popover</h1>
+  <p class="subtitle">Container flutuante que exibe informações e ações contextuais</p>
+
+  <!-- Basic Examples -->
+  <div class="section">
+    <h2 class="section-title">Variações Básicas</h2>
+    
+    <div class="demo-grid">
+      <div class="demo-item">
+        <span class="demo-label">Apenas Texto</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover1')">
+          Mostrar Popover
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover1"
+            arrow="top-center"
+            text="Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nisl et purus pharetra euismod."
+            closable
+          ></atlas-popover>
+        </div>
+        <div class="code-block">&lt;atlas-popover
+  arrow="top-center"
+  text="Body text..."
+  closable
+&gt;&lt;/atlas-popover&gt;</div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Com Título</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover2')">
+          Mostrar Popover
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover2"
+            arrow="top-center"
+            title="Title"
+            text="Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nisl et purus pharetra euismod."
+            closable
+          ></atlas-popover>
+        </div>
+        <div class="code-block">&lt;atlas-popover
+  arrow="top-center"
+  title="Title"
+  text="Body text..."
+  closable
+&gt;&lt;/atlas-popover&gt;</div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Com Botão</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover3')">
+          Mostrar Popover
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover3"
+            arrow="top-center"
+            title="Title"
+            text="Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nisl et purus pharetra euismod."
+            action-type="button"
+            action-label="Button"
+            closable
+          ></atlas-popover>
+        </div>
+        <div class="code-block">&lt;atlas-popover
+  arrow="top-center"
+  title="Title"
+  text="Body text..."
+  action-type="button"
+  action-label="Button"
+  closable
+&gt;&lt;/atlas-popover&gt;</div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Com Link</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover4')">
+          Mostrar Popover
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover4"
+            arrow="top-center"
+            title="Title"
+            text="Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nisl et purus pharetra euismod."
+            action-type="link"
+            action-label="Link"
+            action-href="https://example.com"
+            closable
+          ></atlas-popover>
+        </div>
+        <div class="code-block">&lt;atlas-popover
+  arrow="top-center"
+  title="Title"
+  text="Body text..."
+  action-type="link"
+  action-label="Link"
+  closable
+&gt;&lt;/atlas-popover&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow Positions -->
+  <div class="section">
+    <h2 class="section-title">Posições da Seta (Arrow)</h2>
+    
+    <div class="demo-grid">
+      <div class="demo-item">
+        <span class="demo-label">Top Center</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-top-center')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-top-center"
+            arrow="top-center"
+            title="Top Center"
+            text="Seta centralizada no topo"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Top Left</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-top-left')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-top-left"
+            arrow="top-left"
+            title="Top Left"
+            text="Seta à esquerda no topo"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Top Right</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-top-right')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-top-right"
+            arrow="top-right"
+            title="Top Right"
+            text="Seta à direita no topo"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Bottom Center</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-bottom-center')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-bottom-center"
+            arrow="bottom-center"
+            title="Bottom Center"
+            text="Seta centralizada na base"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Bottom Left</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-bottom-left')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-bottom-left"
+            arrow="bottom-left"
+            title="Bottom Left"
+            text="Seta à esquerda na base"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Bottom Right</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-bottom-right')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-bottom-right"
+            arrow="bottom-right"
+            title="Bottom Right"
+            text="Seta à direita na base"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Side Left</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-side-left')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-side-left"
+            arrow="side-left"
+            title="Side Left"
+            text="Seta na lateral esquerda"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">Side Right</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-side-right')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-side-right"
+            arrow="side-right"
+            title="Side Right"
+            text="Seta na lateral direita"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+
+      <div class="demo-item">
+        <span class="demo-label">No Arrow</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-no-arrow')">
+          Mostrar
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-no-arrow"
+            arrow="none"
+            title="No Arrow"
+            text="Popover sem seta"
+            closable
+          ></atlas-popover>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- With Image -->
+  <div class="section">
+    <h2 class="section-title">Com Imagem</h2>
+    
+    <div class="demo-grid">
+      <div class="demo-item">
+        <span class="demo-label">Popover com Imagem</span>
+        <atlas-button class="trigger-button" onclick="togglePopover('popover-image')">
+          Mostrar Popover
+        </atlas-button>
+        <div class="demo-wrapper">
+          <atlas-popover 
+            id="popover-image"
+            arrow="top-center"
+            title="Title"
+            text="Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nisl et purus pharetra euismod."
+            image-src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=400&h=200&fit=crop"
+            image-alt="Exemplo de imagem"
+            action-type="button"
+            action-label="Button"
+            closable
+          ></atlas-popover>
+        </div>
+        <div class="code-block">&lt;atlas-popover
+  arrow="top-center"
+  title="Title"
+  text="Body text..."
+  image-src="https://..."
+  image-alt="Exemplo"
+  action-type="button"
+  closable
+&gt;&lt;/atlas-popover&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events Demo -->
+  <div class="section">
+    <h2 class="section-title">Eventos Customizados</h2>
+    
+    <div class="demo-item">
+      <span class="demo-label">Teste de Eventos</span>
+      <atlas-button class="trigger-button" onclick="togglePopover('popover-events')">
+        Mostrar Popover
+      </atlas-button>
+      <div class="demo-wrapper">
+        <atlas-popover 
+          id="popover-events"
+          arrow="top-center"
+          title="Teste de Eventos"
+          text="Clique no botão X ou no botão de ação para disparar eventos. Pressione ESC para fechar."
+          action-type="button"
+          action-label="Disparar Ação"
+          closable
+        ></atlas-popover>
+      </div>
+      
+      <div class="event-log">
+        <div class="event-log-title">📋 Console de Eventos:</div>
+        <div id="event-console"></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Eventos disponíveis:</strong></p>
+      <p>• <code>atlas-popover-close</code> - Disparado ao fechar (detail: { reason })</p>
+      <p>• <code>atlas-popover-action</code> - Disparado ao clicar na ação (detail: { actionType, label })</p>
+      <p>• <strong>ESC key</strong> - Fecha o popover automaticamente</p>
+    </div>
+  </div>
+
+  <!-- Interactive Demo -->
+  <div class="section">
+    <h2 class="section-title">Demo Interativo</h2>
+    
+    <div class="demo-item">
+      <span class="demo-label">Configure o Popover</span>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        <div>
+          <label style="display: block; margin-bottom: 4px; font-size: 14px;">Arrow Position:</label>
+          <select id="arrow-select" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #D1D6DC;">
+            <option value="top-center">Top Center</option>
+            <option value="top-left">Top Left</option>
+            <option value="top-right">Top Right</option>
+            <option value="bottom-center">Bottom Center</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="bottom-right">Bottom Right</option>
+            <option value="side-left">Side Left</option>
+            <option value="side-right">Side Right</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+        
+        <div>
+          <label style="display: block; margin-bottom: 4px; font-size: 14px;">Action Type:</label>
+          <select id="action-select" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #D1D6DC;">
+            <option value="none">None</option>
+            <option value="button">Button</option>
+            <option value="link">Link</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; margin-bottom: 4px; font-size: 14px;">
+            <input type="checkbox" id="title-check" checked> Mostrar Título
+          </label>
+        </div>
+
+        <div>
+          <label style="display: block; margin-bottom: 4px; font-size: 14px;">
+            <input type="checkbox" id="closable-check" checked> Botão de Fechar
+          </label>
+        </div>
+      </div>
+
+      <atlas-button onclick="updateInteractivePopover(); togglePopover('popover-interactive');">
+        Aplicar e Mostrar
+      </atlas-button>
+
+      <div class="demo-wrapper" style="margin-top: 16px;">
+        <atlas-popover 
+          id="popover-interactive"
+          arrow="top-center"
+          title="Título Interativo"
+          text="Este é um popover configurável. Use os controles acima para alterar suas propriedades."
+          closable
+        ></atlas-popover>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle popover visibility
+    function togglePopover(id) {
+      const popover = document.getElementById(id);
+      if (popover) {
+        if (popover.hasAttribute('open')) {
+          popover.removeAttribute('open');
+        } else {
+          popover.setAttribute('open', '');
+        }
+      }
+    }
+
+    // Event listeners for events demo
+    const eventsPopover = document.getElementById('popover-events');
+    const eventConsole = document.getElementById('event-console');
+
+    function logEvent(eventName, detail) {
+      const timestamp = new Date().toLocaleTimeString();
+      const eventItem = document.createElement('div');
+      eventItem.className = 'event-item';
+      eventItem.textContent = `[${timestamp}] ${eventName}: ${JSON.stringify(detail)}`;
+      eventConsole.insertBefore(eventItem, eventConsole.firstChild);
+      
+      // Keep only last 10 events
+      while (eventConsole.children.length > 10) {
+        eventConsole.removeChild(eventConsole.lastChild);
+      }
+    }
+
+    eventsPopover.addEventListener('atlas-popover-close', (e) => {
+      logEvent('atlas-popover-close', e.detail);
+    });
+
+    eventsPopover.addEventListener('atlas-popover-action', (e) => {
+      logEvent('atlas-popover-action', e.detail);
+    });
+
+    // Interactive demo
+    function updateInteractivePopover() {
+      const popover = document.getElementById('popover-interactive');
+      const arrow = document.getElementById('arrow-select').value;
+      const actionType = document.getElementById('action-select').value;
+      const showTitle = document.getElementById('title-check').checked;
+      const closable = document.getElementById('closable-check').checked;
+
+      popover.setAttribute('arrow', arrow);
+      popover.setAttribute('action-type', actionType);
+      
+      if (showTitle) {
+        popover.setAttribute('title', 'Título Interativo');
+      } else {
+        popover.removeAttribute('title');
+      }
+
+      if (closable) {
+        popover.setAttribute('closable', '');
+      } else {
+        popover.removeAttribute('closable');
+      }
+
+      if (actionType === 'button') {
+        popover.setAttribute('action-label', 'Ação');
+      } else if (actionType === 'link') {
+        popover.setAttribute('action-label', 'Ver mais');
+        popover.setAttribute('action-href', '#');
+      }
+    }
+
+    // Show first popover on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        togglePopover('popover1');
+      }, 500);
+    });
+  </script>
+</body>
+</html>

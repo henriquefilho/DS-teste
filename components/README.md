@@ -80,6 +80,65 @@ Web Component para ícones do Atlas Design System. Suporta 231 ícones.
 
 ---
 
+### Atlas Popover
+**Localização:** `components/web/atlas-popover/`
+
+Web Component para popovers contextuais do Atlas Design System.
+
+**Atributos:**
+- `arrow`: `top-center` | `top-left` | `top-right` | `bottom-center` | `bottom-left` | `bottom-right` | `side-left` | `side-right` | `none` (default: `top-center`)
+- `title`: string (opcional)
+- `text`: string (obrigatório)
+- `image-src`: URL da imagem (opcional)
+- `image-alt`: texto alternativo da imagem
+- `action-type`: `none` | `button` | `link` (default: `none`)
+- `action-label`: texto da ação (default: `Button`)
+- `action-href`: URL do link (quando action-type='link')
+- `closable`: boolean (default: `true`)
+- `open`: boolean (default: `false`)
+- `max-width`: valor CSS (default: `278px`)
+
+**Eventos:**
+- `atlas-popover-close`: Disparado ao fechar (detail: `{ reason: string }`)
+- `atlas-popover-action`: Disparado ao clicar na ação (detail: `{ actionType: string, label: string }`)
+
+**Exemplo:**
+```html
+<!-- Popover simples -->
+<atlas-popover
+  arrow="top-center"
+  text="Mensagem de ajuda contextual"
+  open
+></atlas-popover>
+
+<!-- Popover completo -->
+<atlas-popover
+  arrow="top-center"
+  title="Título"
+  text="Descrição detalhada..."
+  action-type="button"
+  action-label="Entendi"
+  closable
+  open
+></atlas-popover>
+
+<!-- Com imagem -->
+<atlas-popover
+  arrow="top-center"
+  title="Novo Recurso"
+  text="Confira a novidade!"
+  image-src="https://..."
+  image-alt="Preview"
+  action-type="button"
+  closable
+  open
+></atlas-popover>
+```
+
+**Demo:** [web/atlas-popover/demo.html](./web/atlas-popover/demo.html)
+
+---
+
 ## 📱 Componentes MAUI (.NET)
 
 ### AtlasButton

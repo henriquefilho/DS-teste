@@ -1,0 +1,163 @@
+{
+  "component": "atlas-icon-button",
+  "type": "web-component",
+  "description": "Botão interativo que utiliza apenas um ícone como indicador visual de ação. Requer tooltip para acessibilidade.",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "icon-name",
+      "type": "string",
+      "required": true,
+      "description": "Nome do ícone a ser exibido (deve corresponder aos ícones disponíveis no atlas-icon)"
+    },
+    {
+      "name": "color",
+      "type": "enum",
+      "values": ["secondary", "primary", "success", "warning", "danger", "info", "white"],
+      "default": "secondary",
+      "required": true,
+      "description": "Cor semântica do botão que define os tokens de background e ícone"
+    },
+    {
+      "name": "size",
+      "type": "enum",
+      "values": ["sm", "md", "lg", "xl", "xxl", "auto"],
+      "default": "md",
+      "required": true,
+      "description": "Tamanho do botão - sm:24px, md:32px, lg:40px, xl:48px, xxl:56px, auto:20px"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado desabilitado que remove interatividade e aplica estilo visual disabled"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": true,
+      "description": "Label descritivo para acessibilidade (obrigatório pois é icon-only)"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão sem interação - sem background visível",
+      "tokens": {},
+      "behavior": "Ícone com cor estática baseada na propriedade `color`"
+    },
+    {
+      "name": "hover",
+      "description": "Estado ao passar o mouse sobre o botão",
+      "tokens": {
+        "background-secondary": "--atlas-button-background-color-ghost-neutral-hover",
+        "background-primary": "--atlas-button-background-color-ghost-primary-hover",
+        "background-success": "--atlas-button-background-color-ghost-success-hover",
+        "background-warning": "--atlas-button-background-color-ghost-warning-hover",
+        "background-danger": "--atlas-button-background-color-ghost-danger-hover",
+        "background-info": "--atlas-button-background-color-ghost-info-hover",
+        "background-white": "--atlas-button-background-color-ghost-inverse-hover"
+      },
+      "behavior": "Aplica background color conforme cor selecionada"
+    },
+    {
+      "name": "pressed",
+      "description": "Estado ao clicar/pressionar o botão (:active)",
+      "tokens": {
+        "background-secondary": "--atlas-button-background-color-ghost-neutral-pressed",
+        "background-primary": "--atlas-button-background-color-ghost-primary-pressed",
+        "background-success": "--atlas-button-background-color-ghost-success-pressed",
+        "background-warning": "--atlas-button-background-color-ghost-warning-pressed",
+        "background-danger": "--atlas-button-background-color-ghost-danger-pressed",
+        "background-info": "--atlas-button-background-color-ghost-info-pressed",
+        "background-white": "--atlas-button-background-color-ghost-inverse-pressed"
+      },
+      "behavior": "Background mais escuro que hover para feedback tátil"
+    },
+    {
+      "name": "focus",
+      "description": "Estado de foco via teclado (:focus-visible)",
+      "tokens": {
+        "outline": "0 0 0 var(--atlas-focus-outline-size, 2px) var(--atlas-focus-outline-color, #3359c7)"
+      },
+      "behavior": "Adiciona outline de foco sem alterar background"
+    },
+    {
+      "name": "disabled",
+      "description": "Estado desabilitado que remove interação",
+      "tokens": {
+        "icon-color": "--atlas-button-icon-color-disabled-default",
+        "icon-color-white": "--atlas-button-icon-color-disabled-inverse",
+        "cursor": "not-allowed",
+        "pointer-events": "none"
+      },
+      "behavior": "Ícone fica cinza (#D1D6DC) exceto variante white que usa disabled-inverse"
+    }
+  ],
+  "layout": {
+    "padding": "--atlas-padding-2xs (4px extraído do Figma)",
+    "border-radius": "--atlas-radius-composite-full (9999px)",
+    "display": "inline-flex",
+    "align-items": "center",
+    "justify-content": "center",
+    "notes": [
+      "Container externo tem tamanho fixo baseado em `size`",
+      "Ícone interno tem tamanho específico por size: sm=16px, md=20px, lg=24px, xl=28px, xxl=32px, auto=12px",
+      "Padding de 4px é aplicado ao container interno que contém o ícone"
+    ]
+  },
+  "iconography": {
+    "size-mapping": {
+      "sm": "16px",
+      "md": "20px",
+      "lg": "24px",
+      "xl": "28px",
+      "xxl": "32px",
+      "auto": "12px"
+    },
+    "color-tokens": {
+      "secondary": "--atlas-button-icon-color-static-neutral",
+      "primary": "--atlas-button-icon-color-static-primary",
+      "success": "--atlas-button-icon-color-static-success",
+      "warning": "--atlas-button-icon-color-static-warning",
+      "danger": "--atlas-button-icon-color-static-danger",
+      "info": "--atlas-button-icon-color-static-info",
+      "white": "--atlas-button-icon-color-static-inverse"
+    },
+    "notes": "Ícones usam tokens ESTÁTICOS (não interativos) pois a cor não muda nos estados hover/pressed - apenas o background muda"
+  },
+  "variations": [
+    {
+      "description": "7 cores × 6 tamanhos × 7 estados (default, hover, pressed, focus, disabled, loading-skeleton, loading-request)",
+      "count": "294 variações possíveis no total"
+    },
+    {
+      "description": "Implementação inicial cobrirá: 7 cores × 6 tamanhos × 5 estados básicos",
+      "count": "210 variações na v1.0.0"
+    }
+  ],
+  "dependencies": [
+    "../../tokens/atlas-design-tokens.css (obrigatório para tokens)",
+    "../../assets/fonts/style.css (obrigatório para ícones)",
+    "../atlas-icon/atlas-icon.js (componente de ícone reutilizável)"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
+    "component": "Icon button",
+    "node-id": "22178:270656",
+    "documentation": "https://asaasdev.atlassian.net/wiki/x/t4DABgE",
+    "inspected": "2026-02-12"
+  },
+  "notes": [
+    "⚠️ CRÍTICO: Ícones usam tokens ESTÁTICOS conforme protocolo seção 2",
+    "O background usa tokens de BUTTON GHOST (ghost/neutral, ghost/primary, etc)",
+    "Estado Default não tem background - apenas ícone visível",
+    "Estados Hover e Pressed aplicam background colorido conforme cor selecionada",
+    "Focus adiciona outline sem alterar cores de fundo ou ícone",
+    "Disabled usa tokens específicos de disabled (não são os mesmos do estado default)",
+    "White/Inverse usa tokens `-inverse` em vez dos padrões",
+    "Badge opcional não será implementado na v1.0.0 (recurso futuro)",
+    "Loading states (skeleton e request status) não serão implementados na v1.0.0"
+  ]
+}

@@ -94,6 +94,13 @@
       "default": false,
       "required": false,
       "description": "Exibe um ícone de informação ao lado do label (para tooltips/popovers)"
+    },
+    {
+      "name": "icon-popover-name",
+      "type": "string",
+      "default": "info",
+      "required": false,
+      "description": "Nome do ícone exibido no popover. Aceita qualquer ícone válido do atlas-icon (ex: 'info', 'help-circle', 'settings-01', etc.). Só tem efeito quando icon-popover=true"
     }
   ],
   "states": [
@@ -144,7 +151,8 @@
         "background-checked": "--atlas-color-surface-control-active-read-only (var(--atlas-color-pale-sky-300, #B8C0CB))",
         "background-unchecked": "--atlas-color-surface-control-inactive-read-only (var(--atlas-color-pale-sky-10, #FCFCFD))",
         "border": "--atlas-color-border-default (var(--atlas-color-pale-sky-200, #D1D6DC))",
-        "thumb-color": "--atlas-color-surface-static-shape-neutral-soft (#B8C0CB - cinza neutro para ambos checked/unchecked)",
+        "thumb-color-unchecked": "--atlas-color-surface-static-shape-neutral-soft (#B8C0CB - cinza neutro)",
+        "thumb-color-checked": "--atlas-color-surface-static-container-neutral-ultra-soft (#FCFCFD - branco)",
         "label-color": "--atlas-color-text-static-neutral-hard (var(--atlas-color-pale-sky-900, #1d2125))",
         "description-color": "--atlas-color-text-static-neutral-medium (var(--atlas-color-pale-sky-600, #5e6877))"
       },
@@ -219,7 +227,8 @@
   "dependencies": [
     "../../tokens/atlas-design-tokens.css (obrigatório)",
     "../../assets/fonts/style.css (para icon-popover)",
-    "../atlas-icon/atlas-icon.js (se icon-popover=true)"
+    "../atlas-icon-button/atlas-icon-button.js (se icon-popover=true)",
+    "../atlas-icon/atlas-icon.js (dependência do atlas-icon-button)"
   ],
   "figma": {
     "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
@@ -234,10 +243,11 @@
     "O componente deve emitir evento 'change' quando o valor é alterado",
     "Estados read-only e disabled devem prevenir interação (pointer-events: none)",
     "O thumb (círculo) tem transição suave ao mudar de estado (transition: transform 0.2s ease, background 0.2s ease)",
-    "THUMB COLORS: Default/Error/Read-only usam branco (#FCFCFD), Disabled unchecked usa cinza claro (#D1D6DC), Disabled checked usa cinza médio (#9AA4B3)",
+    "THUMB COLORS: Default/Error unchecked usam azul primário (#0030B9), Default/Error checked usam branco (#FCFCFD), Read-only unchecked usa cinza neutro (#B8C0CB), Read-only checked usa branco (#FCFCFD), Disabled unchecked usa cinza claro (#D1D6DC), Disabled checked usa cinza médio (#9AA4B3)",
     "Border aparece apenas no estado unchecked (exceto disabled que sempre tem border)",
     "Label e description respeitam hierarquia visual conforme tokens",
-    "Icon-popover usa chevron-down (size=sm, 16px) por padrão",
+    "Icon-popover usa atlas-icon-button com ícone customizável via icon-popover-name (default: 'info', size: 'sm' 24px, color: 'primary')",
+    "Icon-popover-name aceita qualquer ícone válido do atlas-icon (ex: 'info', 'help-circle', 'lock-01', 'beaker-02', 'bell-01', 'settings-01', etc.)",
     "Error-text aparece apenas quando state='error'",
     "Alignment='right' inverte a ordem dos elementos (label à esquerda, switch à direita)"
   ]

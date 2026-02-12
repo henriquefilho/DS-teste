@@ -11,6 +11,7 @@
  * @attr {string} state - Estado: "default" | "disabled" | "read-only" | "error" (default: "default")
  * @attr {string} error-text - Mensagem de erro (quando state="error")
  * @attr {boolean} icon-popover - Exibe ícone de informação ao lado do label
+ * @attr {string} icon-popover-name - Nome do ícone do popover (default: "info")
  * 
  * @fires change - Disparado quando o estado do switch muda
  * 
@@ -30,7 +31,7 @@ class AtlasSwitch extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['alignment', 'checked', 'label', 'strong-label', 'description', 'state', 'error-text', 'icon-popover'];
+    return ['alignment', 'checked', 'label', 'strong-label', 'description', 'state', 'error-text', 'icon-popover', 'icon-popover-name'];
   }
 
   connectedCallback() {
@@ -74,6 +75,10 @@ class AtlasSwitch extends HTMLElement {
 
   get iconPopover() {
     return this.hasAttribute('icon-popover');
+  }
+
+  get iconPopoverName() {
+    return this.getAttribute('icon-popover-name') || 'info';
   }
 
   // Setters para propriedades
@@ -156,6 +161,7 @@ class AtlasSwitch extends HTMLElement {
           --local-thumb-disabled-light: var(--atlas-color-pale-sky-200, #D1D6DC);
           --local-thumb-disabled-medium: var(--atlas-color-pale-sky-400, #9AA4B3);
           --local-thumb-neutral: var(--atlas-color-surface-static-shape-neutral-soft, var(--atlas-color-pale-sky-300, #B8C0CB));
+          --local-thumb-neutral-inverse: var(--atlas-color-surface-static-container-neutral-ultra-soft, var(--atlas-color-pale-sky-10, #FCFCFD));
           --local-thumb-error: var(--atlas-color-surface-static-shape-error-hard, var(--atlas-color-red-ribbon-600, #B02A37));
           
           --local-text-neutral-hard: var(--atlas-color-text-static-neutral-hard, var(--atlas-color-pale-sky-900, #1d2125));
@@ -264,9 +270,13 @@ class AtlasSwitch extends HTMLElement {
           background: var(--local-thumb-disabled-medium);
         }
 
-        /* Thumb Colors - Read-only State (cinza neutro para ambos checked/unchecked) */
-        .switch-control.read-only .switch-thumb {
+        /* Thumb Colors - Read-only State (cinza neutro para unchecked, branco para checked) */
+        .switch-control.read-only.unchecked .switch-thumb {
           background: var(--local-thumb-neutral);
+        }
+
+        .switch-control.read-only.checked .switch-thumb {
+          background: var(--local-thumb-neutral-inverse);
         }
 
         /* Thumb Colors - Error State */
@@ -326,22 +336,6 @@ class AtlasSwitch extends HTMLElement {
           color: var(--local-text-error);
         }
 
-        /* Icon Popover Placeholder */
-        .icon-popover {
-          width: 24px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          border-radius: var(--atlas-radius-composite-full, 9999px);
-          cursor: pointer;
-        }
-
-        .icon-popover:hover {
-          background: var(--local-bg-hover);
-        }
-
         /* Non-interactive states */
         .switch-control.disabled,
         .switch-control.read-only {
@@ -358,9 +352,12 @@ class AtlasSwitch extends HTMLElement {
               ${this.label}
             </span>
             ${this.iconPopover ? `
-              <div class="icon-popover">
-                <atlas-icon name="chevron-down" size="sm"></atlas-icon>
-              </div>
+              <atlas-icon-button 
+                icon-name="${this.iconPopoverName}" 
+                size="sm" 
+                color="primary"
+                aria-label="Informações adicionais">
+              </atlas-icon-button>
             ` : ''}
           </div>
           
