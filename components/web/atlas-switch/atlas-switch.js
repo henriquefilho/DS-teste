@@ -12,6 +12,7 @@
  * @attr {string} error-text - Mensagem de erro (quando state="error")
  * @attr {boolean} icon-popover - Exibe ícone de informação ao lado do label
  * @attr {string} icon-popover-name - Nome do ícone do popover (default: "info")
+ * @attr {boolean} hide-label - Oculta o label, exibindo apenas o controle switch (default: false)
  * 
  * @fires change - Disparado quando o estado do switch muda
  * 
@@ -31,7 +32,7 @@ class AtlasSwitch extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['alignment', 'checked', 'label', 'strong-label', 'description', 'state', 'error-text', 'icon-popover', 'icon-popover-name'];
+    return ['alignment', 'checked', 'label', 'strong-label', 'description', 'state', 'error-text', 'icon-popover', 'icon-popover-name', 'hide-label'];
   }
 
   connectedCallback() {
@@ -79,6 +80,10 @@ class AtlasSwitch extends HTMLElement {
 
   get iconPopoverName() {
     return this.getAttribute('icon-popover-name') || 'info';
+  }
+
+  get hideLabel() {
+    return this.hasAttribute('hide-label');
   }
 
   // Setters para propriedades
@@ -344,37 +349,41 @@ class AtlasSwitch extends HTMLElement {
       </style>
 
       <div class="switch-wrapper">
-        ${isLeft ? this.renderSwitch(isChecked, isDisabled, isReadOnly) : ''}
-        
-        <div class="switch-content">
-          <div class="label-row">
-            <span class="switch-label ${this.strongLabel ? 'strong' : ''} ${isDisabled ? 'disabled' : ''}">
-              ${this.label}
-            </span>
-            ${this.iconPopover ? `
-              <atlas-icon-button 
-                icon-name="${this.iconPopoverName}" 
-                size="sm" 
-                color="primary"
-                aria-label="Informações adicionais">
-              </atlas-icon-button>
+        ${this.hideLabel ? `
+          ${this.renderSwitch(isChecked, isDisabled, isReadOnly)}
+        ` : `
+          ${isLeft ? this.renderSwitch(isChecked, isDisabled, isReadOnly) : ''}
+          
+          <div class="switch-content">
+            <div class="label-row">
+              <span class="switch-label ${this.strongLabel ? 'strong' : ''} ${isDisabled ? 'disabled' : ''}">
+                ${this.label}
+              </span>
+              ${this.iconPopover ? `
+                <atlas-icon-button 
+                  icon-name="${this.iconPopoverName}" 
+                  size="sm" 
+                  color="primary"
+                  aria-label="Informações adicionais">
+                </atlas-icon-button>
+              ` : ''}
+            </div>
+            
+            ${hasDescription ? `
+              <div class="switch-description ${isDisabled ? 'disabled' : ''}">
+                ${this.description}
+              </div>
+            ` : ''}
+            
+            ${showError ? `
+              <div class="error-text">
+                ${this.errorText}
+              </div>
             ` : ''}
           </div>
-          
-          ${hasDescription ? `
-            <div class="switch-description ${isDisabled ? 'disabled' : ''}">
-              ${this.description}
-            </div>
-          ` : ''}
-          
-          ${showError ? `
-            <div class="error-text">
-              ${this.errorText}
-            </div>
-          ` : ''}
-        </div>
 
-        ${!isLeft ? this.renderSwitch(isChecked, isDisabled, isReadOnly) : ''}
+          ${!isLeft ? this.renderSwitch(isChecked, isDisabled, isReadOnly) : ''}
+        `}
       </div>
     `;
 

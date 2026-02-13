@@ -170,54 +170,17 @@ class AtlasPopover extends HTMLElement {
         /* Arrow Styles - CSS Border Triangle Technique */
         ${this._getArrowStyles()}
 
-        /* Close Button */
-        .close-button {
-          position: absolute;
-          top: 15px;
-          right: 15px;
-          width: 24px;
-          height: 24px;
+        /* Header: Título + Close Button */
+        .popover-header {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: var(--atlas-padding-2xs);
-          border: none;
-          background: transparent;
-          border-radius: var(--atlas-radius-composite-full);
-          cursor: pointer;
-          transition: background-color 0.2s ease;
-        }
-
-        .close-button:hover {
-          background-color: var(--atlas-color-surface-interaction-neutral-ultra-soft-hover);
-        }
-
-        .close-button:active {
-          background-color: var(--atlas-color-surface-interaction-neutral-ultra-soft-pressed);
-        }
-
-        .close-icon {
-          color: var(--atlas-color-icon-static-neutral-medium);
-          font-size: 16px;
-          line-height: 1;
-        }
-
-        /* Image */
-        .popover-image {
-          width: 100%;
-          display: block;
-          object-fit: cover;
-          max-height: 146px;
-          border-radius: var(--atlas-radius-100);
-          margin: calc(var(--atlas-padding-md) * -1) calc(var(--atlas-padding-md) * -1) 0;
-          width: calc(100% + var(--atlas-padding-md) * 2);
-        }
-
-        /* Content */
-        .popover-content {
-          display: flex;
-          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
           gap: var(--atlas-spacing-100);
+          width: 100%;
+        }
+
+        .popover-header:empty {
+          display: none;
         }
 
         .popover-title {
@@ -228,7 +191,29 @@ class AtlasPopover extends HTMLElement {
           line-height: 1.2;
           color: var(--atlas-color-text-static-neutral-hard);
           margin: 0;
-          padding-right: ${this.closable ? '24px' : '0'};
+          flex: 1;
+        }
+
+        .close-button {
+          flex-shrink: 0;
+        }
+
+        /* Image */
+        .popover-image {
+          width: calc(100% + var(--atlas-padding-md) * 2);
+          margin-left: calc(var(--atlas-padding-md) * -1);
+          margin-right: calc(var(--atlas-padding-md) * -1);
+          display: block;
+          object-fit: cover;
+          max-height: 146px;
+          border-radius: 0;
+        }
+
+        /* Content */
+        .popover-content {
+          display: flex;
+          flex-direction: column;
+          gap: var(--atlas-spacing-100);
         }
 
         .popover-text {
@@ -278,6 +263,23 @@ class AtlasPopover extends HTMLElement {
         ${titleId ? `aria-labelledby="${titleId}"` : ''}
         aria-describedby="${textId}"
       >
+        ${this.title || this.closable ? `
+          <div class="popover-header">
+            ${this.title ? `
+              <h3 id="${titleId}" class="popover-title">${this.title}</h3>
+            ` : ''}
+            ${this.closable ? `
+              <atlas-icon-button
+                class="close-button"
+                icon-name="x"
+                color="secondary"
+                size="sm"
+                aria-label="Fechar"
+              ></atlas-icon-button>
+            ` : ''}
+          </div>
+        ` : ''}
+
         ${this.imageSrc ? `
           <img 
             src="${this.imageSrc}" 
@@ -286,21 +288,7 @@ class AtlasPopover extends HTMLElement {
           />
         ` : ''}
 
-        ${this.closable ? `
-          <button 
-            class="close-button" 
-            aria-label="Fechar"
-            type="button"
-          >
-            <span class="close-icon icon-x" aria-hidden="true"></span>
-          </button>
-        ` : ''}
-
         <div class="popover-content">
-          ${this.title ? `
-            <h3 id="${titleId}" class="popover-title">${this.title}</h3>
-          ` : ''}
-          
           <p id="${textId}" class="popover-text">${this.text}</p>
         </div>
 
@@ -335,171 +323,202 @@ class AtlasPopover extends HTMLElement {
     const borderColor = 'var(--atlas-color-border-default)';
     const fillColor = 'var(--atlas-color-surface-static-container-neutral-ultra-soft)';
     const arrowSize = '6px'; // 12px total width (6px each side)
-    const arrowHeight = '5px';
+    const arrowHeight = '6px'; // Altura da seta
+    const arrowSizeInner = '5px'; // 10px total (para criar borda de 1px)
+    const arrowHeightInner = '5px'; // Altura interna (para criar borda de 1px)
+    const offset = '-5px'; // Distância do container
 
     const positions = {
       'top-center': `
-        :host([arrow="top-center"])::before,
-        :host([arrow="top-center"])::after {
+        :host([arrow="top-center"][open])::before,
+        :host([arrow="top-center"][open])::after {
           content: '';
           position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
           width: 0;
           height: 0;
+        }
+        :host([arrow="top-center"][open])::before {
+          left: 50%;
+          top: ${offset};
+          transform: translateX(-50%);
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="top-center"])::before {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-bottom: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="top-center"])::after {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-bottom: ${arrowHeight} solid ${fillColor};
+        :host([arrow="top-center"][open])::after {
+          left: 50%;
+          top: calc(${offset} + 1px);
+          transform: translateX(-50%);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-bottom: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'top-left': `
-        :host([arrow="top-left"])::before,
-        :host([arrow="top-left"])::after {
+        :host([arrow="top-left"][open])::before,
+        :host([arrow="top-left"][open])::after {
           content: '';
           position: absolute;
-          left: var(--atlas-padding-md);
           width: 0;
           height: 0;
+        }
+        :host([arrow="top-left"][open])::before {
+          left: 20px;
+          top: ${offset};
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="top-left"])::before {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-bottom: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="top-left"])::after {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-bottom: ${arrowHeight} solid ${fillColor};
+        :host([arrow="top-left"][open])::after {
+          left: calc(20px + 1px);
+          top: calc(${offset} + 1px);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-bottom: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'top-right': `
-        :host([arrow="top-right"])::before,
-        :host([arrow="top-right"])::after {
+        :host([arrow="top-right"][open])::before,
+        :host([arrow="top-right"][open])::after {
           content: '';
           position: absolute;
-          right: var(--atlas-padding-md);
           width: 0;
           height: 0;
+        }
+        :host([arrow="top-right"][open])::before {
+          right: 20px;
+          top: ${offset};
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="top-right"])::before {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-bottom: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="top-right"])::after {
-          top: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-bottom: ${arrowHeight} solid ${fillColor};
+        :host([arrow="top-right"][open])::after {
+          right: calc(20px + 1px);
+          top: calc(${offset} + 1px);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-bottom: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'bottom-center': `
-        :host([arrow="bottom-center"])::before,
-        :host([arrow="bottom-center"])::after {
+        :host([arrow="bottom-center"][open])::before,
+        :host([arrow="bottom-center"][open])::after {
           content: '';
           position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
           width: 0;
           height: 0;
+        }
+        :host([arrow="bottom-center"][open])::before {
+          left: 50%;
+          bottom: ${offset};
+          transform: translateX(-50%);
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="bottom-center"])::before {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-top: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="bottom-center"])::after {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-top: ${arrowHeight} solid ${fillColor};
+        :host([arrow="bottom-center"][open])::after {
+          left: 50%;
+          bottom: calc(${offset} + 1px);
+          transform: translateX(-50%);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-top: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'bottom-left': `
-        :host([arrow="bottom-left"])::before,
-        :host([arrow="bottom-left"])::after {
+        :host([arrow="bottom-left"][open])::before,
+        :host([arrow="bottom-left"][open])::after {
           content: '';
           position: absolute;
-          left: var(--atlas-padding-md);
           width: 0;
           height: 0;
+        }
+        :host([arrow="bottom-left"][open])::before {
+          left: 20px;
+          bottom: ${offset};
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="bottom-left"])::before {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-top: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="bottom-left"])::after {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-top: ${arrowHeight} solid ${fillColor};
+        :host([arrow="bottom-left"][open])::after {
+          left: calc(20px + 1px);
+          bottom: calc(${offset} + 1px);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-top: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'bottom-right': `
-        :host([arrow="bottom-right"])::before,
-        :host([arrow="bottom-right"])::after {
+        :host([arrow="bottom-right"][open])::before,
+        :host([arrow="bottom-right"][open])::after {
           content: '';
           position: absolute;
-          right: var(--atlas-padding-md);
           width: 0;
           height: 0;
+        }
+        :host([arrow="bottom-right"][open])::before {
+          right: 20px;
+          bottom: ${offset};
           border-left: ${arrowSize} solid transparent;
           border-right: ${arrowSize} solid transparent;
-        }
-        :host([arrow="bottom-right"])::before {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-top: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="bottom-right"])::after {
-          bottom: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-top: ${arrowHeight} solid ${fillColor};
+        :host([arrow="bottom-right"][open])::after {
+          right: calc(20px + 1px);
+          bottom: calc(${offset} + 1px);
+          border-left: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowSizeInner} solid transparent;
+          border-top: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'side-left': `
-        :host([arrow="side-left"])::before,
-        :host([arrow="side-left"])::after {
+        :host([arrow="side-left"][open])::before,
+        :host([arrow="side-left"][open])::after {
           content: '';
           position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
           width: 0;
           height: 0;
+        }
+        :host([arrow="side-left"][open])::before {
+          top: 50%;
+          left: ${offset};
+          transform: translateY(-50%);
           border-top: ${arrowSize} solid transparent;
           border-bottom: ${arrowSize} solid transparent;
-        }
-        :host([arrow="side-left"])::before {
-          left: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-right: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="side-left"])::after {
-          left: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-right: ${arrowHeight} solid ${fillColor};
+        :host([arrow="side-left"][open])::after {
+          top: 50%;
+          left: calc(${offset} + 1px);
+          transform: translateY(-50%);
+          border-top: ${arrowSizeInner} solid transparent;
+          border-bottom: ${arrowSizeInner} solid transparent;
+          border-right: ${arrowHeightInner} solid ${fillColor};
         }
       `,
       'side-right': `
-        :host([arrow="side-right"])::before,
-        :host([arrow="side-right"])::after {
+        :host([arrow="side-right"][open])::before,
+        :host([arrow="side-right"][open])::after {
           content: '';
           position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
           width: 0;
           height: 0;
+        }
+        :host([arrow="side-right"][open])::before {
+          top: 50%;
+          right: ${offset};
+          transform: translateY(-50%);
           border-top: ${arrowSize} solid transparent;
           border-bottom: ${arrowSize} solid transparent;
-        }
-        :host([arrow="side-right"])::before {
-          right: calc(var(--atlas-padding-md) * -1 - ${arrowHeight});
           border-left: ${arrowHeight} solid ${borderColor};
         }
-        :host([arrow="side-right"])::after {
-          right: calc(var(--atlas-padding-md) * -1 - ${arrowHeight} + 1px);
-          border-left: ${arrowHeight} solid ${fillColor};
+        :host([arrow="side-right"][open])::after {
+          top: 50%;
+          right: calc(${offset} + 1px);
+          transform: translateY(-50%);
+          border-top: ${arrowSizeInner} solid transparent;
+          border-bottom: ${arrowSizeInner} solid transparent;
+          border-left: ${arrowHeightInner} solid ${fillColor};
         }
       `
     };
@@ -519,7 +538,7 @@ class AtlasPopover extends HTMLElement {
             class="action-button"
             variant="filled"
             color="primary"
-            size="small"
+            size="sm"
             label="${this.actionLabel}"
           ></atlas-button>
         </div>
@@ -531,7 +550,7 @@ class AtlasPopover extends HTMLElement {
         <div class="popover-footer">
           <atlas-link-button
             class="action-link"
-            size="small"
+            size="sm"
             label="${this.actionLabel}"
             href="${this.actionHref}"
           ></atlas-link-button>

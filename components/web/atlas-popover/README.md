@@ -12,8 +12,12 @@ Container flutuante que exibe informações e ações contextuais. Acionado quan
 ## 🚀 Uso Básico
 
 ```html
-<!-- Importar o componente -->
+<!-- Importar os componentes necessários -->
 <script src="./atlas-popover.js"></script>
+<script src="../atlas-button/atlas-button.js"></script>
+<script src="../atlas-link-button/atlas-link-button.js"></script>
+<script src="../atlas-icon-button/atlas-icon-button.js"></script>
+<script src="../atlas-icon/atlas-icon.js"></script>
 
 <!-- Popover simples -->
 <atlas-popover
@@ -230,7 +234,7 @@ Utiliza Shadow DOM (`mode: 'open'`) para:
 ## 📦 Dependências
 
 - `atlas-design-tokens.css` - Tokens de design
-- `assets/fonts/style.css` - Icon font (ícone X)
+- `atlas-icon-button` - Botão de fechar (quando `closable`)
 - `atlas-button` - Quando `action-type="button"`
 - `atlas-link-button` - Quando `action-type="link"`
 

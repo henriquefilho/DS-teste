@@ -1,0 +1,272 @@
+{
+  "component": "atlas-resource-list",
+  "type": "web-component",
+  "description": "Lista de recursos para exibir informações resumidas com ação principal. Permite navegação, controle de estado (switch) ou ações secundárias (icon-button)",
+  "version": "1.0.0",
+  "properties": [
+    {
+      "name": "type",
+      "type": "enum",
+      "values": ["navigation", "icon-button", "switch", "informational"],
+      "default": "navigation",
+      "required": true,
+      "description": "Define o tipo de ação do item: navigation (com chevron), icon-button (botão de ação), switch (toggle), ou informational (sem ação)"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "default": "",
+      "required": true,
+      "description": "Texto principal do item (título em negrito)"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "default": "",
+      "required": true,
+      "description": "Texto descritivo secundário (menor e cinza)"
+    },
+    {
+      "name": "visual-support",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Exibe ícone ou imagem decorativa à esquerda"
+    },
+    {
+      "name": "visual-support-icon",
+      "type": "string",
+      "default": "cog",
+      "required": false,
+      "description": "Nome do ícone para o visual support (requer visual-support=true)"
+    },
+    {
+      "name": "visual-support-image",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "URL da imagem para o visual support (tem prioridade sobre o ícone, requer visual-support=true)"
+    },
+    {
+      "name": "action-icon",
+      "type": "string",
+      "default": "chevron-right (navigation) / three-dots (icon-button)",
+      "required": false,
+      "description": "Nome do ícone para o botão de ação ou chevron de navegação"
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado do switch (usado apenas quando type='switch')"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Estado desabilitado do componente"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "URL de navegação (usado quando type='navigation')"
+    },
+    {
+      "name": "show-divider",
+      "type": "boolean",
+      "default": true,
+      "required": false,
+      "description": "Exibe linha divisória na parte inferior"
+    }
+  ],
+  "events": [
+    {
+      "name": "resource-list-click",
+      "description": "Disparado quando o item é clicado (type: navigation)",
+      "detail": "{ type: string, label: string, href: string }"
+    },
+    {
+      "name": "action-click",
+      "description": "Disparado quando o botão de ação é clicado (type: icon-button)",
+      "detail": "{ label: string }"
+    },
+    {
+      "name": "switch-change",
+      "description": "Disparado quando o switch muda de estado (type: switch)",
+      "detail": "{ checked: boolean, label: string }"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "Conteúdo customizado substituindo label e description. Útil para layouts complexos"
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "description": "Estado padrão do item",
+      "tokens": {
+        "background": "#fcfcfd (--atlas-color-surface-interaction-neutral-ultra-soft-default)",
+        "label-color": "#212529 (--text-body)",
+        "description-color": "#5e6877 (--atlas-color-text-static-neutral-medium)"
+      }
+    },
+    {
+      "name": "hover",
+      "description": "Estado ao passar o mouse (apenas types: navigation, icon-button)",
+      "tokens": {
+        "background": "#ccd6f1 (--atlas-color-surface-interaction-primary-ultra-soft-hover)",
+        "label-color": "#212529 (--text-body)",
+        "description-color": "#5e6877 (--atlas-color-text-static-neutral-medium)"
+      },
+      "behavior": "Fundo muda para azul claro. Switch e Informational types NÃO têm hover no container"
+    },
+    {
+      "name": "active",
+      "description": "Estado ao clicar (apenas types: navigation, icon-button)",
+      "tokens": {
+        "background": "#99ace3 (--atlas-color-surface-interaction-primary-ultra-soft-pressed)",
+        "label-color": "#212529 (--text-body)",
+        "description-color": "#5e6877 (--atlas-color-text-static-neutral-medium)"
+      },
+      "behavior": "Fundo azul médio durante o clique. Switch e Informational types não têm este estado"
+    },
+    {
+      "name": "focus",
+      "description": "Estado de foco para acessibilidade",
+      "tokens": {
+        "outline": "(--atlas-focus-outline-size) (--atlas-focus-outline-type) (--atlas-focus-outline-color)",
+        "outline-offset": "--atlas-focus-outline-offset-default"
+      },
+      "behavior": "Anel de foco azul ao redor do item"
+    },
+    {
+      "name": "disabled",
+      "description": "Estado desabilitado",
+      "tokens": {
+        "background": "#d1d6dc (--atlas-color-surface-interaction-disabled)",
+        "label-color": "#212529 (--text-body)",
+        "description-color": "#5e6877 (--atlas-color-text-static-neutral-medium)"
+      },
+      "behavior": "Cursor not-allowed, sem interações, fundo cinza"
+    }
+  ],
+  "layout": {
+    "padding": "16px (--atlas-padding-md)",
+    "gap-visual-to-content": "12px (--atlas-gap-sm)",
+    "gap-content-to-action": "16px (--atlas-gap-md)",
+    "gap-label-to-description": "4px (--atlas-gap-2xs)",
+    "visual-support-size": "32px (círculo)",
+    "visual-support-icon-size": "24px",
+    "visual-support-padding": "4px",
+    "border-radius-visual": "999px (--pill / --atlas-radius-composite-full)",
+    "divider-height": "1px (--thin)",
+    "divider-color": "#d1d6dc (--atlas-color-surface-static-shape-neutral-super-soft)"
+  },
+  "typography": {
+    "label": {
+      "font-family": "Open Sans (--atlas-font-face-general)",
+      "font-weight": "600 (Semi Bold) (--atlas-typescale-label-inline-sm-weight-strong)",
+      "font-size": "14px (--atlas-typescale-label-inline-sm-size)",
+      "line-height": "21px (1.5 ratio)",
+      "letter-spacing": "0px (--atlas-typescale-label-inline-sm-letter-spacing)",
+      "color": "#212529 (--text-body)"
+    },
+    "description": {
+      "font-family": "Open Sans (--atlas-font-face-general)",
+      "font-weight": "400 (Regular) (--atlas-typescale-label-inline-xs-weight-default)",
+      "font-size": "12px (--atlas-typescale-label-inline-xs-size)",
+      "line-height": "auto (single line)",
+      "letter-spacing": "0px (--atlas-typescale-label-inline-xs-letter-spacing)",
+      "color": "#5e6877 (--atlas-color-text-static-neutral-medium)"
+    }
+  },
+  "visual-support": {
+    "background": "#f0f1f2 (--atlas-components-resource-list-icon-background-neutral)",
+    "icon-size": "24px",
+    "container-size": "32px",
+    "padding": "4px (para ícones) / 0px (para imagens)",
+    "border-radius": "999px (pill)",
+    "icon-color": "herda do atlas-icon (padrão: neutral)",
+    "image": {
+      "size": "32x32px (preenche o container)",
+      "object-fit": "cover",
+      "border-radius": "999px (circular)",
+      "priority": "A imagem tem prioridade sobre o ícone quando ambos são definidos"
+    }
+  },
+  "variations": [
+    {
+      "description": "Type=Navigation: Item clicável com chevron à direita para navegação",
+      "count": "5 estados (default, hover, focus, active, disabled)"
+    },
+    {
+      "description": "Type=Icon button: Item com botão de ação (ícone) à direita",
+      "count": "5 estados (default, hover, focus, active, disabled)"
+    },
+    {
+      "description": "Type=Switch: Item com controle toggle à direita",
+      "count": "2 estados principais (default, disabled) + estados do switch interno",
+      "note": "Switch sempre renderiza sem label interno (hide-label)"
+    },
+    {
+      "description": "Type=Informational: Item sem ação, apenas informativo (sem hover, active ou clique)",
+      "count": "2 estados (default, disabled)"
+    },
+    {
+      "description": "Com/sem visual support: Ícone ou imagem decorativa opcional",
+      "count": "3 variações (sem visual support, com ícone, com imagem)"
+    },
+    {
+      "description": "Com/sem divider: Linha separadora opcional",
+      "count": "2 variações"
+    },
+    {
+      "description": "Custom content: Slot customizável para layouts complexos",
+      "count": "Variação especial"
+    }
+  ],
+  "dependencies": [
+    "OBRIGATÓRIOS:",
+    "- tokens/atlas-design-tokens.css (tokens globais)",
+    "- assets/fonts/style.css (fonte 'Open Sans' e ícones)",
+    "",
+    "COMPONENTES ATLAS (composição):",
+    "- components/web/atlas-icon/atlas-icon.js (visual support + navigation chevron)",
+    "- components/web/atlas-icon-button/atlas-icon-button.js (action button no type='icon-button')",
+    "- components/web/atlas-switch/atlas-switch.js (controle toggle no type='switch')",
+    "",
+    "NOTA: atlas-icon é dependência transitiva de atlas-icon-button"
+  ],
+  "figma": {
+    "file": "https://www.figma.com/design/CsUV3Zb3YJYB02y1gRaDbp/Refatorar-Tokens---Resource-List",
+    "component": ".Resource list",
+    "node-id": "41699:250682",
+    "inspected": "2026-02-13",
+    "last-updated": "2026-02-13 (tokens refatorados + visual-support-image + ajustes de interação)",
+    "documentation": "https://asaasdev.atlassian.net/wiki/x/lgBeGAE"
+  },
+  "notes": [
+    "✅ TOKENS REFATORADOS: Extraídos do Figma em 2026-02-13",
+    "✅ NOVA FEATURE: Visual support agora aceita imagens via visual-support-image (2026-02-13)",
+    "⚠️ COMPOSIÇÃO: Usa atlas-icon, atlas-icon-button e atlas-switch. NUNCA reimplementar manualmente",
+    "⚠️ Switch type: Container não tem hover/active, apenas o switch interno tem interação",
+    "⚠️ Switch type: O controle switch SEMPRE é renderizado sem label (hide-label hardcoded)",
+    "⚠️ Informational type: NÃO tem hover, active ou clique. Apenas exibição de informações estáticas",
+    "⚠️ Navigation type: Usa <a> internamente quando href é fornecido, <div> caso contrário",
+    "⚠️ Slot 'default': Substitui completamente label+description para layouts customizados",
+    "⚠️ Visual support: Pode ser ícone (24px, fundo #f0f1f2) ou imagem (32x32px, circular)",
+    "⚠️ Visual support: Imagem tem PRIORIDADE sobre ícone quando ambos são definidos",
+    "⚠️ Acessibilidade: Todos os tipos interativos tem foco visível e aria-labels apropriados",
+    "⚠️ Estados interativos: Aplicados APENAS em navigation e icon-button types",
+    "⚠️ Tokens: Usa mix de tokens legados (--text-body) e tokens Atlas padronizados",
+    "⚠️ Background States: Default (#fcfcfd) → Hover (#ccd6f1) → Active (#99ace3) → Disabled (#d1d6dc)",
+    "⚠️ Typography: Label 14px/600 weight, Description 12px/400 weight",
+    "⚠️ Divider: Linha de 1px (#d1d6dc) na parte inferior, controlada por show-divider"
+  ]
+}

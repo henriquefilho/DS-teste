@@ -158,17 +158,19 @@
     "implementation": "CSS puro usando ::before e ::after com border-triangle technique",
     "size": {
       "width": "12px (6px por lado)",
-      "height": "5px"
+      "height": "6px (ajustado para melhor alinhamento)",
+      "border-width": "1px (visualmente consistente com --atlas-stroke-weight-100)",
+      "technique": "::before cria triângulo externo 6px, ::after cria triângulo interno 5px para simular borda de 1px"
     },
     "positions": {
       "top-center": "Centralizada no topo (top: -5px, left: 50%, transform: translateX(-50%))",
-      "top-left": "À esquerda no topo (top: -5px, left: 16px)",
-      "top-right": "À direita no topo (top: -5px, right: 16px)",
+      "top-left": "À esquerda no topo (top: -5px, left: 20px)",
+      "top-right": "À direita no topo (top: -5px, right: 20px)",
       "bottom-center": "Centralizada na base (bottom: -5px, left: 50%, transform: translateX(-50%))",
-      "bottom-left": "À esquerda na base (bottom: -5px, left: 16px)",
-      "bottom-right": "À direita na base (bottom: -5px, right: 16px)",
-      "side-left": "Lateral esquerda (left: -5px, rotação 90°)",
-      "side-right": "Lateral direita (right: -5px, rotação -90°)",
+      "bottom-left": "À esquerda na base (bottom: -5px, left: 20px)",
+      "bottom-right": "À direita na base (bottom: -5px, right: 20px)",
+      "side-left": "Lateral esquerda (left: -5px, top: 50%, transform: translateY(-50%))",
+      "side-right": "Lateral direita (right: -5px, top: 50%, transform: translateY(-50%))",
       "none": "Sem seta (::before/::after não renderizados)"
     },
     "colors": {
@@ -178,24 +180,32 @@
     "technique": "::before cria borda da seta, ::after cria preenchimento interno",
     "performance": "Zero requests HTTP, zero processamento SVG, CSS puro"
   },
+  "header": {
+    "description": "Bloco que agrupa título + botão fechar no topo",
+    "display": "flex (align-items: flex-start, justify-content: space-between)",
+    "gap": "var(--atlas-spacing-100) [8px]",
+    "hidden-when": "Quando não há título E não é closable"
+  },
   "close-button": {
-    "description": "Botão icon-button no canto superior direito",
-    "icon": "X icon (chevron-down rotacionado ou ícone específico de fechar)",
-    "size": "24x24px",
-    "position": "absolute, top: 15px, right: 15px",
-    "padding": "var(--atlas-padding-2xs) [4px]",
-    "icon-color": "var(--atlas-color-icon-static-neutral-medium)",
+    "component": "atlas-icon-button",
+    "description": "Composição do componente atlas-icon-button dentro do header",
+    "default-props": {
+      "icon-name": "x",
+      "color": "secondary",
+      "size": "sm"
+    },
+    "dimensions": "24x24px (size='sm' do atlas-icon-button)",
     "icon-size": "16x16px",
-    "background-hover": "var(--atlas-color-surface-interaction-neutral-ultra-soft-hover)",
-    "border-radius": "var(--atlas-radius-composite-full) [9999px]"
+    "position": "flex-shrink: 0 (dentro do header, lado a lado com o título)"
   },
   "image": {
-    "description": "Imagem opcional exibida entre o título e o texto",
+    "description": "Imagem opcional exibida abaixo do header, antes do texto",
+    "order": "1. Header (título + botão) → 2. Imagem → 3. Content (texto) → 4. Footer",
     "display": "block",
-    "width": "100%",
-    "border-radius": "Pode ter border-radius nas bordas superiores",
+    "width": "calc(100% + padding-md * 2) - sangra nas bordas laterais",
+    "border-radius": "0 (sem border-radius, conforme Figma)",
     "aspect-ratio": "Livre, definido pela imagem",
-    "max-height": "Aproximadamente 146px (extraído do Figma)",
+    "max-height": "146px (extraído do Figma)",
     "object-fit": "cover"
   },
   "footer-actions": {
@@ -204,14 +214,14 @@
       "default-props": {
         "type": "filled",
         "color": "primary",
-        "size": "small",
+        "size": "sm",
         "label": "Button"
       }
     },
     "link": {
       "component": "atlas-link-button",
       "default-props": {
-        "size": "small",
+        "size": "sm",
         "label": "Link"
       }
     },
@@ -231,10 +241,9 @@
   ],
   "dependencies": [
     "atlas-design-tokens.css (tokens de cor, espaçamento, borda)",
-    "assets/fonts/style.css (ícones do close button)",
     "atlas-button (quando action-type='button')",
     "atlas-link-button (quando action-type='link')",
-    "atlas-icon (para o close button)"
+    "atlas-icon-button (para o close button quando closable=true)"
   ],
   "figma": {
     "file": "https://www.figma.com/design/EpnFuPVWcjDYwkV2o2Vx3I/Atlas---UI-Kit",
@@ -275,8 +284,13 @@
     "✅ Tipografia migrada: .Old/Heading/H6 → --atlas-typescale-heading-6 | .Old/Small/Regular → --atlas-typescale-body-sm",
     "✅ Seta implementada com CSS puro (::before/::after) - zero dependências externas",
     "✅ Cor da borda: Diferença de 1.5% entre Figma (#ced4da) e token (#D1D6DC) é imperceptível visualmente",
+    "🐛 CORRIGIDO: Tamanho dos botões/links mudado de 'small' para 'sm' (padrão do Atlas Design System)",
+    "🐛 CORRIGIDO: Close button agora usa atlas-icon-button em vez de implementação manual (composição correta)",
+    "🐛 CORRIGIDO: Layout reorganizado conforme Figma - Header (título + botão) → Imagem → Content (texto) → Footer",
+    "🐛 CORRIGIDO: Imagem sem border-radius (border-radius: 0) conforme Figma",
+    "🐛 CORRIGIDO: Posicionamento da seta ajustado (offset: -5px fixo, left/right: 20px) - colada no container",
     "📱 Mobile/App: largura mínima 328px (vs 278px no Desktop), sem arrow",
-    "📦 O componente compõe atlas-button e atlas-link-button dinamicamente baseado em action-type",
+    "📦 O componente compõe atlas-button, atlas-link-button e atlas-icon-button dinamicamente",
     "🔒 Close button dispara evento customizado 'atlas-popover-close'",
     "⚡ Posicionamento do popover é responsabilidade do consumidor (via CSS/JS positioning library)",
     "♿ Acessibilidade: role=dialog, aria-labelledby, aria-describedby, esc-key handler, focus trap quando ações presentes"
@@ -296,6 +310,7 @@
     "✅ DECIDIDO: Seta implementada com CSS puro (::before/::after) - border-triangle technique",
     "✅ DECIDIDO: Cor da borda usa --atlas-color-border-default (diferença < 2% é imperceptível)",
     "✅ DECIDIDO: Tipografia migrada para tokens modernos (heading-6 e body-sm)",
+    "✅ CORRIGIDO: Seta usa border-size reduzido (5px interno vs 6px externo) para criar borda visual de 1px consistente com container",
     "✅ APROVADO: Componente pronto para implementação - ver DECISOES-TECNICAS.md"
   ]
 }

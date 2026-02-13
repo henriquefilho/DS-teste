@@ -1,6 +1,9 @@
 import '../components/web/atlas-switch/atlas-switch.js';
 import '../components/web/atlas-icon-button/atlas-icon-button.js';
 import '../components/web/atlas-icon/atlas-icon.js';
+import '../components/web/atlas-popover/atlas-popover.js';
+import '../components/web/atlas-button/atlas-button.js';
+import '../components/web/atlas-link-button/atlas-link-button.js';
 
 export default {
   title: 'Components/Atlas Switch',
@@ -23,6 +26,11 @@ export default {
       element.setAttribute('strong-label', '');
     } else {
       element.removeAttribute('strong-label');
+    }
+    if (args.hideLabel) {
+      element.setAttribute('hide-label', '');
+    } else {
+      element.removeAttribute('hide-label');
     }
     if (args.iconPopover) {
       element.setAttribute('icon-popover', '');
@@ -98,6 +106,15 @@ export default {
         defaultValue: { summary: false }
       }
     },
+    hideLabel: {
+      control: 'boolean',
+      description: 'Oculta o label, exibindo apenas o controle switch',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false }
+      }
+    },
     iconPopover: {
       control: 'boolean',
       description: 'Exibe ícone de informação ao lado do label',
@@ -155,6 +172,7 @@ export default {
     errorText: 'Error text',
     alignment: 'left',
     strongLabel: false,
+    hideLabel: false,
     iconPopover: false,
     iconPopoverName: 'info',
     state: 'default',
@@ -242,6 +260,142 @@ export const WithIconPopover = {
   }
 };
 
+export const HideLabel = {
+  args: {
+    label: 'Label oculto',
+    hideLabel: true,
+    checked: true
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Switch sem label, exibindo apenas o controle. Útil quando o contexto já deixa claro o que o switch controla.'
+      }
+    }
+  }
+};
+
+export const HideLabelUnchecked = {
+  args: {
+    label: 'Label oculto',
+    hideLabel: true,
+    checked: false
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Switch sem label no estado desligado.'
+      }
+    }
+  }
+};
+
+export const WithInteractivePopover = {
+  render: () => {
+    const container = document.createElement('div');
+    container.style.cssText = 'display: flex; flex-direction: column; gap: 24px; max-width: 500px; padding: 24px; position: relative;';
+    
+    const title = document.createElement('h3');
+    title.textContent = 'Interactive Popover Demo';
+    title.style.cssText = 'margin: 0 0 8px 0; font-size: 18px; font-weight: 600;';
+    container.appendChild(title);
+    
+    const instruction = document.createElement('p');
+    instruction.textContent = 'Clique no ícone de informação ao lado do label para ver detalhes';
+    instruction.style.cssText = 'margin: 0 0 16px 0; color: #5e6877; font-size: 14px;';
+    container.appendChild(instruction);
+    
+    // Switch com icon-popover
+    const switchEl = document.createElement('atlas-switch');
+    switchEl.setAttribute('label', 'Data synchronization');
+    switchEl.setAttribute('description', 'Sync your data across all devices');
+    switchEl.setAttribute('icon-popover', '');
+    switchEl.setAttribute('icon-popover-name', 'info');
+    container.appendChild(switchEl);
+    
+    // Popover (inicialmente oculto) - adicionado ao container, não ao wrapper
+    const popover = document.createElement('atlas-popover');
+    popover.setAttribute('title', 'About Data Sync');
+    popover.setAttribute('text', 'When enabled, your data will be automatically synchronized across all your devices in real-time. This includes preferences, settings, and user data.');
+    popover.setAttribute('arrow', 'top-left');
+    popover.setAttribute('action-type', 'link');
+    popover.setAttribute('action-label', 'Learn more');
+    popover.setAttribute('closable', '');
+    popover.style.cssText = 'position: absolute; z-index: 9999; max-width: 400px;';
+    container.appendChild(popover);
+    
+    let isTogglingPopover = false;
+    
+    // Usar event delegation no container para capturar cliques do icon-button
+    container.addEventListener('click', (e) => {
+      const path = e.composedPath();
+      const iconButton = path.find(el => el.tagName === 'ATLAS-ICON-BUTTON');
+      
+      if (iconButton) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        isTogglingPopover = true;
+        
+        // Usar atributo 'open' ao invés de display
+        if (popover.hasAttribute('open')) {
+          popover.removeAttribute('open');
+          console.log('Popover closed');
+        } else {
+          // Calcular posição do icon-button
+          const rect = iconButton.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          
+          popover.style.top = `${rect.bottom - containerRect.top + 8}px`;
+          popover.style.left = `${rect.left - containerRect.left}px`;
+          
+          popover.setAttribute('open', '');
+          console.log('Popover opened at:', rect);
+        }
+        
+        // Reset flag depois do próximo frame
+        setTimeout(() => { isTogglingPopover = false; }, 100);
+      }
+    });
+    
+    // Fechar popover ao clicar no botão fechar
+    popover.addEventListener('close', () => {
+      popover.removeAttribute('open');
+      console.log('Popover closed via X button');
+    });
+    
+    // Fechar popover ao clicar fora
+    const clickOutsideHandler = (e) => {
+      // Não fechar se estamos no meio do toggle
+      if (isTogglingPopover) return;
+      
+      const path = e.composedPath();
+      
+      // Verificar se clicou dentro do container ou popover
+      const clickedInside = path.some(el => {
+        return el === container || el === popover;
+      });
+      
+      if (!clickedInside && popover.hasAttribute('open')) {
+        popover.removeAttribute('open');
+        console.log('Popover closed by clicking outside');
+      }
+    };
+    
+    document.addEventListener('click', clickOutsideHandler);
+    
+    return container;
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: 'Exemplo de switch com ícone interativo que abre um popover ao ser clicado, fornecendo informações adicionais sobre a funcionalidade.'
+      }
+    }
+  }
+};
+
 export const CustomIconPopover = {
   args: {
     label: 'Advanced settings',
@@ -287,6 +441,172 @@ export const MultipleIconExamples = {
     docs: {
       description: {
         story: 'Demonstração de diferentes ícones que podem ser usados no icon-popover. Você pode usar qualquer ícone disponível no sistema de design.'
+      }
+    }
+  }
+};
+
+export const MultipleInteractivePopovers = {
+  render: () => {
+    const container = document.createElement('div');
+    container.style.cssText = 'display: flex; flex-direction: column; gap: 24px; max-width: 600px; padding: 24px;';
+    
+    const title = document.createElement('h3');
+    title.textContent = 'Settings with Interactive Help';
+    title.style.cssText = 'margin: 0 0 8px 0; font-size: 18px; font-weight: 600;';
+    container.appendChild(title);
+    
+    const instruction = document.createElement('p');
+    instruction.textContent = 'Clique nos ícones para ver informações detalhadas sobre cada configuração';
+    instruction.style.cssText = 'margin: 0 0 16px 0; color: #5e6877; font-size: 14px;';
+    container.appendChild(instruction);
+    
+    const switchConfigs = [
+      {
+        label: 'Two-Factor Authentication',
+        description: 'Add extra security to your account',
+        icon: 'lock-01',
+        popover: {
+          title: '2FA Security',
+          text: 'Two-factor authentication adds an extra layer of security by requiring a second form of verification. We recommend enabling this for all accounts.',
+          arrow: 'top-left',
+          actionType: 'button',
+          actionLabel: 'Enable 2FA'
+        }
+      },
+      {
+        label: 'Auto-save Documents',
+        description: 'Automatically save your work',
+        icon: 'save-01',
+        popover: {
+          title: 'Auto-save Feature',
+          text: 'Your documents will be automatically saved every 5 minutes. You can still manually save at any time using Ctrl+S.',
+          arrow: 'top-left',
+          actionType: 'link',
+          actionLabel: 'View backup history'
+        }
+      },
+      {
+        label: 'Analytics Tracking',
+        description: 'Help us improve your experience',
+        icon: 'bar-chart-01',
+        popover: {
+          title: 'Usage Analytics',
+          text: 'We collect anonymous usage data to improve our service. No personal information is shared with third parties.',
+          arrow: 'top-left',
+          actionType: 'link',
+          actionLabel: 'Privacy policy'
+        }
+      }
+    ];
+    
+    const allPopovers = [];
+    const toggleStates = new Map(); // Rastrear estado de toggle de cada popover
+    
+    switchConfigs.forEach((config) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position: relative;';
+      
+      const switchEl = document.createElement('atlas-switch');
+      switchEl.setAttribute('label', config.label);
+      switchEl.setAttribute('description', config.description);
+      switchEl.setAttribute('icon-popover', '');
+      switchEl.setAttribute('icon-popover-name', config.icon);
+      wrapper.appendChild(switchEl);
+      
+      const popover = document.createElement('atlas-popover');
+      popover.setAttribute('title', config.popover.title);
+      popover.setAttribute('text', config.popover.text);
+      popover.setAttribute('arrow', config.popover.arrow);
+      popover.setAttribute('action-type', config.popover.actionType);
+      popover.setAttribute('action-label', config.popover.actionLabel);
+      popover.setAttribute('closable', '');
+      popover.style.cssText = 'position: absolute; z-index: 1000; min-width: 320px;';
+      wrapper.appendChild(popover);
+      
+      allPopovers.push(popover);
+      toggleStates.set(popover, false);
+      
+      // Event delegation no wrapper
+      wrapper.addEventListener('click', (e) => {
+        const path = e.composedPath();
+        const iconButton = path.find(el => el.tagName === 'ATLAS-ICON-BUTTON');
+        
+        if (iconButton) {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          toggleStates.set(popover, true);
+          
+          // Fechar outros popovers
+          allPopovers.forEach(p => {
+            if (p !== popover) p.removeAttribute('open');
+          });
+          
+          // Toggle usando atributo 'open'
+          if (popover.hasAttribute('open')) {
+            popover.removeAttribute('open');
+          } else {
+            // Calcular posição do icon-button
+            const rect = iconButton.getBoundingClientRect();
+            const wrapperRect = wrapper.getBoundingClientRect();
+            
+            popover.style.top = `${rect.bottom - wrapperRect.top + 8}px`;
+            popover.style.left = `${rect.left - wrapperRect.left}px`;
+            
+            popover.setAttribute('open', '');
+          }
+          
+          console.log('Popover toggled:', config.label, popover.hasAttribute('open'));
+          
+          // Reset flag
+          setTimeout(() => { toggleStates.set(popover, false); }, 100);
+        }
+      });
+      
+      popover.addEventListener('close', () => {
+        popover.removeAttribute('open');
+      });
+      
+      popover.addEventListener('action', (e) => {
+        console.log('Popover action clicked:', config.label, e.detail);
+        popover.removeAttribute('open');
+      });
+      
+      container.appendChild(wrapper);
+    });
+    
+    // Fechar popovers ao clicar fora
+    const clickOutsideHandler = (e) => {
+      const path = e.composedPath();
+      
+      // Verificar se clicou dentro de qualquer wrapper ou popover
+      const wrappers = Array.from(container.querySelectorAll('div[style*="position: relative"]'));
+      const clickedInside = path.some(el => {
+        return wrappers.includes(el) || allPopovers.includes(el);
+      });
+      
+      // Verificar se algum popover está sendo toggleado
+      const anyToggling = Array.from(toggleStates.values()).some(v => v === true);
+      
+      if (!clickedInside && !anyToggling) {
+        allPopovers.forEach(p => {
+          if (p.hasAttribute('open')) {
+            p.removeAttribute('open');
+          }
+        });
+      }
+    };
+    
+    document.addEventListener('click', clickOutsideHandler);
+    
+    return container;
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: 'Exemplo completo de múltiplos switches com popovers interativos. Cada ícone abre um popover com informações contextuais e ações relevantes.'
       }
     }
   }

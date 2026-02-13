@@ -24,6 +24,7 @@
 | `state` | "default" \| "disabled" \| "read-only" \| "error" | "default" | Estado visual e funcional |
 | `error-text` | string | "Error text" | Mensagem de erro |
 | `icon-popover` | boolean | false | Exibe ícone de informação |
+| `hide-label` | boolean | false | Oculta o label, exibindo apenas o controle switch |
 
 ## 🎭 Estados
 
@@ -102,6 +103,17 @@ Estado de erro com mensagem.
   label="Privacy settings"
   icon-popover
   description="Click icon for more info"
+></atlas-switch>
+```
+
+### Switch Sem Label
+
+Use `hide-label` para exibir apenas o controle do switch, sem o texto do label. Útil quando o contexto já deixa claro o que o switch controla.
+
+```html
+<atlas-switch 
+  hide-label
+  checked
 ></atlas-switch>
 ```
 

@@ -25,6 +25,8 @@
 import '../components/web/atlas-popover/atlas-popover.js';
 import '../components/web/atlas-button/atlas-button.js';
 import '../components/web/atlas-link-button/atlas-link-button.js';
+import '../components/web/atlas-icon-button/atlas-icon-button.js';
+import '../components/web/atlas-icon/atlas-icon.js';
 
 export default {
   title: 'Components/Atlas Popover',
