@@ -264,15 +264,15 @@ class AtlasResourceList extends HTMLElement {
         .resource-list-container {
           display: flex;
           flex-direction: column;
-          background: var(--atlas-color-surface-interaction-neutral-ultra-soft-default, #fcfcfd);
+          background: var(--atlas-color-surface-interaction-neutral-ultra-soft-default);
           transition: background-color 0.15s ease-in-out;
         }
 
         .resource-list-item {
           display: flex;
           align-items: center;
-          gap: var(--atlas-gap-md, 16px);
-          padding: var(--atlas-padding-md, 16px);
+          gap: var(--atlas-gap-md);
+          padding: var(--atlas-padding-md);
           cursor: ${isInteractive && !this.disabled ? 'pointer' : 'default'};
           text-decoration: none;
           color: inherit;
@@ -282,25 +282,24 @@ class AtlasResourceList extends HTMLElement {
         /* Estados do container (apenas para types que suportam) */
         ${hasHoverActive && !this.disabled ? `
           .resource-list-container:hover {
-            background: var(--atlas-color-surface-interaction-primary-ultra-soft-hover, #ccd6f1);
+            background: var(--atlas-color-surface-interaction-primary-ultra-soft-hover);
           }
 
           .resource-list-container:active,
           .resource-list-item:active {
-            background: var(--atlas-color-surface-interaction-primary-ultra-soft-pressed, #99ace3);
+            background: var(--atlas-color-surface-interaction-primary-ultra-soft-pressed);
           }
         ` : ''}
 
         .resource-list-item:focus-visible {
-          outline: 2px solid var(--atlas-focus-outline-color, #3359c7);
-          outline-offset: 2px;
-          border-radius: 4px;
+          outline: var(--atlas-focus-outline-size) solid var(--atlas-focus-outline-color);
+          outline-offset: var(--atlas-focus-outline-offset-default);
         }
 
         /* Estado disabled */
         ${this.disabled ? `
           .resource-list-container {
-            background: var(--atlas-color-surface-interaction-disabled, #d1d6dc);
+            background: var(--atlas-color-surface-interaction-disabled);
           }
           .resource-list-item {
             cursor: not-allowed;
@@ -312,7 +311,7 @@ class AtlasResourceList extends HTMLElement {
         .visual-content-wrapper {
           display: flex;
           align-items: center;
-          gap: var(--atlas-gap-sm, 12px);
+          gap: var(--atlas-gap-sm);
           flex: 1;
           min-width: 0;
         }
@@ -324,9 +323,9 @@ class AtlasResourceList extends HTMLElement {
           width: 32px;
           height: 32px;
           min-width: 32px;
-          background: var(--atlas-components-resource-list-icon-background-neutral, #f0f1f2);
+          background: var(--atlas-color-surface-static-container-neutral-soft);
           border-radius: 999px;
-          padding: 4px;
+          padding: var(--atlas-padding-2xs);
           overflow: hidden;
         }
 
@@ -345,28 +344,28 @@ class AtlasResourceList extends HTMLElement {
         .content {
           display: flex;
           flex-direction: column;
-          gap: var(--atlas-gap-2xs, 4px);
+          gap: var(--atlas-gap-2xs);
           flex: 1;
           min-width: 0;
         }
 
         .label {
-          font-family: var(--atlas-font-face-general, 'Open Sans', sans-serif);
-          font-size: var(--atlas-typescale-label-inline-sm-size, 14px);
-          font-weight: var(--atlas-typescale-label-inline-sm-weight-strong, 600);
+          font-family: var(--atlas-font-face-general);
+          font-size: var(--atlas-typescale-label-inline-sm-size);
+          font-weight: var(--atlas-typescale-label-inline-sm-weight-strong);
           line-height: 1.5;
-          color: var(--text-body, #212529);
+          color: var(--atlas-color-text-static-neutral-hard);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
         .description {
-          font-family: var(--atlas-font-face-general, 'Open Sans', sans-serif);
-          font-size: var(--atlas-typescale-label-inline-xs-size, 12px);
-          font-weight: var(--atlas-typescale-label-inline-xs-weight-default, 400);
+          font-family: var(--atlas-font-face-general);
+          font-size: var(--atlas-typescale-label-inline-xs-size);
+          font-weight: var(--atlas-typescale-label-inline-xs-weight-default);
           line-height: 1;
-          color: var(--atlas-color-text-static-neutral-medium, #5e6877);
+          color: var(--atlas-color-text-static-neutral-medium);
           word-wrap: break-word;
         }
 
@@ -391,7 +390,7 @@ class AtlasResourceList extends HTMLElement {
         .divider {
           width: 100%;
           height: 1px;
-          background: var(--atlas-color-surface-static-shape-neutral-super-soft, #d1d6dc);
+          background: var(--atlas-color-surface-static-shape-neutral-super-soft);
         }
       </style>
 
