@@ -42,15 +42,15 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         .resource-list-container {
           display: flex;
           flex-direction: column;
-          background: var(--atlas-color-surface-interaction-neutral-ultra-soft-default, #fcfcfd);
+          background: var(--atlas-color-surface-interaction-neutral-ultra-soft-default);
           transition: background-color 0.15s ease-in-out;
         }
 
         .resource-list-item {
           display: flex;
           align-items: center;
-          gap: var(--atlas-gap-md, 16px);
-          padding: var(--atlas-padding-md, 16px);
+          gap: var(--atlas-gap-md);
+          padding: var(--atlas-padding-md);
           cursor: ${e&&!this.disabled?"pointer":"default"};
           text-decoration: none;
           color: inherit;
@@ -60,25 +60,24 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         /* Estados do container (apenas para types que suportam) */
         ${a&&!this.disabled?`
           .resource-list-container:hover {
-            background: var(--atlas-color-surface-interaction-primary-ultra-soft-hover, #ccd6f1);
+            background: var(--atlas-color-surface-interaction-primary-ultra-soft-hover);
           }
 
           .resource-list-container:active,
           .resource-list-item:active {
-            background: var(--atlas-color-surface-interaction-primary-ultra-soft-pressed, #99ace3);
+            background: var(--atlas-color-surface-interaction-primary-ultra-soft-pressed);
           }
         `:""}
 
         .resource-list-item:focus-visible {
-          outline: 2px solid var(--atlas-focus-outline-color, #3359c7);
-          outline-offset: 2px;
-          border-radius: 4px;
+          outline: var(--atlas-focus-outline-size) solid var(--atlas-focus-outline-color);
+          outline-offset: var(--atlas-focus-outline-offset-default);
         }
 
         /* Estado disabled */
         ${this.disabled?`
           .resource-list-container {
-            background: var(--atlas-color-surface-interaction-disabled, #d1d6dc);
+            background: var(--atlas-color-surface-interaction-disabled);
           }
           .resource-list-item {
             cursor: not-allowed;
@@ -90,7 +89,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         .visual-content-wrapper {
           display: flex;
           align-items: center;
-          gap: var(--atlas-gap-sm, 12px);
+          gap: var(--atlas-gap-sm);
           flex: 1;
           min-width: 0;
         }
@@ -102,9 +101,9 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
           width: 32px;
           height: 32px;
           min-width: 32px;
-          background: var(--atlas-components-resource-list-icon-background-neutral, #f0f1f2);
+          background: var(--atlas-color-surface-static-container-neutral-soft);
           border-radius: 999px;
-          padding: 4px;
+          padding: var(--atlas-padding-2xs);
           overflow: hidden;
         }
 
@@ -123,28 +122,28 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         .content {
           display: flex;
           flex-direction: column;
-          gap: var(--atlas-gap-2xs, 4px);
+          gap: var(--atlas-gap-2xs);
           flex: 1;
           min-width: 0;
         }
 
         .label {
-          font-family: var(--atlas-font-face-general, 'Open Sans', sans-serif);
-          font-size: var(--atlas-typescale-label-inline-sm-size, 14px);
-          font-weight: var(--atlas-typescale-label-inline-sm-weight-strong, 600);
+          font-family: var(--atlas-font-face-general);
+          font-size: var(--atlas-typescale-label-inline-sm-size);
+          font-weight: var(--atlas-typescale-label-inline-sm-weight-strong);
           line-height: 1.5;
-          color: var(--text-body, #212529);
+          color: var(--atlas-color-text-static-neutral-hard);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
         .description {
-          font-family: var(--atlas-font-face-general, 'Open Sans', sans-serif);
-          font-size: var(--atlas-typescale-label-inline-xs-size, 12px);
-          font-weight: var(--atlas-typescale-label-inline-xs-weight-default, 400);
+          font-family: var(--atlas-font-face-general);
+          font-size: var(--atlas-typescale-label-inline-xs-size);
+          font-weight: var(--atlas-typescale-label-inline-xs-weight-default);
           line-height: 1;
-          color: var(--atlas-color-text-static-neutral-medium, #5e6877);
+          color: var(--atlas-color-text-static-neutral-medium);
           word-wrap: break-word;
         }
 
@@ -169,7 +168,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         .divider {
           width: 100%;
           height: 1px;
-          background: var(--atlas-color-surface-static-shape-neutral-super-soft, #d1d6dc);
+          background: var(--atlas-color-surface-static-shape-neutral-super-soft);
         }
       </style>
 
@@ -189,7 +188,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
         </${s}>
         ${De}
       </div>
-    `,this._isRendering=!1,this.setupEventListeners()}}customElements.define("atlas-resource-list",Ie);const ze={title:"Components/Atlas Resource List",tags:["autodocs"],render:i=>{const e=document.createElement("atlas-resource-list");return e.setAttribute("type",i.type),i.label&&e.setAttribute("label",i.label),i.description&&e.setAttribute("description",i.description),i.visualSupport?e.setAttribute("visual-support",""):e.removeAttribute("visual-support"),i.visualSupportIcon&&e.setAttribute("visual-support-icon",i.visualSupportIcon),i.visualSupportImage&&e.setAttribute("visual-support-image",i.visualSupportImage),i.actionIcon&&e.setAttribute("action-icon",i.actionIcon),i.href&&e.setAttribute("href",i.href),i.checked?e.setAttribute("checked",""):e.removeAttribute("checked"),i.disabled?e.setAttribute("disabled",""):e.removeAttribute("disabled"),i.showDivider?e.removeAttribute("show-divider"):e.setAttribute("show-divider","false"),i.customContent&&(e.innerHTML=i.customContent),e.addEventListener("resource-list-click",a=>{i.onResourceListClick(a.detail)}),e.addEventListener("action-click",a=>{i.onActionClick(a.detail)}),e.addEventListener("switch-change",a=>{i.onSwitchChange(a.detail)}),e},argTypes:{type:{control:"select",options:["navigation","icon-button","switch","informational"],description:"Tipo de ação do item",table:{category:"Type & Content",type:{summary:"'navigation' | 'icon-button' | 'switch' | 'informational'"},defaultValue:{summary:"navigation"}}},label:{control:"text",description:"Texto principal do item (título em negrito)",table:{category:"Type & Content",type:{summary:"string"},defaultValue:{summary:""}}},description:{control:"text",description:"Texto descritivo secundário (menor e cinza)",table:{category:"Type & Content",type:{summary:"string"},defaultValue:{summary:""}}},customContent:{control:"text",description:"HTML customizado que substitui label e description (usa slot default)",table:{category:"Type & Content",type:{summary:"string (HTML)"},defaultValue:{summary:""}}},visualSupport:{control:"boolean",description:"Exibe ícone decorativo à esquerda",table:{category:"Visual Support",type:{summary:"boolean"},defaultValue:{summary:!1}}},visualSupportIcon:{control:"text",description:"Nome do ícone para o visual support (ex: cog, bell, lock, wifi)",table:{category:"Visual Support",type:{summary:"string"},defaultValue:{summary:"cog"}},if:{arg:"visualSupport",truthy:!0}},visualSupportImage:{control:"text",description:"URL da imagem para o visual support (tem prioridade sobre o ícone)",table:{category:"Visual Support",type:{summary:"string"},defaultValue:{summary:""}},if:{arg:"visualSupport",truthy:!0}},actionIcon:{control:"text",description:"Nome do ícone para ação (chevron-right para navigation, three-dots para icon-button)",table:{category:"Action Configuration",type:{summary:"string"},defaultValue:{summary:"chevron-right / three-dots"}},if:{arg:"type",neq:"switch"}},href:{control:"text",description:'URL de navegação (usado apenas quando type="navigation")',table:{category:"Action Configuration",type:{summary:"string"},defaultValue:{summary:""}},if:{arg:"type",eq:"navigation"}},checked:{control:"boolean",description:'Estado do switch (usado apenas quando type="switch")',table:{category:"Action Configuration",type:{summary:"boolean"},defaultValue:{summary:!1}},if:{arg:"type",eq:"switch"}},disabled:{control:"boolean",description:"Estado desabilitado do componente",table:{category:"State",type:{summary:"boolean"},defaultValue:{summary:!1}}},showDivider:{control:"boolean",description:"Exibe linha divisória na parte inferior",table:{category:"State",type:{summary:"boolean"},defaultValue:{summary:!0}}},onResourceListClick:{action:"resource-list-click",description:"Disparado quando item é clicado (type: navigation)",table:{category:"Actions",type:{summary:"CustomEvent<{ type, label, href }>"}}},onActionClick:{action:"action-click",description:"Disparado quando botão de ação é clicado (type: icon-button)",table:{category:"Actions",type:{summary:"CustomEvent<{ label }>"}}},onSwitchChange:{action:"switch-change",description:"Disparado quando switch muda de estado (type: switch)",table:{category:"Actions",type:{summary:"CustomEvent<{ checked, label }>"}}}}},o={args:{type:"navigation",label:"Configurações do sistema",description:"Gerencie preferências e configurações",href:"#settings",visualSupport:!1,disabled:!1,showDivider:!0}},n={args:{type:"navigation",label:"Notificações",description:"Configure suas notificações",href:"#notifications",visualSupport:!0,visualSupportIcon:"bell",disabled:!1,showDivider:!0}},l={args:{type:"navigation",label:"Meu Perfil",description:"Edite suas informações pessoais",href:"#profile",visualSupport:!0,visualSupportImage:"https://i.pravatar.cc/32?img=1",disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Navigation com imagem no visual support. A imagem tem prioridade sobre o ícone quando ambos são definidos."}}}},c={args:{type:"navigation",label:"Funcionalidade desabilitada",description:"Esta opção não está disponível",href:"#disabled",visualSupport:!0,visualSupportIcon:"alert-triangle",disabled:!0,showDivider:!0}},d={args:{type:"navigation",label:"Item único sem divider",description:"Útil para listas com um único item",href:"#single",visualSupport:!1,disabled:!1,showDivider:!1}},u={args:{type:"icon-button",label:"Opções avançadas",description:"Acesse configurações adicionais",actionIcon:"three-dots",visualSupport:!1,disabled:!1,showDivider:!0}},p={args:{type:"icon-button",label:"Minha conta",description:"Editar informações do perfil",actionIcon:"pencil",visualSupport:!0,visualSupportIcon:"user",disabled:!1,showDivider:!0}},m={args:{type:"icon-button",label:"Ação desabilitada",description:"Não disponível no momento",actionIcon:"x",visualSupport:!1,disabled:!0,showDivider:!0}},h={args:{type:"switch",label:"Modo escuro",description:"Ative o tema escuro",checked:!1,visualSupport:!1,disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Switch no resource list (sempre renderizado sem label interno, usando apenas o toggle)."}}}},v={args:{type:"switch",label:"Notificações push",description:"Receba notificações no dispositivo",checked:!0,visualSupport:!1,disabled:!1,showDivider:!0}},f={args:{type:"switch",label:"Pagamento por aproximação",description:"Ative para pagar sem inserir o cartão",checked:!0,visualSupport:!0,visualSupportIcon:"contactless",disabled:!1,showDivider:!0}},b={args:{type:"switch",label:"Recurso premium",description:"Requer assinatura ativa",checked:!1,visualSupport:!1,disabled:!0,showDivider:!0}},g={args:{type:"switch",label:"Sincronização automática",description:"Sincronize dados automaticamente",checked:!0,visualSupport:!1,disabled:!0,showDivider:!0}},y={args:{type:"informational",label:"Versão do aplicativo",description:"v2.4.1 - Build 1234",visualSupport:!1,disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Tipo informational não possui interação (sem hover, pressed ou clique). Usado apenas para exibir informações estáticas."}}}},x={args:{type:"informational",label:"Limite utilizado",description:"R$ 2.450,00 de R$ 5.000,00",visualSupport:!0,visualSupportIcon:"hand-card",disabled:!1,showDivider:!0}},w={args:{type:"navigation",href:"#uber-credito",visualSupport:!0,visualSupportImage:"https://t2.tudocdn.net/693919?w=1200&h=1200",disabled:!1,showDivider:!0,customContent:`
+    `,this._isRendering=!1,this.setupEventListeners()}}customElements.define("atlas-resource-list",Ie);const ze={title:"Components/Atlas Resource List",tags:["autodocs"],render:i=>{const e=document.createElement("atlas-resource-list");return e.setAttribute("type",i.type),i.label&&e.setAttribute("label",i.label),i.description&&e.setAttribute("description",i.description),i.visualSupport?e.setAttribute("visual-support",""):e.removeAttribute("visual-support"),i.visualSupportIcon&&e.setAttribute("visual-support-icon",i.visualSupportIcon),i.visualSupportImage&&e.setAttribute("visual-support-image",i.visualSupportImage),i.actionIcon&&e.setAttribute("action-icon",i.actionIcon),i.href&&e.setAttribute("href",i.href),i.checked?e.setAttribute("checked",""):e.removeAttribute("checked"),i.disabled?e.setAttribute("disabled",""):e.removeAttribute("disabled"),i.showDivider?e.removeAttribute("show-divider"):e.setAttribute("show-divider","false"),i.customContent&&(e.innerHTML=i.customContent),e.addEventListener("resource-list-click",a=>{i.onResourceListClick(a.detail)}),e.addEventListener("action-click",a=>{i.onActionClick(a.detail)}),e.addEventListener("switch-change",a=>{i.onSwitchChange(a.detail)}),e},argTypes:{type:{control:"select",options:["navigation","icon-button","switch","informational"],description:"Tipo de ação do item",table:{category:"Type & Content",type:{summary:"'navigation' | 'icon-button' | 'switch' | 'informational'"},defaultValue:{summary:"navigation"}}},label:{control:"text",description:"Texto principal do item (título em negrito)",table:{category:"Type & Content",type:{summary:"string"},defaultValue:{summary:""}}},description:{control:"text",description:"Texto descritivo secundário (menor e cinza)",table:{category:"Type & Content",type:{summary:"string"},defaultValue:{summary:""}}},customContent:{control:"text",description:"HTML customizado que substitui label e description (usa slot default)",table:{category:"Type & Content",type:{summary:"string (HTML)"},defaultValue:{summary:""}}},visualSupport:{control:"boolean",description:"Exibe ícone decorativo à esquerda",table:{category:"Visual Support",type:{summary:"boolean"},defaultValue:{summary:!1}}},visualSupportIcon:{control:"text",description:"Nome do ícone para o visual support (ex: cog, bell, lock, wifi)",table:{category:"Visual Support",type:{summary:"string"},defaultValue:{summary:"cog"}},if:{arg:"visualSupport",truthy:!0}},visualSupportImage:{control:"text",description:"URL da imagem para o visual support (tem prioridade sobre o ícone)",table:{category:"Visual Support",type:{summary:"string"},defaultValue:{summary:""}},if:{arg:"visualSupport",truthy:!0}},actionIcon:{control:"text",description:"Nome do ícone para ação (chevron-right para navigation, three-dots para icon-button)",table:{category:"Action Configuration",type:{summary:"string"},defaultValue:{summary:"chevron-right / three-dots"}},if:{arg:"type",neq:"switch"}},href:{control:"text",description:'URL de navegação (usado apenas quando type="navigation")',table:{category:"Action Configuration",type:{summary:"string"},defaultValue:{summary:""}},if:{arg:"type",eq:"navigation"}},checked:{control:"boolean",description:'Estado do switch (usado apenas quando type="switch")',table:{category:"Action Configuration",type:{summary:"boolean"},defaultValue:{summary:!1}},if:{arg:"type",eq:"switch"}},disabled:{control:"boolean",description:"Estado desabilitado do componente",table:{category:"State",type:{summary:"boolean"},defaultValue:{summary:!1}}},showDivider:{control:"boolean",description:"Exibe linha divisória na parte inferior",table:{category:"State",type:{summary:"boolean"},defaultValue:{summary:!0}}},onResourceListClick:{action:"resource-list-click",description:"Disparado quando item é clicado (type: navigation)",table:{category:"Actions",type:{summary:"CustomEvent<{ type, label, href }>"}}},onActionClick:{action:"action-click",description:"Disparado quando botão de ação é clicado (type: icon-button)",table:{category:"Actions",type:{summary:"CustomEvent<{ label }>"}}},onSwitchChange:{action:"switch-change",description:"Disparado quando switch muda de estado (type: switch)",table:{category:"Actions",type:{summary:"CustomEvent<{ checked, label }>"}}}}},o={args:{type:"navigation",label:"Configurações do sistema",description:"Gerencie preferências e configurações",href:"#settings",visualSupport:!1,disabled:!1,showDivider:!0}},n={args:{type:"navigation",label:"Notificações",description:"Configure suas notificações",href:"#notifications",visualSupport:!0,visualSupportIcon:"bell",disabled:!1,showDivider:!0}},l={args:{type:"navigation",label:"Meu Perfil",description:"Edite suas informações pessoais",href:"#profile",visualSupport:!0,visualSupportImage:"https://i.pravatar.cc/32?img=1",disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Navigation com imagem no visual support. A imagem tem prioridade sobre o ícone quando ambos são definidos."}}}},c={args:{type:"navigation",label:"Funcionalidade desabilitada",description:"Esta opção não está disponível",href:"#disabled",visualSupport:!0,visualSupportIcon:"alert-triangle",disabled:!0,showDivider:!0}},u={args:{type:"navigation",label:"Item único sem divider",description:"Útil para listas com um único item",href:"#single",visualSupport:!1,disabled:!1,showDivider:!1}},d={args:{type:"icon-button",label:"Opções avançadas",description:"Acesse configurações adicionais",actionIcon:"three-dots",visualSupport:!1,disabled:!1,showDivider:!0}},p={args:{type:"icon-button",label:"Minha conta",description:"Editar informações do perfil",actionIcon:"pencil",visualSupport:!0,visualSupportIcon:"user",disabled:!1,showDivider:!0}},m={args:{type:"icon-button",label:"Ação desabilitada",description:"Não disponível no momento",actionIcon:"x",visualSupport:!1,disabled:!0,showDivider:!0}},h={args:{type:"switch",label:"Modo escuro",description:"Ative o tema escuro",checked:!1,visualSupport:!1,disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Switch no resource list (sempre renderizado sem label interno, usando apenas o toggle)."}}}},v={args:{type:"switch",label:"Notificações push",description:"Receba notificações no dispositivo",checked:!0,visualSupport:!1,disabled:!1,showDivider:!0}},f={args:{type:"switch",label:"Pagamento por aproximação",description:"Ative para pagar sem inserir o cartão",checked:!0,visualSupport:!0,visualSupportIcon:"contactless",disabled:!1,showDivider:!0}},b={args:{type:"switch",label:"Recurso premium",description:"Requer assinatura ativa",checked:!1,visualSupport:!1,disabled:!0,showDivider:!0}},g={args:{type:"switch",label:"Sincronização automática",description:"Sincronize dados automaticamente",checked:!0,visualSupport:!1,disabled:!0,showDivider:!0}},y={args:{type:"informational",label:"Versão do aplicativo",description:"v2.4.1 - Build 1234",visualSupport:!1,disabled:!1,showDivider:!0},parameters:{docs:{description:{story:"Tipo informational não possui interação (sem hover, pressed ou clique). Usado apenas para exibir informações estáticas."}}}},x={args:{type:"informational",label:"Limite utilizado",description:"R$ 2.450,00 de R$ 5.000,00",visualSupport:!0,visualSupportIcon:"hand-card",disabled:!1,showDivider:!0}},w={args:{type:"navigation",href:"#uber-credito",visualSupport:!0,visualSupportImage:"https://t2.tudocdn.net/693919?w=1200&h=1200",disabled:!1,showDivider:!0,customContent:`
       <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; font-family: var(--atlas-font-face-general, 'Open Sans', sans-serif);">
         <div style="display: flex; flex-direction: column; gap: var(--atlas-gap-2xs, 4px);">
           <div style="color: var(--atlas-color-text-static-neutral-hard, #212529); font-size: var(--atlas-font-size-175, 14px); font-weight: var(--atlas-font-weight-400, 400); line-height: 1.5;">
@@ -253,7 +252,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: true,
     showDivider: true
   }
-}`,...(N=(T=c.parameters)==null?void 0:T.docs)==null?void 0:N.source}}};var q,F,W;d.parameters={...d.parameters,docs:{...(q=d.parameters)==null?void 0:q.docs,source:{originalSource:`{
+}`,...(N=(T=c.parameters)==null?void 0:T.docs)==null?void 0:N.source}}};var q,F,W;u.parameters={...u.parameters,docs:{...(q=u.parameters)==null?void 0:q.docs,source:{originalSource:`{
   args: {
     type: 'navigation',
     label: 'Item único sem divider',
@@ -263,7 +262,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: false,
     showDivider: false
   }
-}`,...(W=(F=d.parameters)==null?void 0:F.docs)==null?void 0:W.source}}};var M,P,j;u.parameters={...u.parameters,docs:{...(M=u.parameters)==null?void 0:M.docs,source:{originalSource:`{
+}`,...(W=(F=u.parameters)==null?void 0:F.docs)==null?void 0:W.source}}};var M,P,j;d.parameters={...d.parameters,docs:{...(M=d.parameters)==null?void 0:M.docs,source:{originalSource:`{
   args: {
     type: 'icon-button',
     label: 'Opções avançadas',
@@ -273,7 +272,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: false,
     showDivider: true
   }
-}`,...(j=(P=u.parameters)==null?void 0:P.docs)==null?void 0:j.source}}};var B,H,U;p.parameters={...p.parameters,docs:{...(B=p.parameters)==null?void 0:B.docs,source:{originalSource:`{
+}`,...(j=(P=d.parameters)==null?void 0:P.docs)==null?void 0:j.source}}};var B,H,U;p.parameters={...p.parameters,docs:{...(B=p.parameters)==null?void 0:B.docs,source:{originalSource:`{
   args: {
     type: 'icon-button',
     label: 'Minha conta',
@@ -284,7 +283,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: false,
     showDivider: true
   }
-}`,...(U=(H=p.parameters)==null?void 0:H.docs)==null?void 0:U.source}}};var _,O,J;m.parameters={...m.parameters,docs:{...(_=m.parameters)==null?void 0:_.docs,source:{originalSource:`{
+}`,...(U=(H=p.parameters)==null?void 0:H.docs)==null?void 0:U.source}}};var _,J,O;m.parameters={...m.parameters,docs:{...(_=m.parameters)==null?void 0:_.docs,source:{originalSource:`{
   args: {
     type: 'icon-button',
     label: 'Ação desabilitada',
@@ -294,7 +293,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: true,
     showDivider: true
   }
-}`,...(J=(O=m.parameters)==null?void 0:O.docs)==null?void 0:J.source}}};var G,K,Q;h.parameters={...h.parameters,docs:{...(G=h.parameters)==null?void 0:G.docs,source:{originalSource:`{
+}`,...(O=(J=m.parameters)==null?void 0:J.docs)==null?void 0:O.source}}};var G,K,Q;h.parameters={...h.parameters,docs:{...(G=h.parameters)==null?void 0:G.docs,source:{originalSource:`{
   args: {
     type: 'switch',
     label: 'Modo escuro',
@@ -352,7 +351,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
     disabled: true,
     showDivider: true
   }
-}`,...(le=(ne=g.parameters)==null?void 0:ne.docs)==null?void 0:le.source}}};var ce,de,ue;y.parameters={...y.parameters,docs:{...(ce=y.parameters)==null?void 0:ce.docs,source:{originalSource:`{
+}`,...(le=(ne=g.parameters)==null?void 0:ne.docs)==null?void 0:le.source}}};var ce,ue,de;y.parameters={...y.parameters,docs:{...(ce=y.parameters)==null?void 0:ce.docs,source:{originalSource:`{
   args: {
     type: 'informational',
     label: 'Versão do aplicativo',
@@ -368,7 +367,7 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
       }
     }
   }
-}`,...(ue=(de=y.parameters)==null?void 0:de.docs)==null?void 0:ue.source}}};var pe,me,he;x.parameters={...x.parameters,docs:{...(pe=x.parameters)==null?void 0:pe.docs,source:{originalSource:`{
+}`,...(de=(ue=y.parameters)==null?void 0:ue.docs)==null?void 0:de.source}}};var pe,me,he;x.parameters={...x.parameters,docs:{...(pe=x.parameters)==null?void 0:pe.docs,source:{originalSource:`{
   args: {
     type: 'informational',
     label: 'Limite utilizado',
@@ -490,4 +489,4 @@ import"./atlas-icon-B_0Pd0rQ.js";import"./atlas-icon-button-D_fTdWvm.js";import"
       }
     }
   }
-}`,...(Ae=(Se=A.parameters)==null?void 0:Se.docs)==null?void 0:Ae.source}}};const Re=["NavigationDefault","NavigationWithVisualSupport","NavigationWithVisualSupportImage","NavigationDisabled","NavigationWithoutDivider","IconButtonDefault","IconButtonWithVisualSupport","IconButtonDisabled","SwitchUnchecked","SwitchChecked","SwitchWithVisualSupport","SwitchDisabled","SwitchDisabledChecked","InformationalDefault","InformationalWithVisualSupport","CustomContent","ConfigurationList","UserListWithImages"];export{S as ConfigurationList,w as CustomContent,u as IconButtonDefault,m as IconButtonDisabled,p as IconButtonWithVisualSupport,y as InformationalDefault,x as InformationalWithVisualSupport,o as NavigationDefault,c as NavigationDisabled,n as NavigationWithVisualSupport,l as NavigationWithVisualSupportImage,d as NavigationWithoutDivider,v as SwitchChecked,b as SwitchDisabled,g as SwitchDisabledChecked,h as SwitchUnchecked,f as SwitchWithVisualSupport,A as UserListWithImages,Re as __namedExportsOrder,ze as default};
+}`,...(Ae=(Se=A.parameters)==null?void 0:Se.docs)==null?void 0:Ae.source}}};const Re=["NavigationDefault","NavigationWithVisualSupport","NavigationWithVisualSupportImage","NavigationDisabled","NavigationWithoutDivider","IconButtonDefault","IconButtonWithVisualSupport","IconButtonDisabled","SwitchUnchecked","SwitchChecked","SwitchWithVisualSupport","SwitchDisabled","SwitchDisabledChecked","InformationalDefault","InformationalWithVisualSupport","CustomContent","ConfigurationList","UserListWithImages"];export{S as ConfigurationList,w as CustomContent,d as IconButtonDefault,m as IconButtonDisabled,p as IconButtonWithVisualSupport,y as InformationalDefault,x as InformationalWithVisualSupport,o as NavigationDefault,c as NavigationDisabled,n as NavigationWithVisualSupport,l as NavigationWithVisualSupportImage,u as NavigationWithoutDivider,v as SwitchChecked,b as SwitchDisabled,g as SwitchDisabledChecked,h as SwitchUnchecked,f as SwitchWithVisualSupport,A as UserListWithImages,Re as __namedExportsOrder,ze as default};
