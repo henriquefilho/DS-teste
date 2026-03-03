@@ -1,0 +1,5 @@
+/workspaces/DS-teste/components/app/obj/Debug/net8.0-android/AtlasShowcase.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/DS-teste/components/app/obj/Debug/net8.0-android/AtlasShowcase.AssemblyInfoInputs.cache
+/workspaces/DS-teste/components/app/obj/Debug/net8.0-android/AtlasShowcase.AssemblyInfo.cs
+/workspaces/DS-teste/components/app/obj/Debug/net8.0-android/AtlasShowcase.csproj.CoreCompileInputs.cache
+/workspaces/DS-teste/components/app/obj/Debug/net8.0-android/AtlasShowcase.sourcelink.json

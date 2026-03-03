@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:atlas="clr-namespace:Atlas.Components"
+             xmlns:vm="clr-namespace:Atlas.Components.Showcase"
+             x:Class="Atlas.Components.Showcase.AtlasIconShowcasePage"
+             Title="AtlasIcon Showcase">
+
+    <ContentPage.BindingContext>
+        <vm:AtlasIconShowcaseViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="24">
+
+            <!-- ════════════════════════════════════════════════════════
+                 A. ÁREA DE PREVIEW — O Palco
+                 ════════════════════════════════════════════════════════ -->
+            <Label Text="Preview"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#6B7280, Dark=#9CA3AF}" />
+
+            <Border Padding="32"
+                    StrokeShape="RoundRectangle 16"
+                    Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#374151}"
+                    BackgroundColor="{AppThemeBinding Light=#F9FAFB, Dark=#1F2937}"
+                    HorizontalOptions="Fill"
+                    MinimumHeightRequest="140">
+
+                <VerticalStackLayout Spacing="12"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+
+                    <!-- Componente AtlasIcon em exibição -->
+                    <atlas:AtlasIcon Glyph="{Binding Glyph}"
+                                     Size="{Binding SelectedSize}"
+                                     Color="{Binding IconColor}"
+                                     IsEnabled="{Binding IsEnabled}"
+                                     HorizontalOptions="Center"
+                                     SemanticProperties.Description="{Binding SemanticDescription}"
+                                     SemanticProperties.Hint="{Binding SemanticHint}" />
+
+                    <!-- Metadados do ícone renderizado -->
+                    <Label Text="{Binding Glyph, StringFormat='glyph: {0}'}"
+                           FontSize="11"
+                           TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="{Binding SelectedSize, StringFormat='size: {0}'}"
+                           FontSize="11"
+                           TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                           HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ════════════════════════════════════════════════════════
+                 B. PAINEL DE CONTROLES — Os Knobs
+                 ════════════════════════════════════════════════════════ -->
+            <Label Text="Controles"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#6B7280, Dark=#9CA3AF}" />
+
+            <Border Padding="16"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#374151}"
+                    BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#111827}">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- ── Categoria: Content ─────────────────────── -->
+                    <Label Text="CONTENT"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           CharacterSpacing="1.5"
+                           TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
+
+                    <!-- Glyph via Picker (catálogo) -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Ícone (catálogo)"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Picker ItemsSource="{Binding AvailableIcons}"
+                                SelectedIndex="{Binding SelectedIconIndex, Mode=TwoWay}"
+                                Title="Selecione um ícone"
+                                TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}"
+                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}" />
+                    </VerticalStackLayout>
+
+                    <!-- Glyph via texto livre -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Glyph (texto livre)"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Entry Text="{Binding Glyph, Mode=TwoWay}"
+                               Placeholder="ex: home, check, user..."
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}"
+                               TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}" />
+                    </VerticalStackLayout>
+
+                    <!-- Separador -->
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light=#E5E7EB, Dark=#374151}" />
+
+                    <!-- ── Categoria: Appearance ──────────────────── -->
+                    <Label Text="APPEARANCE"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           CharacterSpacing="1.5"
+                           TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
+
+                    <!-- Size Picker -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Size"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Picker ItemsSource="{Binding SizeOptions}"
+                                SelectedIndex="{Binding SelectedSizeIndex, Mode=TwoWay}"
+                                Title="Selecione o tamanho"
+                                TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}"
+                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}" />
+
+                        <!-- Régua de tamanhos como referência visual -->
+                        <HorizontalStackLayout Spacing="16" Padding="4,8,4,0"
+                                               HorizontalOptions="Center">
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="xs"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="xs" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="sm"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="sm" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="md"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="md" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="lg"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="lg" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="xl"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="xl" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <atlas:AtlasIcon Glyph="{Binding Glyph}" Size="xxl"
+                                                 Color="{Binding IconColor}"
+                                                 HorizontalOptions="Center" />
+                                <Label Text="xxl" FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Color Picker -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Color"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Picker ItemsSource="{Binding ColorOptions}"
+                                SelectedIndex="{Binding SelectedColorIndex, Mode=TwoWay}"
+                                Title="Selecione a cor"
+                                TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}"
+                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}" />
+                    </VerticalStackLayout>
+
+                    <!-- Separador -->
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light=#E5E7EB, Dark=#374151}" />
+
+                    <!-- ── Categoria: Status ───────────────────────── -->
+                    <Label Text="STATUS"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           CharacterSpacing="1.5"
+                           TextColor="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
+                        <Label Text="IsEnabled"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsEnabled, Mode=TwoWay}"
+                                OnColor="{AppThemeBinding Light=#0066CC, Dark=#3B82F6}" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ════════════════════════════════════════════════════════
+                 C. ACESSIBILIDADE
+                 ════════════════════════════════════════════════════════ -->
+            <Label Text="Acessibilidade"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#6B7280, Dark=#9CA3AF}" />
+
+            <Border Padding="16"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#374151}"
+                    BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#111827}">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="SemanticProperties.Description"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Entry Text="{Binding SemanticDescription, Mode=TwoWay}"
+                               Placeholder="Descrição para leitores de tela"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}"
+                               TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="SemanticProperties.Hint"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#374151, Dark=#D1D5DB}" />
+                        <Entry Text="{Binding SemanticHint, Mode=TwoWay}"
+                               Placeholder="Dica interativa para leitores de tela"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1F2937}"
+                               TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}" />
+                    </VerticalStackLayout>
+
+                    <!-- Preview de acessibilidade -->
+                    <Border Padding="12"
+                            StrokeShape="RoundRectangle 8"
+                            BackgroundColor="{AppThemeBinding Light=#EFF6FF, Dark=#1E3A5F}"
+                            Stroke="{AppThemeBinding Light=#BFDBFE, Dark=#2563EB}">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="📢 O que o leitor de tela anuncia:"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#1D4ED8, Dark=#93C5FD}" />
+                            <Label Text="{Binding SemanticDescription}"
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#1E40AF, Dark=#BFDBFE}" />
+                            <Label Text="{Binding SemanticHint, StringFormat='Dica: {0}'}"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#3B82F6, Dark=#93C5FD}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ════════════════════════════════════════════════════════
+                 D. SNIPPET DE CÓDIGO — Uso básico
+                 ════════════════════════════════════════════════════════ -->
+            <Label Text="Snippet de Uso"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#6B7280, Dark=#9CA3AF}" />
+
+            <Border Padding="16"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{AppThemeBinding Light=#1F2937, Dark=#0F172A}"
+                    Stroke="Transparent">
+                <VerticalStackLayout Spacing="4">
+                    <Label FontFamily="Consolas, monospace"
+                           FontSize="12"
+                           TextColor="#86EFAC">
+                        <Label.Text>&lt;atlas:AtlasIcon</Label.Text>
+                    </Label>
+                    <Label FontFamily="Consolas, monospace"
+                           FontSize="12"
+                           Padding="16,0,0,0">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="    Glyph=" TextColor="#FCA5A5" />
+                                <Span Text="&quot;home&quot;" TextColor="#FDE68A" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label FontFamily="Consolas, monospace"
+                           FontSize="12"
+                           Padding="16,0,0,0">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="    Size=" TextColor="#FCA5A5" />
+                                <Span Text="&quot;md&quot;" TextColor="#FDE68A" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label FontFamily="Consolas, monospace"
+                           FontSize="12"
+                           Padding="16,0,0,0">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="    Color=" TextColor="#FCA5A5" />
+                                <Span Text="&quot;Black&quot;" TextColor="#FDE68A" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label FontFamily="Consolas, monospace"
+                           FontSize="12"
+                           TextColor="#86EFAC">
+                        <Label.Text>/&gt;</Label.Text>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Espaço inferior para evitar sobreposição com nav bar -->
+            <BoxView HeightRequest="32" Color="Transparent" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

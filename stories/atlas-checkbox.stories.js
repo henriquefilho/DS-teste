@@ -1,8 +1,6 @@
 import '../components/web/atlas-checkbox/atlas-checkbox.js';
 
 /**
- * # Atlas Checkbox
- * 
  * Checkbox interativo com suporte a múltiplos estados e acessibilidade completa.
  * 
  * ## Estados Suportados
